@@ -38,5 +38,6 @@
 //   (window as any).HostieChat = { init };
 // }
 
+// index.ts
 import { mountWidget } from "./widget";
 export { mountWidget };
