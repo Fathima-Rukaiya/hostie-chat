@@ -28,19 +28,15 @@
 // });
 
 
-
+// tsup.config.ts
 import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.tsx"],
-  format: ["iife"],           // Browser-ready <script>
-  globalName: "HostieChat",   // exposed as window.HostieChat
+  format: ["iife"],            // Browser-ready script
+  globalName: "HostieChat",    // Exposed as window.HostieChat
   outDir: "dist",
-  bundle: true,               // include React + ReactDOM
+  bundle: true,
   minify: true,
-  splitting: false,           // single file
-  define: { "process.env.NODE_ENV": '"production"' },
-  loader: { ".css": "css" },  // converts CSS imports into strings
-  target: "es2020",           // modern browsers
+  loader: { ".css": "css" },   // Inline CSS
 });
-
