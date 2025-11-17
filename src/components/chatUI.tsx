@@ -227,15 +227,15 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
         verifyDomain();
     }, [apiKey]);
 
-    //   useEffect(() => {
-    //     function close(e: MouseEvent) {
-    //       if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
-    //         setIsOpen(false);
-    //       }
-    //     }
-    //     document.addEventListener("mousedown", close);
-    //     return () => document.removeEventListener("mousedown", close);
-    //   }, []);
+      useEffect(() => {
+        function close(e: MouseEvent) {
+          if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+            setIsOpen(false);
+          }
+        }
+        document.addEventListener("mousedown", close);
+        return () => document.removeEventListener("mousedown", close);
+      }, []);
 
    const buttonRef = useRef<HTMLButtonElement>(null);
 const popupRef = useRef<HTMLDivElement>(null);
