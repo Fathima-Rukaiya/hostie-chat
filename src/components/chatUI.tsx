@@ -237,15 +237,22 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
     //     return () => document.removeEventListener("mousedown", close);
     //   }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+   const buttonRef = useRef<HTMLButtonElement>(null);
+const popupRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      !buttonRef.current?.contains(e.target as Node) &&
+      !popupRef.current?.contains(e.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
 
 
     if (isAllowed === null) return null;
