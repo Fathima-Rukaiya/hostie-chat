@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ChatUI } from "./components/ChatUI";
 import chatCSS from "./assets/tailwind-embedded.css"; // normal import handled by TSUP
+import { ChatUI } from "./components/chatUI";
 
 // Inject CSS globally (or into shadow root later)
 if (typeof document !== "undefined") {
