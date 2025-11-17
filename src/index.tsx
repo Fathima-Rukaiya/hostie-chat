@@ -41,22 +41,31 @@
 // index.ts
 import { mountWidget } from "./widget";
 
+// Read API key from <script> tag or fallback
 function autoInit() {
-  const script = document.currentScript as HTMLScriptElement | null;
-  if (!script) return;
+  let apiKey = "test_12345_user_key"; // fallback default
+  let openAi = undefined;
 
-  const apiKey = script.getAttribute("data-api-key");
-  if (!apiKey) return;
+  // Try to read from any script tag that loaded this bundle
+  const scripts = document.getElementsByTagName("script");
+  for (let i = 0; i < scripts.length; i++) {
+    const script = scripts[i];
+    if (script.src.includes("index.global.js")) {
+      const key = script.getAttribute("data-api-key");
+      const oa = script.getAttribute("data-openai");
+      if (key) apiKey = key;
+      if (oa) openAi = oa;
+      break;
+    }
+  }
 
-  // Auto mount
-  mountWidget({ apiKey });
+  mountWidget({ apiKey, openAi });
 }
 
-// Run ONLY when loaded in browser
+// Only run in browser
 if (typeof window !== "undefined") {
   autoInit();
 }
 
-// Expose API (optional)
+// Optional API exposure
 (window as any).HostieChat = { mountWidget };
-
