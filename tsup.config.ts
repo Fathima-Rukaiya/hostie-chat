@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.tsx"],
- format: ["esm", "cjs", "iife"], // ADD IIFE
+ format: ["iife"], // ADD IIFE
   globalName: "HostieChat",  // Only ESM for CDN
   dts: true,
   sourcemap: true,
