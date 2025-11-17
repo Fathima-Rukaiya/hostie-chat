@@ -29,19 +29,18 @@
 
 
 
-  import { defineConfig } from "tsup";
+import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.tsx"],
-  format: ["iife"],           // Browser-ready
-  globalName: "HostieChat",   // window.HostieChat
+  format: ["iife"],           // Browser-ready <script>
+  globalName: "HostieChat",   // exposed as window.HostieChat
   outDir: "dist",
-  bundle: true,               // bundle React + components
+  bundle: true,               // include React + ReactDOM
   minify: true,
   splitting: false,           // single file
-  target: "es2020",           // modern JS
-  define: {
-    "process.env.NODE_ENV": '"production"', // replace process.env
-  },
-  loader: { ".css": "css" },
+  define: { "process.env.NODE_ENV": '"production"' },
+  loader: { ".css": "css" },  // converts CSS imports into strings
+  target: "es2020",           // modern browsers
 });
+
