@@ -1,27 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChatUI } from "./components/chatUI";
-import chatCSS from "./assets/tailwind-embedded.css";
+import chatCSS from './assets/tailwind-embedded.css';
 
 interface HostieChatOptions {
   apiKey: string;
-  openAi?: string;
   containerId?: string;
 }
 
-// Inject CSS dynamically
 if (typeof document !== "undefined") {
   const style = document.createElement("style");
   style.textContent = chatCSS;
   document.head.appendChild(style);
 }
 
-// Main init function
-export function init({
-  apiKey,
-  openAi,
-  containerId = "hostie-chat-root",
-}: HostieChatOptions) {
+export function init({ apiKey, containerId = "hostie-chat-root" }:HostieChatOptions) {
   let container = document.getElementById(containerId);
   if (!container) {
     container = document.createElement("div");
@@ -30,26 +23,19 @@ export function init({
   }
 
   const root = ReactDOM.createRoot(container);
-  root.render(<ChatUI apiKey={apiKey} openAi={openAi} />);
+  root.render(<ChatUI apiKey={apiKey} />);
 }
 
-// Auto-init from script attributes
 if (typeof window !== "undefined") {
   const script = document.currentScript as HTMLScriptElement | null;
   if (script) {
     const apiKey = script.getAttribute("data-api-key");
-    const openAi = script.getAttribute("data-openai");
     const containerId = script.getAttribute("data-id") || "hostie-chat-root";
-    if (apiKey) {
-      init({ apiKey, openAi: openAi || undefined, containerId });
-    }
+    if (apiKey) init({ apiKey, containerId });
   }
-
-  // Expose globally
   (window as any).HostieChat = { init };
 }
 
-export { ChatUI };
 
 
 // import React from "react";
