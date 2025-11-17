@@ -38,6 +38,8 @@ import ReactDOM from "react-dom/client";
 import { ChatUI } from "./components/chatUI";
 import "./styles/tailwind.css";
 
+
+
 interface HostieChatOptions {
   apiKey: string;
   openAi?: string;
