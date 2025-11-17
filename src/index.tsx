@@ -40,4 +40,23 @@
 
 // index.ts
 import { mountWidget } from "./widget";
-export { mountWidget };
+
+function autoInit() {
+  const script = document.currentScript as HTMLScriptElement | null;
+  if (!script) return;
+
+  const apiKey = script.getAttribute("data-api-key");
+  if (!apiKey) return;
+
+  // Auto mount
+  mountWidget({ apiKey });
+}
+
+// Run ONLY when loaded in browser
+if (typeof window !== "undefined") {
+  autoInit();
+}
+
+// Expose API (optional)
+(window as any).HostieChat = { mountWidget };
+
