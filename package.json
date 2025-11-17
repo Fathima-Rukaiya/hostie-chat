@@ -8,11 +8,12 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "npm run build:css &&tsup",
-    "prepublishOnly": "npm run build",
-    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/assets/tailwind-embedded.css --minify"
-  },
+ "scripts": {
+  "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/assets/tailwind-embedded.css --minify",
+  "build:js": "tsup",
+  "build": "npm run build:css && npm run build:js",
+  "prepublishOnly": "npm run build"
+},
   "keywords": [
     "chatbot",
     "widget",
