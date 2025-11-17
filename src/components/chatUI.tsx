@@ -197,47 +197,47 @@ import { Wanchain1 } from "iconsax-react";
 import { StandardUI } from "./StandardUI";
 
 export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const [isAllowed, setIsAllowed] = useState<boolean | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const popoverRef = useRef<HTMLDivElement>(null);
+    const [isAllowed, setIsAllowed] = useState<boolean | null>(null);
 
-  const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+    const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
-  useEffect(() => {
-    const verifyDomain = async () => {
-      try {
-        const res = await fetch(`${API_BASE_URL}/verifyDomain`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": apiKey,
-          },
-          body: JSON.stringify({ api_key: apiKey }),
-        });
+    useEffect(() => {
+        const verifyDomain = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/verifyDomain`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": apiKey,
+                    },
+                    body: JSON.stringify({ api_key: apiKey }),
+                });
 
-        if (!res.ok) return setIsAllowed(false);
+                if (!res.ok) return setIsAllowed(false);
 
-        const data = await res.json();
-        setIsAllowed(data.allowed ?? false);
-      } catch {
-        setIsAllowed(false);
-      }
-    };
+                const data = await res.json();
+                setIsAllowed(data.allowed ?? false);
+            } catch {
+                setIsAllowed(false);
+            }
+        };
 
-    verifyDomain();
-  }, [apiKey]);
+        verifyDomain();
+    }, [apiKey]);
 
-//   useEffect(() => {
-//     function close(e: MouseEvent) {
-//       if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
-//         setIsOpen(false);
-//       }
-//     }
-//     document.addEventListener("mousedown", close);
-//     return () => document.removeEventListener("mousedown", close);
-//   }, []);
+    //   useEffect(() => {
+    //     function close(e: MouseEvent) {
+    //       if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+    //         setIsOpen(false);
+    //       }
+    //     }
+    //     document.addEventListener("mousedown", close);
+    //     return () => document.removeEventListener("mousedown", close);
+    //   }, []);
 
- useEffect(() => {
+    useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
@@ -248,33 +248,34 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
     }, []);
 
 
-  if (isAllowed === null) return null;
+    if (isAllowed === null) return null;
 
-  if (isAllowed === false)
+    if (isAllowed === false)
+        return (
+            <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow">
+                <p className="text-gray-600 text-sm">This chat widget is not authorized for this domain.</p>
+                <p className="text-gray-400 text-xs mt-2">Please contact the admin.</p>
+            </div>
+        );
+
     return (
-      <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow">
-        <p className="text-gray-600 text-sm">This chat widget is not authorized for this domain.</p>
-        <p className="text-gray-400 text-xs mt-2">Please contact the admin.</p>
-      </div>
+        <div className="fixed bottom-6 right-6 z-[9999]">
+            <div ref={popoverRef}>
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
+                >
+                    <Wanchain1 size={22} />
+                    <span className="font-semibold text-sm">Ask Hostie!</span>
+                </button>
+
+                {isOpen && (
+                    <div className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl border border-gray-200 rounded-xl bg-white transition-all duration-200">
+                        <StandardUI apiKey={apiKey} openAi={openAi} />
+                    </div>
+                )}
+            </div>
+
+        </div>
     );
-
-  return (
-    <div className="fixed bottom-6 right-6 z-[9999]">
-      <div ref={popoverRef}>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
-        >
-          <Wanchain1 size="22" />
-          <span className="font-semibold text-sm">Ask Hostie!</span>
-        </button>
-
-        {isOpen && (
-          <div className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl border border-gray-200 rounded-xl bg-white transition-all duration-200">
-            <StandardUI apiKey={apiKey} openAi={openAi} />
-          </div>
-        )}
-      </div>
-    </div>
-  );
 }
