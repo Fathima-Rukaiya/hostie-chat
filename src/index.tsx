@@ -1,20 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+//import { ChatUI } from "./components/ChatUI";
+import chatCSS from "./assets/tailwind-embedded.css";
 import { ChatUI } from "./components/chatUI";
-import chatCSS from './assets/tailwind-embedded.css';
 
-interface HostieChatOptions {
-  apiKey: string;
-  containerId?: string;
-}
-
+// Inject CSS
 if (typeof document !== "undefined") {
   const style = document.createElement("style");
   style.textContent = chatCSS;
   document.head.appendChild(style);
 }
 
-export function init({ apiKey, containerId = "hostie-chat-root" }:HostieChatOptions) {
+interface HostieChatOptions {
+  apiKey: string;
+  containerId?: string;
+}
+
+// Init function
+export function init({ apiKey, containerId = "hostie-chat-root" }: HostieChatOptions) {
   let container = document.getElementById(containerId);
   if (!container) {
     container = document.createElement("div");
@@ -26,6 +29,7 @@ export function init({ apiKey, containerId = "hostie-chat-root" }:HostieChatOpti
   root.render(<ChatUI apiKey={apiKey} />);
 }
 
+// Auto-init from <script>
 if (typeof window !== "undefined") {
   const script = document.currentScript as HTMLScriptElement | null;
   if (script) {
