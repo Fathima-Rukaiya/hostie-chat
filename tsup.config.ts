@@ -26,7 +26,10 @@ export default defineConfig({
   bundle: true,
   minify: true,
   sourcemap: true,
-  loader: { ".css": "css" },
+  loader: {
+  ".css": "text",
+},
+
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
