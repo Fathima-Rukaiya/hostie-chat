@@ -495,7 +495,7 @@ export function StandardUI({
         className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200 bg-white dark:bg-neutral-800 overflow-hidden"
       >
         {/* Header */}
-        {/* <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700"> */}
+        <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700">
           <div className="flex items-center gap-2">
             <Bot strokeWidth={1.75} className="text-purple-600" />
             <span className="font-semibold text-sm">Hostie</span>
@@ -516,7 +516,7 @@ export function StandardUI({
             </button>
             </span>
           </div>
-        {/* </div> */}
+        </div>
 
         {/* Chat area */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2">

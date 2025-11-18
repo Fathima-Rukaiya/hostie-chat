@@ -280,7 +280,7 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
 
                 {isOpen && (
                     <div
-                     className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl border border-gray-200 rounded-xl bg-white transition-all duration-200">
+                     className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl  rounded-xl bg-white transition-all duration-200">
                         <StandardUI apiKey={apiKey} />
                     </div>
                 )}
