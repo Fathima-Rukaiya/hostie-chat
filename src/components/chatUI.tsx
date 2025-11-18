@@ -228,15 +228,15 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
         verifyDomain();
     }, [apiKey]);
 
-      useEffect(() => {
-        function close(e: MouseEvent) {
-          if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
-            setIsOpen(false);
-          }
-        }
-        document.addEventListener("mousedown", close);
-        return () => document.removeEventListener("mousedown", close);
-      }, []);
+    //   useEffect(() => {
+    //     function close(e: MouseEvent) {
+    //       if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+    //         setIsOpen(false);
+    //       }
+    //     }
+    //     document.addEventListener("mousedown", close);
+    //     return () => document.removeEventListener("mousedown", close);
+    //   }, []);
 
 //    const buttonRef = useRef<HTMLButtonElement>(null);
 // const popupRef = useRef<HTMLDivElement>(null);
@@ -254,6 +254,23 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
 //   return () => document.removeEventListener("mousedown", handleClickOutside);
 // }, []);
 
+useEffect(() => {
+  function close(e: MouseEvent) {
+    const host = document.getElementById("hostie-chat-root");
+    const shadow = host?.shadowRoot;
+
+    const clickedInsideShadow = shadow?.contains(e.target as Node);
+    const clickedInsidePopover = popoverRef.current?.contains(e.target as Node);
+
+    // If user clicked outside both → close
+    if (!clickedInsideShadow && !clickedInsidePopover) {
+      setIsOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", close);
+  return () => document.removeEventListener("mousedown", close);
+}, []);
 
 
     if (isAllowed === null) return null;
@@ -275,7 +292,7 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
                     <Bot strokeWidth={1.75}  size={22} />
-                    <span className="font-semibold text-sm">Ask Hostie!</span>
+                    <span className="font-semibold text-sm">Ask Hostie!!!</span>
                 </button>
 
                 {isOpen && (
