@@ -1,6 +1,6 @@
 {
   "name": "hostie-chat-new",
- "version": "1.0.0",
+  "version": "1.0.0",
   "description": "Smart AI chat widget for embedding GPT-powered chatbots on any website",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -8,12 +8,12 @@
   "files": [
     "dist"
   ],
- "scripts": {
-  "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/assets/tailwind-embedded.css --minify",
-  "build:js": "tsup",
-  "build": "npm run build:css && npm run build:js",
-  "prepublishOnly": "npm run build"
-},
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/assets/tailwind-embedded.css --minify",
+    "build:js": "tsup",
+    "build": "npm run build:css && npm run build:js",
+    "prepublishOnly": "npm run build"
+  },
   "keywords": [
     "chatbot",
     "widget",
@@ -46,6 +46,7 @@
     "clsx": "^2.1.1",
     "iconsax-react": "^0.0.8",
     "lucide-react": ">=0.460.0",
+    "next-themes": "^0.4.6",
     "react-shadow-root": "^6.2.0",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.1",

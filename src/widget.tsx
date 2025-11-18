@@ -98,15 +98,18 @@ import ReactDOM from "react-dom/client";
 import { createPortal } from "react-dom";
 import chatCSS from "./assets/tailwind-embedded.css";
 import { ChatUI } from "./components/chatUI";
+import { ThemeProvider } from "next-themes";
+
+import { useTheme } from "next-themes";
 
 interface MountWidgetOptions {
   apiKey: string;
   containerId?: string;
 }
 
+
 export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountWidgetOptions) {
   let host = document.getElementById(containerId);
-
   if (!host) {
     host = document.createElement("div");
     host.id = containerId;
@@ -114,15 +117,45 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
   }
 
   ReactDOM.createRoot(host).render(
-    <ShadowWrapper>
-      <ChatUI apiKey={apiKey} />
-    </ShadowWrapper>
+    <ThemeProvider attribute="data-theme" enableSystem={true} defaultTheme="light">
+      <ShadowWrapper>
+        <ChatUI apiKey={apiKey} />
+      </ShadowWrapper>
+    </ThemeProvider>
   );
 }
 
-function ShadowWrapper({ children }: { children: React.ReactNode }) {
+
+// function ShadowWrapper({ children }: { children: React.ReactNode }) {
+//   const hostRef = useRef<HTMLDivElement>(null);
+//   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
+//   const { theme } = useTheme();
+
+//   useEffect(() => {
+//     if (!hostRef.current || shadow) return;
+
+//     const sr = hostRef.current.attachShadow({ mode: "open" });
+
+//     const style = document.createElement("style");
+//     style.textContent = chatCSS; // Tailwind compiled CSS
+//     sr.appendChild(style);
+
+//     setShadow(sr);
+//   }, [shadow]);
+
+//   // Apply theme to Shadow DOM whenever it changes
+//   useEffect(() => {
+//     if (!hostRef.current) return;
+//     hostRef.current.setAttribute("data-theme", theme || "light");
+//   }, [theme]);
+
+//   return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
+// }
+
+export function ShadowWrapper({ children }: { children: React.ReactNode }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!hostRef.current || shadow) return;
@@ -134,23 +167,13 @@ function ShadowWrapper({ children }: { children: React.ReactNode }) {
     sr.appendChild(style);
 
     setShadow(sr);
-
-    // DARK MODE
-    const setTheme = (theme: "dark" | "light") => {
-      hostRef.current!.setAttribute("data-theme", theme); // <-- this is key
-    };
-
-    // Initial
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(prefersDark ? "dark" : "light");
-
-    // Listen for OS theme changes
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => mediaQuery.removeEventListener("change", handleChange);
   }, [shadow]);
+
+  // Update Shadow DOM with theme automatically
+  useEffect(() => {
+    if (!hostRef.current) return;
+    hostRef.current.setAttribute("data-theme", theme || "light");
+  }, [theme]);
 
   return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
 }
