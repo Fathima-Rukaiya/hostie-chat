@@ -492,10 +492,10 @@ export function StandardUI({
     <div className="fixed bottom-6 right-6 z-50">
       <div
         id="hostie-chat-box"
-        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200  overflow-hidden bg-white dark:bg-neutral-900 transition-colors duration-300"
+        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200  overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-300"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 bg-white dark:bg-neutral-900">
+        <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 bg-white dark:bg-gray-900">
           <div className="flex items-center gap-2">
             <Bot strokeWidth={1.75} className="text-purple-600" />
             <span className="font-semibold text-sm">Hostie</span>
@@ -519,7 +519,7 @@ export function StandardUI({
         </div>
 
         {/* Chat area */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-white dark:bg-neutral-900">
+        <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-white dark:bg-gray-900">
           {chatHistory.length === 0 && (
             <div className="mt-10 flex flex-col items-center justify-center text-center">
               <Bot strokeWidth={1.75}
@@ -648,7 +648,7 @@ export function StandardUI({
         </div>
 
         {/* Input */}
-        <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 bg-white dark:bg-neutral-900">
+        <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 bg-white dark:bg-gray-900">
           <input
             type="file"
             id="hostieFileInput"
@@ -682,7 +682,7 @@ export function StandardUI({
           </button>
         </div>
 
-        <div className="text-center text-xs text-zinc-400 py-2 bg-white dark:bg-neutral-900">
+        <div className="text-center text-xs text-zinc-400 py-2 bg-white dark:bg-gray-900">
           Hostie may produce inaccurate information
         </div>
       </div>
