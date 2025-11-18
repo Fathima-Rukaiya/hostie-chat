@@ -23,6 +23,7 @@ export function StandardUI({
   apiKey, openAi, }: {
     apiKey: string;
     openAi?: string;
+  
   }) {
 
 
@@ -44,12 +45,13 @@ export function StandardUI({
 
   const [userInfo, setUserInfo] = useState<{ name?: string; email?: string } | null>(null);
   const [askedForInfo, setAskedForInfo] = useState(false);
+const [showChat, setShowChat] = useState(true);
 
   useEffect(() => {
     sessionStorage.setItem("aiPaused", aiPaused.toString());
   }, [aiPaused]);
 
-//
+  //
   //https://hostingate-client.vercel.app/sign-in
   const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
@@ -486,7 +488,7 @@ export function StandardUI({
     }
   };
 
-
+if (!showChat) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -497,7 +499,7 @@ export function StandardUI({
         {/* Header */}
         <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700">
           <div className="flex items-center gap-2">
-            <Bot strokeWidth={1.75}  className="text-purple-600"  />
+            <Bot strokeWidth={1.75} className="text-purple-600" />
             <span className="font-semibold text-sm">Hostie</span>
             <span className="ml-1 h-2 w-2 rounded-full bg-green-500" />
             <span className="text-xs text-green-500">Online</span>
@@ -506,16 +508,26 @@ export function StandardUI({
             <Bot size={12} className="text-zinc-600 dark:text-zinc-200" />
             <span className="ml-1 text-xs font-medium">AI</span>
           </div>
+          <div className="flex items-center px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-800">
+
+            <span className="ml-1 text-xs font-medium"><button
+  onClick={() => setShowChat(false)}
+  className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white ml-3"
+>
+  ✕
+</button>
+</span>
+          </div>
         </div>
 
         {/* Chat area */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
           {chatHistory.length === 0 && (
             <div className="mt-10 flex flex-col items-center justify-center text-center">
-              <Bot strokeWidth={1.75} 
+              <Bot strokeWidth={1.75}
                 size={60}
                 className="text-purple-600 dark:text-purple-600 mb-2"
-               
+
               />
               <div className="text-lg font-bold text-purple-600">
                 Hello, there...! 👋
@@ -534,9 +546,9 @@ export function StandardUI({
             >
               {msg.sender === "bot" && (
                 <div className="flex items-end relative">
-                 <Bot strokeWidth={1.75} 
+                  <Bot strokeWidth={1.75}
                     className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
-                  
+
                   />
                 </div>
               )}
@@ -628,7 +640,7 @@ export function StandardUI({
                 //   />
                 // </div>
                 <div className="flex-shrink-0 relative flex items-center justify-center bg-purple-600  rounded-full h-[30px] w-[30px]">
-                  <UserRound  size="18" className="text-gray-200" />
+                  <UserRound size="18" className="text-gray-200" />
                 </div>
               )}
             </div>

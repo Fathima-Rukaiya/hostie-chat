@@ -201,6 +201,7 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
     const [isOpen, setIsOpen] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const [isAllowed, setIsAllowed] = useState<boolean | null>(null);
+    
 
     const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
@@ -274,13 +275,13 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
                     <Bot strokeWidth={1.75}  size={22} />
-                    <span className="font-semibold text-sm">Ask HostieX</span>
+                    <span className="font-semibold text-sm">Ask HostieXX</span>
                 </button>
 
                 {isOpen && (
                     <div
                      className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl border border-gray-200 rounded-xl bg-white transition-all duration-200">
-                        <StandardUI apiKey={apiKey} openAi={openAi} />
+                        <StandardUI apiKey={apiKey} openAi={openAi}  />
                     </div>
                 )}
             </div>
