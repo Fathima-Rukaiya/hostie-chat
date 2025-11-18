@@ -508,6 +508,7 @@ export function StandardUI({
       alert("Something went wrong while uploading. Please try again.");
     }
   };
+ const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!showChat) return null;
 
@@ -673,7 +674,26 @@ export function StandardUI({
 
         {/* Input */}
         <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 ">
-          <input
+         
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handleFileUpload(e.target.files[0]);
+                }
+              }}
+            />
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+
+            {/* <input
             type="file"
             id="hostieFileInput"
             className="hidden"
@@ -682,15 +702,10 @@ export function StandardUI({
                 handleFileUpload(e.target.files[0]);
               }
             }}
-          />
-          <button
-            onClick={() => document.getElementById("hostieFileInput")?.click()}
-            className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
-          >
-            <Plus className="w-4 h-4" />
-          </button>
+          /> */}
 
-          {/* <button
+
+            {/* <button
             onClick={() => window.dispatchEvent(new CustomEvent("hostie-open-file"))}
             className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
           >
@@ -698,26 +713,26 @@ export function StandardUI({
           </button> */}
 
 
-          {/* <button
+            {/* <button
             onClick={() => document.getElementById("hostieFileInput")?.click()}
             className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
           >
             <Plus className="w-4 h-4" />
           </button> */}
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask your question"
-            className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
-          />
-          <button
-            onClick={sendMessage}
-            className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
-          >
-            <SendHorizonal className="w-4 h-4" />
-          </button>
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+              placeholder="Ask your question"
+              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
+            />
+            <button
+              onClick={sendMessage}
+              className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
+            >
+              <SendHorizonal className="w-4 h-4" />
+            </button>
         </div>
 
         <div className="text-center text-xs text-zinc-400 py-2">
