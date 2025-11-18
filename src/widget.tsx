@@ -2,6 +2,8 @@
 //   const hostRef = useRef<HTMLDivElement>(null);
 //   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
 
+
+
 //   useEffect(() => {
 //     if (!hostRef.current) return;
 //     if (shadow) return;
@@ -107,7 +109,6 @@ interface MountWidgetOptions {
   containerId?: string;
 }
 
-
 export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountWidgetOptions) {
   let host = document.getElementById(containerId);
   if (!host) {
@@ -124,7 +125,44 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
     </ThemeProvider>
   );
 }
+function ShadowWrapper({ children }: { children: React.ReactNode }) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [shadow, setShadow] = useState<ShadowRoot | null>(null);
 
+  useEffect(() => {
+    if (!hostRef.current || shadow) return;
+
+    const sr = hostRef.current.attachShadow({ mode: "open" });
+
+    const wrapper = document.createElement("div");
+    sr.appendChild(wrapper);
+
+    // inject CSS
+    const style = document.createElement("style");
+    style.textContent = chatCSS;
+    sr.appendChild(style);
+
+    setShadow(sr);
+
+    // auto detect website theme
+    const setTheme = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
+    };
+
+    setTheme(); // initial
+
+    const observer = new MutationObserver(setTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"]
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
+}
 
 // function ShadowWrapper({ children }: { children: React.ReactNode }) {
 //   const hostRef = useRef<HTMLDivElement>(null);
@@ -151,42 +189,45 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
 
 //   return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
 // }
-function ShadowWrapper({ children }: { children: React.ReactNode }) {
-  const hostRef = useRef<HTMLDivElement>(null);
-  const [shadow, setShadow] = useState<ShadowRoot | null>(null);
-  const { theme } = useTheme();
+// function ShadowWrapper({ children }: { children: React.ReactNode }) {
+//   const hostRef = useRef<HTMLDivElement>(null);
+//   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
+//   const { theme } = useTheme();
 
-  useEffect(() => {
-    if (!hostRef.current || shadow) return;
+//   useEffect(() => {
+//     if (!hostRef.current || shadow) return;
 
-    const sr = hostRef.current.attachShadow({ mode: "open" });
+//     const sr = hostRef.current.attachShadow({ mode: "open" });
 
-    // Create a wrapper inside Shadow DOM to hold children + theme
-    const wrapper = document.createElement("div");
-    wrapper.setAttribute("data-theme", theme || "light"); // ✅ critical
-    sr.appendChild(wrapper);
+//     // Create a wrapper inside Shadow DOM to hold children + theme
+//     const wrapper = document.createElement("div");
+//     wrapper.setAttribute("data-theme", theme || "light"); // ✅ critical
+//     sr.appendChild(wrapper);
 
-    // Inject Tailwind CSS
-    const style = document.createElement("style");
-    style.textContent = chatCSS;
-    sr.appendChild(style);
+//     // Inject Tailwind CSS
+//     const style = document.createElement("style");
+//     style.textContent = chatCSS;
+//     sr.appendChild(style);
 
-    setShadow(sr);
+//     setShadow(sr);
 
-  }, [shadow]);
+//   }, [shadow]);
 
-  // Update theme inside Shadow DOM when it changes
-  useEffect(() => {
-    if (!shadow) return;
-    const wrapper = shadow.querySelector("div");
-    if (wrapper) wrapper.setAttribute("data-theme", theme || "light");
-  }, [theme, shadow]);
+//   // Update theme inside Shadow DOM when it changes
+//   useEffect(() => {
+//     if (!shadow) return;
+//     const wrapper = shadow.querySelector("div");
+//     if (wrapper) wrapper.setAttribute("data-theme", theme || "light");
+//   }, [theme, shadow]);
 
-  return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
-}
+//   return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
+// }
 
 
 interface MountWidgetOptions {
   apiKey: string;
   containerId?: string;
 }
+
+
+
