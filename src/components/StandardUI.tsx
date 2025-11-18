@@ -19,11 +19,14 @@ type ChatMessage = {
   uploaded_documents?: any;
 };
 export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
-    return (
-        <ThemeProvider attribute="data-theme" defaultTheme="light">
-            <StandardUI apiKey={apiKey} />
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider attribute="class"
+      defaultTheme="light"
+      enableSystem={false}
+      disableTransitionOnChange>
+      <StandardUI apiKey={apiKey} />
+    </ThemeProvider>
+  );
 }
 //export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
@@ -57,7 +60,7 @@ export function StandardUI({
     sessionStorage.setItem("aiPaused", aiPaused.toString());
   }, [aiPaused]);
 
-      const { theme } = useTheme();
+  const { theme } = useTheme();
   useEffect(() => {
     console.log(theme);
   }, [theme]);
