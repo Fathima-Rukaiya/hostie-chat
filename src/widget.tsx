@@ -147,7 +147,13 @@ function ShadowWrapper({ children }: { children: React.ReactNode }) {
     // auto detect website theme
     const setTheme = () => {
       const isDark = document.documentElement.classList.contains("dark");
-      wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
+      // wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
+      if (isDark) {
+        wrapper.classList.add("dark");
+      } else {
+        wrapper.classList.remove("dark");
+      }
+
     };
 
     setTheme(); // initial
