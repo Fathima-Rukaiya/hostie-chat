@@ -20,9 +20,10 @@ type ChatMessage = {
 };
 export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
   return (
-    <ThemeProvider attribute="class"
-      defaultTheme="light"
-      enableSystem={false}
+    <ThemeProvider 
+      attribute="class"
+      defaultTheme="system"
+      enableSystem={true}
       disableTransitionOnChange>
       <StandardUI apiKey={apiKey} />
     </ThemeProvider>
