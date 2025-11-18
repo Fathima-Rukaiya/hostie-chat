@@ -506,7 +506,7 @@ export function StandardUI({
     <div className="fixed bottom-6 right-6 z-50" >
       <div
         id="hostie-chat-box"
-        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
+        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
