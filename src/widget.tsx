@@ -130,24 +130,21 @@ function ShadowWrapper({ children }: { children: React.ReactNode }) {
     const sr = hostRef.current.attachShadow({ mode: "open" });
 
     const style = document.createElement("style");
-    style.textContent = chatCSS;
+    style.textContent = chatCSS; // Tailwind compiled CSS
     sr.appendChild(style);
 
     setShadow(sr);
 
-    // DARK MODE: set attribute on hostRef.current
+    // DARK MODE
     const setTheme = (theme: "dark" | "light") => {
-      // This is key
-      hostRef.current!.setAttribute("data-theme", theme);
-      // Optional: also add class for Tailwind inside Shadow DOM
-      hostRef.current!.classList.toggle("dark", theme === "dark");
+      hostRef.current!.setAttribute("data-theme", theme); // <-- this is key
     };
 
-    // Initial theme
+    // Initial
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     setTheme(prefersDark ? "dark" : "light");
 
-    // Listen for changes
+    // Listen for OS theme changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
     mediaQuery.addEventListener("change", handleChange);
@@ -157,6 +154,7 @@ function ShadowWrapper({ children }: { children: React.ReactNode }) {
 
   return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
 }
+
 
 interface MountWidgetOptions {
   apiKey: string;
