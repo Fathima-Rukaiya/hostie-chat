@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Bot, FileText, Plus, SendHorizonal } from "lucide-react";
-import { User, Wanchain } from "iconsax-react";
+import { Bot, FileText, Plus, SendHorizonal, UserRound } from "lucide-react";
+//import {  Wanchain } from "iconsax-react";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -497,7 +497,7 @@ export function StandardUI({
         {/* Header */}
         <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700">
           <div className="flex items-center gap-2">
-            <Wanchain className="text-purple-600" variant="Bold" />
+            <Bot strokeWidth={1.75}  className="text-purple-600"  />
             <span className="font-semibold text-sm">Hostie</span>
             <span className="ml-1 h-2 w-2 rounded-full bg-green-500" />
             <span className="text-xs text-green-500">Online</span>
@@ -512,10 +512,10 @@ export function StandardUI({
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
           {chatHistory.length === 0 && (
             <div className="mt-10 flex flex-col items-center justify-center text-center">
-              <Wanchain
+              <Bot strokeWidth={1.75} 
                 size={60}
                 className="text-purple-600 dark:text-purple-600 mb-2"
-                variant="Bold"
+               
               />
               <div className="text-lg font-bold text-purple-600">
                 Hello, there...! 👋
@@ -534,9 +534,9 @@ export function StandardUI({
             >
               {msg.sender === "bot" && (
                 <div className="flex items-end relative">
-                  <Wanchain
+                 <Bot strokeWidth={1.75} 
                     className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
-                    variant="Bold"
+                  
                   />
                 </div>
               )}
@@ -628,7 +628,7 @@ export function StandardUI({
                 //   />
                 // </div>
                 <div className="flex-shrink-0 relative flex items-center justify-center bg-purple-600  rounded-full h-[30px] w-[30px]">
-                  <User size="18" className="text-gray-200" variant="Bold" />
+                  <UserRound  size="18" className="text-gray-200" />
                 </div>
               )}
             </div>
