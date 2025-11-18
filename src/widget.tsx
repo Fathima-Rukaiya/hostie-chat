@@ -42,7 +42,7 @@ interface MountWidgetOptions {
 
 
 
-export function mountWidget({ apiKey, containerId = "hostie-chat-root" }:MountWidgetOptions) {
+export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountWidgetOptions) {
   let host = document.getElementById(containerId);
 
   if (!host) {
@@ -81,3 +81,10 @@ function ShadowWrapper({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+interface MountWidgetOptions {
+  apiKey: string;
+  containerId?: string;
+}
+
+
