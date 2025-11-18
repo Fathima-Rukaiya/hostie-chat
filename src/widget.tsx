@@ -26,85 +26,144 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
     </ThemeProvider>
   );
 }
+// function ShadowWrapper({ children }: { children: React.ReactNode }) {
+//   const hostRef = useRef<HTMLDivElement>(null);
+//   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
+
+//   // useEffect(() => {
+//   //   if (!hostRef.current || shadow) return;
+
+//   //   const sr = hostRef.current.attachShadow({ mode: "open" });
+
+//   //   const wrapper = document.createElement("div");
+//   //   sr.appendChild(wrapper);
+
+//   //   // inject CSS
+//   //   const style = document.createElement("style");
+//   //   style.textContent = chatCSS;
+//   //   sr.appendChild(style);
+
+//   //   setShadow(sr);
+
+//   //   // auto detect website theme
+//   //   const setTheme = () => {
+//   //     const isDark = document.documentElement.classList.contains("dark");
+//   //     // wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
+//   //     if (isDark) {
+//   //       wrapper.classList.add("dark");
+//   //     } else {
+//   //       wrapper.classList.remove("dark");
+//   //     }
+
+//   //   };
+
+//   //   setTheme(); // initial
+
+//   //   const observer = new MutationObserver(setTheme);
+//   //   observer.observe(document.documentElement, {
+//   //     attributes: true,
+//   //     attributeFilter: ["class"]
+//   //   });
+
+//   //   return () => observer.disconnect();
+//   // }, []);
+// useEffect(() => {
+//   if (!hostRef.current || shadow) return;
+
+//   const sr = hostRef.current.attachShadow({ mode: "open" });
+
+//   const wrapper = document.createElement("div");
+//   sr.appendChild(wrapper);
+
+//   const style = document.createElement("style");
+//   style.textContent = chatCSS;
+//   sr.appendChild(style);
+
+//   setShadow(sr);
+
+//   // auto detect website theme
+//   const syncTheme = () => {
+//     const isDark = document.documentElement.classList.contains("dark");
+
+//     // FIX: Apply Tailwind dark class inside Shadow DOM
+//     if (isDark) {
+//       wrapper.classList.add("dark");
+//     } else {
+//       wrapper.classList.remove("dark");
+//     }
+//   };
+
+//   syncTheme(); // initial
+
+//   const observer = new MutationObserver(syncTheme);
+//   observer.observe(document.documentElement, {
+//     attributes: true,
+//     attributeFilter: ["class"],
+//   });
+
+//   return () => observer.disconnect();
+// }, []);
+
+//   return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
+// }
 function ShadowWrapper({ children }: { children: React.ReactNode }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
 
-  // useEffect(() => {
-  //   if (!hostRef.current || shadow) return;
+  useEffect(() => {
+    if (!hostRef.current || shadow) return;
 
-  //   const sr = hostRef.current.attachShadow({ mode: "open" });
+    const sr = hostRef.current.attachShadow({ mode: "open" });
 
-  //   const wrapper = document.createElement("div");
-  //   sr.appendChild(wrapper);
+    const wrapper = document.createElement("div");
+    sr.appendChild(wrapper);
 
-  //   // inject CSS
-  //   const style = document.createElement("style");
-  //   style.textContent = chatCSS;
-  //   sr.appendChild(style);
+    // Inject Tailwind CSS
+    const style = document.createElement("style");
+    style.textContent = chatCSS;
+    sr.appendChild(style);
 
-  //   setShadow(sr);
+    // ------------- FIX FOR FILE UPLOAD ------------- //
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.id = "hostie-file-input";
+    fileInput.style.display = "none";
+    sr.appendChild(fileInput);
 
-  //   // auto detect website theme
-  //   const setTheme = () => {
-  //     const isDark = document.documentElement.classList.contains("dark");
-  //     // wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
-  //     if (isDark) {
-  //       wrapper.classList.add("dark");
-  //     } else {
-  //       wrapper.classList.remove("dark");
-  //     }
+    // Listen for global event from ChatUI
+    const openFileHandler = () => fileInput.click();
+    window.addEventListener("hostie-open-file", openFileHandler);
+    // ------------------------------------------------ //
 
-  //   };
+    // Save shadow root
+    setShadow(sr);
 
-  //   setTheme(); // initial
+    // Sync website dark mode → Shadow DOM
+    const syncTheme = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      if (isDark) wrapper.classList.add("dark");
+      else wrapper.classList.remove("dark");
+    };
 
-  //   const observer = new MutationObserver(setTheme);
-  //   observer.observe(document.documentElement, {
-  //     attributes: true,
-  //     attributeFilter: ["class"]
-  //   });
+    syncTheme();
 
-  //   return () => observer.disconnect();
-  // }, []);
-useEffect(() => {
-  if (!hostRef.current || shadow) return;
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
-  const sr = hostRef.current.attachShadow({ mode: "open" });
+    return () => {
+      window.removeEventListener("hostie-open-file", openFileHandler);
+      observer.disconnect();
+    };
+  }, []);
 
-  const wrapper = document.createElement("div");
-  sr.appendChild(wrapper);
-
-  const style = document.createElement("style");
-  style.textContent = chatCSS;
-  sr.appendChild(style);
-
-  setShadow(sr);
-
-  // auto detect website theme
-  const syncTheme = () => {
-    const isDark = document.documentElement.classList.contains("dark");
-
-    // FIX: Apply Tailwind dark class inside Shadow DOM
-    if (isDark) {
-      wrapper.classList.add("dark");
-    } else {
-      wrapper.classList.remove("dark");
-    }
-  };
-
-  syncTheme(); // initial
-
-  const observer = new MutationObserver(syncTheme);
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["class"],
-  });
-
-  return () => observer.disconnect();
-}, []);
-
-  return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
+  return (
+    <div ref={hostRef}>
+      {shadow && createPortal(children, shadow.querySelector("div")!)}
+    </div>
+  );
 }
 
 interface MountWidgetOptions {
