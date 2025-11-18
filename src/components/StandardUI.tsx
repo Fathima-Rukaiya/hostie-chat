@@ -489,10 +489,10 @@ export function StandardUI({
   if (!showChat) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 ">
+    <div className="fixed bottom-6 right-6 z-50 bg-white dark:bg-neutral-600">
       <div
         id="hostie-chat-box"
-        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200 bg-white dark:bg-neutral-900 overflow-hidden"
+        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200  overflow-hidden"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700">

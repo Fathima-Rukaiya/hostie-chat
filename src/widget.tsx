@@ -1,3 +1,27 @@
+// function ShadowWrapper({ children }: { children: React.ReactNode }) {
+//   const hostRef = useRef<HTMLDivElement>(null);
+//   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
+
+//   useEffect(() => {
+//     if (!hostRef.current) return;
+//     if (shadow) return;
+
+//     const sr = hostRef.current.attachShadow({ mode: "open" });
+
+//     const style = document.createElement("style");
+//     style.textContent = chatCSS;
+//     sr.appendChild(style);
+
+//     setShadow(sr);
+//   }, []);
+
+//   return (
+//     <div ref={hostRef}>
+//       {shadow && createPortal(children, shadow)}
+//     </div>
+//   );
+// }
+
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { createPortal } from "react-dom";
@@ -27,29 +51,7 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
   );
 }
 
-// function ShadowWrapper({ children }: { children: React.ReactNode }) {
-//   const hostRef = useRef<HTMLDivElement>(null);
-//   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
 
-//   useEffect(() => {
-//     if (!hostRef.current) return;
-//     if (shadow) return;
-
-//     const sr = hostRef.current.attachShadow({ mode: "open" });
-
-//     const style = document.createElement("style");
-//     style.textContent = chatCSS;
-//     sr.appendChild(style);
-
-//     setShadow(sr);
-//   }, []);
-
-//   return (
-//     <div ref={hostRef}>
-//       {shadow && createPortal(children, shadow)}
-//     </div>
-//   );
-// }
 
 function ShadowWrapper({ children }: { children: React.ReactNode }) {
   const hostRef = useRef<HTMLDivElement>(null);
