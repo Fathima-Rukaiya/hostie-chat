@@ -227,31 +227,31 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
         verifyDomain();
     }, [apiKey]);
 
-    //   useEffect(() => {
-    //     function close(e: MouseEvent) {
-    //       if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
-    //         setIsOpen(false);
-    //       }
-    //     }
-    //     document.addEventListener("mousedown", close);
-    //     return () => document.removeEventListener("mousedown", close);
-    //   }, []);
+      useEffect(() => {
+        function close(e: MouseEvent) {
+          if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+            setIsOpen(false);
+          }
+        }
+        document.addEventListener("mousedown", close);
+        return () => document.removeEventListener("mousedown", close);
+      }, []);
 
-   const buttonRef = useRef<HTMLButtonElement>(null);
-const popupRef = useRef<HTMLDivElement>(null);
+//    const buttonRef = useRef<HTMLButtonElement>(null);
+// const popupRef = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      !buttonRef.current?.contains(e.target as Node) &&
-      !popupRef.current?.contains(e.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
+// useEffect(() => {
+//   const handleClickOutside = (e: MouseEvent) => {
+//     if (
+//       !buttonRef.current?.contains(e.target as Node) &&
+//       !popupRef.current?.contains(e.target as Node)
+//     ) {
+//       setIsOpen(false);
+//     }
+//   };
+//   document.addEventListener("mousedown", handleClickOutside);
+//   return () => document.removeEventListener("mousedown", handleClickOutside);
+// }, []);
 
 
 
@@ -269,16 +269,16 @@ useEffect(() => {
         <div className="fixed bottom-6 right-6 z-[9999]">
             <div ref={popoverRef}>
                 <button
-                 ref={buttonRef}
+                
                     onClick={() => setIsOpen(!isOpen)}
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
                     <Wanchain1 size={22} />
-                    <span className="font-semibold text-sm">Ask Hostie..!!</span>
+                    <span className="font-semibold text-sm">Ask Hostie!!</span>
                 </button>
 
                 {isOpen && (
-                    <div ref={popupRef}
+                    <div
                      className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl border border-gray-200 rounded-xl bg-white transition-all duration-200">
                         <StandardUI apiKey={apiKey} openAi={openAi} />
                     </div>
