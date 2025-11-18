@@ -520,9 +520,9 @@ export function StandardUI({
             <Bot size={12} className="text-zinc-600 dark:text-zinc-200" />
             <span className="ml-1 text-xs font-medium">AI</span>
           </div>
-          <div className="flex items-center px-1 py-0.5 rounded-md bg-purple-50 dark:bg-purple-800">
+          <div className="flex items-center px-2 py-0.5 rounded-md">
 
-            <span className="ml-1 text-xs font-medium"><button
+            <span className=" text-xs font-medium"><button
               onClick={() => setShowChat(false)}
               className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
             >
