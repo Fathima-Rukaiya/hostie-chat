@@ -19,6 +19,7 @@ type ChatMessage = {
   uploaded_documents?: any;
 };
 export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
+
   return (
     <ThemeProvider 
       attribute="class"
@@ -62,9 +63,7 @@ export function StandardUI({
   }, [aiPaused]);
 
   const { theme } = useTheme();
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
+  
   //
   //https://hostingate-client.vercel.app/sign-in
   const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
@@ -503,7 +502,7 @@ export function StandardUI({
   if (!showChat) return null;
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 ${theme}`}>
+    <div className="fixed bottom-6 right-6 z-50" >
       <div
         id="hostie-chat-box"
         className={`flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-200  overflow-hidden  transition-colors duration-300 ${theme === "dark" ? "bg-gray-900 border-neutral-700" : "bg-white border-zinc-200"}`}
