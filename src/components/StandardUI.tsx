@@ -20,10 +20,10 @@ type ChatMessage = {
 
 //export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
-  apiKey, openAi, }: {
+  apiKey,  }: {
     apiKey: string;
-    openAi?: string;
-  
+   
+
   }) {
 
 
@@ -45,7 +45,7 @@ export function StandardUI({
 
   const [userInfo, setUserInfo] = useState<{ name?: string; email?: string } | null>(null);
   const [askedForInfo, setAskedForInfo] = useState(false);
-const [showChat, setShowChat] = useState(true);
+  const [showChat, setShowChat] = useState(true);
 
   useEffect(() => {
     sessionStorage.setItem("aiPaused", aiPaused.toString());
@@ -267,7 +267,6 @@ const [showChat, setShowChat] = useState(true);
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-openai-key": openAi as string,
         "x-api-key": apiKey,
       },
       body: JSON.stringify({
@@ -287,7 +286,6 @@ const [showChat, setShowChat] = useState(true);
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-openai-key": openAi as string,
         "x-api-key": apiKey,
       },
       body: JSON.stringify({
@@ -488,7 +486,7 @@ const [showChat, setShowChat] = useState(true);
     }
   };
 
-if (!showChat) return null;
+  if (!showChat) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -508,15 +506,15 @@ if (!showChat) return null;
             <Bot size={12} className="text-zinc-600 dark:text-zinc-200" />
             <span className="ml-1 text-xs font-medium">AI</span>
           </div>
-          <div className="flex items-center px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-800">
+          <div className="flex items-center px-1 py-0.5 rounded-md bg-purple-50 dark:bg-purple-800">
 
             <span className="ml-1 text-xs font-medium"><button
-  onClick={() => setShowChat(false)}
-  className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white ml-3"
->
-  ✕
-</button>
-</span>
+              onClick={() => setShowChat(false)}
+              className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
+            >
+              ✕
+            </button>
+            </span>
           </div>
         </div>
 
