@@ -129,43 +129,79 @@ function ShadowWrapper({ children }: { children: React.ReactNode }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
 
-  useEffect(() => {
-    if (!hostRef.current || shadow) return;
+  // useEffect(() => {
+  //   if (!hostRef.current || shadow) return;
 
-    const sr = hostRef.current.attachShadow({ mode: "open" });
+  //   const sr = hostRef.current.attachShadow({ mode: "open" });
 
-    const wrapper = document.createElement("div");
-    sr.appendChild(wrapper);
+  //   const wrapper = document.createElement("div");
+  //   sr.appendChild(wrapper);
 
-    // inject CSS
-    const style = document.createElement("style");
-    style.textContent = chatCSS;
-    sr.appendChild(style);
+  //   // inject CSS
+  //   const style = document.createElement("style");
+  //   style.textContent = chatCSS;
+  //   sr.appendChild(style);
 
-    setShadow(sr);
+  //   setShadow(sr);
 
-    // auto detect website theme
-    const setTheme = () => {
-      const isDark = document.documentElement.classList.contains("dark");
-      // wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
-      if (isDark) {
-        wrapper.classList.add("dark");
-      } else {
-        wrapper.classList.remove("dark");
-      }
+  //   // auto detect website theme
+  //   const setTheme = () => {
+  //     const isDark = document.documentElement.classList.contains("dark");
+  //     // wrapper.setAttribute("data-theme", isDark ? "dark" : "light");
+  //     if (isDark) {
+  //       wrapper.classList.add("dark");
+  //     } else {
+  //       wrapper.classList.remove("dark");
+  //     }
 
-    };
+  //   };
 
-    setTheme(); // initial
+  //   setTheme(); // initial
 
-    const observer = new MutationObserver(setTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"]
-    });
+  //   const observer = new MutationObserver(setTheme);
+  //   observer.observe(document.documentElement, {
+  //     attributes: true,
+  //     attributeFilter: ["class"]
+  //   });
 
-    return () => observer.disconnect();
-  }, []);
+  //   return () => observer.disconnect();
+  // }, []);
+useEffect(() => {
+  if (!hostRef.current || shadow) return;
+
+  const sr = hostRef.current.attachShadow({ mode: "open" });
+
+  const wrapper = document.createElement("div");
+  sr.appendChild(wrapper);
+
+  const style = document.createElement("style");
+  style.textContent = chatCSS;
+  sr.appendChild(style);
+
+  setShadow(sr);
+
+  // auto detect website theme
+  const syncTheme = () => {
+    const isDark = document.documentElement.classList.contains("dark");
+
+    // FIX: Apply Tailwind dark class inside Shadow DOM
+    if (isDark) {
+      wrapper.classList.add("dark");
+    } else {
+      wrapper.classList.remove("dark");
+    }
+  };
+
+  syncTheme(); // initial
+
+  const observer = new MutationObserver(syncTheme);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+
+  return () => observer.disconnect();
+}, []);
 
   return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
 }
