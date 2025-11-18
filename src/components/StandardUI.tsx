@@ -24,7 +24,7 @@ export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
       attribute="class"
       defaultTheme="system"
       enableSystem={true}
-      disableTransitionOnChange>
+      >
       <StandardUI apiKey={apiKey} />
     </ThemeProvider>
   );
