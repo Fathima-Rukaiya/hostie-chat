@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Bot, FileText, Plus, SendHorizonal, UserRound } from "lucide-react";
+import { ThemeProvider, useTheme } from "next-themes";
 //import {  Wanchain } from "iconsax-react";
 
 type ChatMessage = {
@@ -17,12 +18,18 @@ type ChatMessage = {
   isTyping?: boolean;
   uploaded_documents?: any;
 };
-
+export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
+    return (
+        <ThemeProvider attribute="data-theme" defaultTheme="light">
+            <StandardUI apiKey={apiKey} />
+        </ThemeProvider>
+    );
+}
 //export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
-  apiKey, theme }: {
+  apiKey }: {
     apiKey: string;
-theme: "light" | "dark";
+
   }) {
 
 
@@ -50,7 +57,7 @@ theme: "light" | "dark";
     sessionStorage.setItem("aiPaused", aiPaused.toString());
   }, [aiPaused]);
 
-  
+      const { theme } = useTheme();
   useEffect(() => {
     console.log(theme);
   }, [theme]);

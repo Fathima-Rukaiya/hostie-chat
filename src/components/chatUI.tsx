@@ -257,13 +257,13 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
                     <Bot strokeWidth={1.75} size={22} />
-                    <span className="font-semibold text-sm">Ask Hostie9</span>
+                    <span className="font-semibold text-sm">Ask Hostie10</span>
                 </button>
 
                 {isOpen && (
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} theme={(theme as "light" | "dark") || "light"} />
+                        <StandardUI apiKey={apiKey}  />
                     </div>
                 )}
             </div>
