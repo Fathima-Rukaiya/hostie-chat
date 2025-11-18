@@ -120,7 +120,7 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
   );
 }
 
-export function ShadowWrapper({ children }: { children: React.ReactNode }) {
+function ShadowWrapper({ children }: { children: React.ReactNode }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
 
@@ -129,23 +129,25 @@ export function ShadowWrapper({ children }: { children: React.ReactNode }) {
 
     const sr = hostRef.current.attachShadow({ mode: "open" });
 
-    // Embed Tailwind CSS in Shadow DOM
     const style = document.createElement("style");
     style.textContent = chatCSS;
     sr.appendChild(style);
 
     setShadow(sr);
 
-    // DARK MODE LOGIC
+    // DARK MODE: set attribute on hostRef.current
     const setTheme = (theme: "dark" | "light") => {
+      // This is key
       hostRef.current!.setAttribute("data-theme", theme);
+      // Optional: also add class for Tailwind inside Shadow DOM
+      hostRef.current!.classList.toggle("dark", theme === "dark");
     };
 
-    // Set initial theme based on user preference
+    // Initial theme
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     setTheme(prefersDark ? "dark" : "light");
 
-    // Listen to system changes
+    // Listen for changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
     mediaQuery.addEventListener("change", handleChange);
@@ -155,6 +157,7 @@ export function ShadowWrapper({ children }: { children: React.ReactNode }) {
 
   return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
 }
+
 interface MountWidgetOptions {
   apiKey: string;
   containerId?: string;
