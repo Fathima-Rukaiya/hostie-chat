@@ -151,8 +151,7 @@ export function mountWidget({ apiKey, containerId = "hostie-chat-root" }: MountW
 
 //   return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
 // }
-
-export function ShadowWrapper({ children }: { children: React.ReactNode }) {
+function ShadowWrapper({ children }: { children: React.ReactNode }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [shadow, setShadow] = useState<ShadowRoot | null>(null);
   const { theme } = useTheme();
@@ -162,20 +161,28 @@ export function ShadowWrapper({ children }: { children: React.ReactNode }) {
 
     const sr = hostRef.current.attachShadow({ mode: "open" });
 
+    // Create a wrapper inside Shadow DOM to hold children + theme
+    const wrapper = document.createElement("div");
+    wrapper.setAttribute("data-theme", theme || "light"); // ✅ critical
+    sr.appendChild(wrapper);
+
+    // Inject Tailwind CSS
     const style = document.createElement("style");
-    style.textContent = chatCSS; // Tailwind compiled CSS
+    style.textContent = chatCSS;
     sr.appendChild(style);
 
     setShadow(sr);
+
   }, [shadow]);
 
-  // Update Shadow DOM with theme automatically
+  // Update theme inside Shadow DOM when it changes
   useEffect(() => {
-    if (!hostRef.current) return;
-    hostRef.current.setAttribute("data-theme", theme || "light");
-  }, [theme]);
+    if (!shadow) return;
+    const wrapper = shadow.querySelector("div");
+    if (wrapper) wrapper.setAttribute("data-theme", theme || "light");
+  }, [theme, shadow]);
 
-  return <div ref={hostRef}>{shadow && createPortal(children, shadow)}</div>;
+  return <div ref={hostRef}>{shadow && createPortal(children, shadow.querySelector("div")!)}</div>;
 }
 
 
