@@ -20,10 +20,9 @@ type ChatMessage = {
 
 //export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
-  apiKey,  }: {
+  apiKey, theme }: {
     apiKey: string;
-   
-
+theme: "light" | "dark";
   }) {
 
 
@@ -51,6 +50,10 @@ export function StandardUI({
     sessionStorage.setItem("aiPaused", aiPaused.toString());
   }, [aiPaused]);
 
+  
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
   //
   //https://hostingate-client.vercel.app/sign-in
   const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
