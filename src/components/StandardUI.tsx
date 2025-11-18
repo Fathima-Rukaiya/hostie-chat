@@ -18,18 +18,18 @@ type ChatMessage = {
   isTyping?: boolean;
   uploaded_documents?: any;
 };
-export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
+// export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
 
-  return (
-    <ThemeProvider 
-      attribute="class"
-      defaultTheme="system"
-      enableSystem={true}
-      >
-      <StandardUI apiKey={apiKey} />
-    </ThemeProvider>
-  );
-}
+//   return (
+//     <ThemeProvider 
+//       attribute="class"
+//       defaultTheme="system"
+//       enableSystem={true}
+//       >
+//       <StandardUI apiKey={apiKey} />
+//     </ThemeProvider>
+//   );
+// }
 //export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
   apiKey }: {
@@ -502,6 +502,11 @@ export function StandardUI({
   if (!showChat) return null;
 
   return (
+ <ThemeProvider 
+      attribute="class"
+      defaultTheme="system"
+      enableSystem={true}
+      >
     <div className="fixed bottom-6 right-6 z-50" >
       <div
         id="hostie-chat-box"
@@ -700,5 +705,7 @@ export function StandardUI({
         </div>
       </div>
     </div>
+
+       </ThemeProvider>
   );
 }
