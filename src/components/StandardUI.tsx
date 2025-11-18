@@ -63,7 +63,7 @@ export function StandardUI({
   }, [aiPaused]);
 
   const { theme } = useTheme();
-  
+
   //
   //https://hostingate-client.vercel.app/sign-in
   const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
@@ -424,6 +424,16 @@ export function StandardUI({
     }
   };
 
+  useEffect(() => {
+  const handleFile = (e: any) => {
+    const file = e.detail as File;
+    handleFileUpload(file);
+  };
+  window.addEventListener("hostie-file-selected", handleFile);
+  return () => window.removeEventListener("hostie-file-selected", handleFile);
+}, [roomName, senderId]);
+
+
   const handleFileUpload = async (file: File) => {
     if (!roomName || !senderId) {
       alert("provide your details First..!")
@@ -673,13 +683,20 @@ export function StandardUI({
               }
             }}
           />
-
           <button
-            onClick={() => document.getElementById("hostieFileInput")?.click()}
+            onClick={() => window.dispatchEvent(new CustomEvent("hostie-open-file"))}
             className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
           >
             <Plus className="w-4 h-4" />
           </button>
+
+
+          {/* <button
+            onClick={() => document.getElementById("hostieFileInput")?.click()}
+            className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
+          >
+            <Plus className="w-4 h-4" />
+          </button> */}
           <input
             type="text"
             value={message}
