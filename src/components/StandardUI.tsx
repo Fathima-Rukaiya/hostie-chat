@@ -738,7 +738,7 @@ export function StandardUI({
 
                   </strong>
                 </PopoverTrigger>
-                <PopoverContent  className="text-xs">
+                <PopoverContent container={shadowRoot} className="text-xs">
                   {/* <BecomepartnerCard/ > */}
                 </PopoverContent>
               </Popover>
