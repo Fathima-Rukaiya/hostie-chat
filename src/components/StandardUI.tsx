@@ -715,13 +715,13 @@ export function StandardUI({
                       <PopoverContent  container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700">
                         {msg.timestamps && (
                           <div className="flex flex-col gap-0.5">
-                            {msg.timestamps.sent && (
+                            {msg.timestamps.received && (
                               <div>Sent: {msg.timestamps.received}</div>
                             )}
-                            {msg.timestamps.delivered && (
+                            {msg.timestamps.received && (
                               <div>Delivered: {msg.timestamps.received}</div>
                             )}
-                            {msg.timestamps.read && (
+                            {msg.timestamps.received && (
                               <div>Read: {msg.timestamps.received}</div>
                             )}
                           </div>
