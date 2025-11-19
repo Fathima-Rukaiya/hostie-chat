@@ -586,7 +586,7 @@ export function StandardUI({
               )}
 
               <div
-                className={`px-3 py-2 rounded-xl max-w-[75%] text-sm shadow-sm break-words ${msg.sender === "user"
+                className={`px-3 py-2 rounded-xl max-w-[75%] text-sm shadow-sm break-words relative ${msg.sender === "user"
                   ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none"
                   : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none"
                   }`}
