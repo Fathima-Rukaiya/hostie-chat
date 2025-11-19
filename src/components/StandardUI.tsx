@@ -757,30 +757,60 @@ export function StandardUI({
 
                     {/* USER MESSAGE TIMESTAMPS WITH POPUP */}
                     {msg.sender === "user" && (msg.timestamps?.sent || msg.timestamps?.received) ? (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <span className="ml-1 text-[8px] opacity-70 cursor-pointer">
-                            {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                          </span>
-                        </PopoverTrigger>
+                      // <Popover>
+                      //   <PopoverTrigger asChild>
+                      //     <span className="ml-1 text-[8px] opacity-70 cursor-pointer">
+                      //       {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                      //     </span>
+                      //   </PopoverTrigger>
 
-                        <PopoverContent
-                          container={shadowContainer?.current?.getRootNode() as ShadowRoot}
-                          className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700 text-black dark:text-white"
+                      //   <PopoverContent
+                      //     container={shadowContainer?.current?.getRootNode() as ShadowRoot}
+                      //     className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700 text-black dark:text-white"
+                      //   >
+                      //     <div className="flex flex-col gap-0.5">
+                      //       {msg.timestamps.sent && (
+                      //         <div>Sent: {msg.timestamps.sent}</div>
+                      //       )}
+                      //       {msg.timestamps.received && (
+                      //         <div>Delivered: {msg.timestamps.received}</div>
+                      //       )}
+                      //       {msg.timestamps.read && (
+                      //         <div>Read: {msg.timestamps.read}</div>
+                      //       )}
+                      //     </div>
+                      //   </PopoverContent>
+                      // </Popover>
+                      <div className="relative group inline-block">
+                        {/* Time text */}
+                        <span className="ml-1 text-[8px] opacity-70 cursor-default">
+                          {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                        </span>
+
+                        {/* Tooltip */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1  text-xs p-1 rounded shadow-lg
+      border border-zinc-200 dark:border-neutral-700
+      bg-white dark:bg-neutral-800 text-black dark:text-white
+      whitespace-nowrap z-50
+      opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150
+    "
                         >
                           <div className="flex flex-col gap-0.5">
-                            {msg.timestamps.sent && (
-                              <div>Sent: {msg.timestamps.sent}</div>
+                            {msg.timestamps?.received || msg.timestamps.sent && (
+                              <div>Sent: {msg.timestamps.received || msg.timestamps.sent}</div>
                             )}
-                            {msg.timestamps.received && (
-                              <div>Delivered: {msg.timestamps.received}</div>
+
+                            {msg.timestamps?.received || msg.timestamps.sent && (
+                              <div>Delivered: {msg.timestamps.received || msg.timestamps.sent}</div>
                             )}
-                            {msg.timestamps.read && (
-                              <div>Read: {msg.timestamps.read}</div>
+
+                            {msg.timestamps?.received || msg.timestamps.sent && (
+                              <div>Read: {msg.timestamps.received || msg.timestamps.sent}</div>
                             )}
                           </div>
-                        </PopoverContent>
-                      </Popover>
+                        </div>
+                      </div>
+
                     ) : (
                       <span className="ml-1 text-[8px] opacity-70">
                         {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
