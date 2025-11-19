@@ -72,7 +72,7 @@ export function ChatUI({ apiKey,
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
                     <Bot strokeWidth={1.75} size={22} />
-                    <span className="font-semibold text-sm">Ask Hostie.</span>
+                    <span className="font-semibold text-sm">Ask Hostie.?</span>
                 </button>
 
                 {isOpen && (
