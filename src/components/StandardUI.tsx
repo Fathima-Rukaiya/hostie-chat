@@ -586,9 +586,9 @@ export function StandardUI({
               )}
 
               <div
-                className={`px-3 py-2 rounded-xl max-w-[75%] text-sm shadow-sm break-words relative ${msg.sender === "user"
-                  ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none"
-                  : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none"
+                className={`px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
+                  ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
+                  : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                   }`}
               >
                 {msg.isTyping ? (
@@ -640,23 +640,17 @@ export function StandardUI({
                       </div>
                     )}
 
-
+                    <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                      {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                    </span>
                   </div>
 
 
                 )}
                 {/* time stamp */}
 
-                {msg.sender === "user" && (
-                  // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                  //   {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                  // </span>
-                  <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                    {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                  </span>
 
-                )}
-                {msg.sender === "bot" && msg.timestamps?.received && (
+                {/* {msg.sender === "bot" && msg.timestamps?.received && (
                   // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
                   //   {msg.timestamps.received}
                   // </span>
@@ -664,7 +658,7 @@ export function StandardUI({
                     {msg.timestamps.received}
                   </span>
 
-                )}
+                )} */}
 
 
 
