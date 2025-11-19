@@ -573,12 +573,16 @@ export function StandardUI({
                 }`}
             >
               {msg.sender === "bot" && (
-                <div className="flex items-end relative">
-                  <Bot strokeWidth={1.75}
-                    className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
+                // <div className="flex items-end relative">
+                //   <Bot strokeWidth={1.75}
+                //     className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
 
-                  />
-                </div>
+                //   />
+                // </div>
+                 <div className="flex items-end relative">
+                      <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" />
+                      <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
+                    </div>
               )}
 
               <div
