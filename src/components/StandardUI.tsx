@@ -740,7 +740,7 @@ export function StandardUI({
 
               </strong>
             </PopoverTrigger>
-            <PopoverContent container={shadowContainer?.current} className="text-xs">
+            <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot}  className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
               {/* <BecomepartnerCard/ > */}
             </PopoverContent>
           </Popover>

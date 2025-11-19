@@ -265,7 +265,7 @@ export function ChatUI({ apiKey,
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
                     <Bot strokeWidth={1.75} size={22} />
-                    <span className="font-semibold text-sm">Ask Hostie4</span>
+                    <span className="font-semibold text-sm">Ask Hostie5</span>
                 </button>
 
                 {isOpen && (
@@ -276,35 +276,7 @@ export function ChatUI({ apiKey,
                 )}
             </div>
 
-            {/* <Popover>
-                <PopoverTrigger asChild>
-                    <button >Open popover</button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80">
-                    <div className="grid gap-4">
-                        <div className="space-y-2">
-                            <h4 className="leading-none font-medium">Dimensions</h4>
-                            <p className="text-muted-foreground text-sm">
-                                Set the dimensions for the layer.
-                            </p>
-                        </div>
-                        <div className="grid gap-2">
-                            <div className="grid grid-cols-3 items-center gap-4">
-                                kjk
-                            </div>
-                            <div className="grid grid-cols-3 items-center gap-4">
-                                kjkj
-                            </div>
-                            <div className="grid grid-cols-3 items-center gap-4">
-                                jkjkj
-                            </div>
-                            <div className="grid grid-cols-3 items-center gap-4">
-
-                            </div>
-                        </div>
-                    </div>
-                </PopoverContent>
-            </Popover> */}
+        
             {/* </ThemeProvider> */}
         </div>
 
