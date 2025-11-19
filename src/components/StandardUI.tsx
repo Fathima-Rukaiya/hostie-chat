@@ -33,10 +33,12 @@ type ChatMessage = {
 // }
 //export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
-  apiKey }: {
-    apiKey: string;
-
-  }) {
+  apiKey,
+  shadowContainer,
+}: {
+  apiKey: string;
+  shadowContainer?: React.RefObject<HTMLDivElement | null>;
+}) {
 
 
 
@@ -509,9 +511,9 @@ export function StandardUI({
       alert("Something went wrong while uploading. Please try again.");
     }
   };
- const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
- const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
+  const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
   if (!showChat) return null;
 
@@ -677,72 +679,72 @@ export function StandardUI({
 
         {/* Input */}
         <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 ">
-         
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="hidden"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  handleFileUpload(e.target.files[0]);
-                }
-              }}
-            />
 
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={(e) => {
+              if (e.target.files && e.target.files[0]) {
+                handleFileUpload(e.target.files[0]);
+              }
+            }}
+          />
 
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-              placeholder="Ask your question"
-              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
-            />
-            <button
-              onClick={sendMessage}
-              className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
-            >
-              <SendHorizonal className="w-4 h-4" />
-            </button>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
+          >
+            <Plus className="w-4 h-4" />
+          </button>
+
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+            placeholder="Ask your question"
+            className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
+          />
+          <button
+            onClick={sendMessage}
+            className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
+          >
+            <SendHorizonal className="w-4 h-4" />
+          </button>
         </div>
 
         <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
-              Hostie may produce inaccurate information
-            </div>
-            <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
-              Powered by{" "}
-              <Popover>
-                <PopoverTrigger>
-                  {" "}
-                  <strong>
+          Hostie may produce inaccurate information
+        </div>
+        <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
+          Powered by{" "}
+          <Popover>
+            <PopoverTrigger>
+              {" "}
+              <strong>
 
-                      <div className="flex items-center gap-1 hover:text-black">
-                        <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">&nbsp;Hostie</div>
-                        <div className="relative w-6 h-6 flex items-center justify-center">
-                          <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
-                          <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
-                          <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
-                          <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
-                          <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
-                          <span className="absolute text-xs text-gray-600 font-bold">
-                            AI
-                          </span>
-                        </div>
-                      </div>
+                <div className="flex items-center gap-1 hover:text-black">
+                  <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">&nbsp;Hostie</div>
+                  <div className="relative w-6 h-6 flex items-center justify-center">
+                    <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
+                    <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                    <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
+                    <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
+                    <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
+                    <span className="absolute text-xs text-gray-600 font-bold">
+                      AI
+                    </span>
+                  </div>
+                </div>
 
-                  </strong>
-                </PopoverTrigger>
-                <PopoverContent container={shadowRoot} className="text-xs">
-                  {/* <BecomepartnerCard/ > */}
-                </PopoverContent>
-              </Popover>
-            </div>
+              </strong>
+            </PopoverTrigger>
+            <PopoverContent container={shadowContainer?.current} className="text-xs">
+              {/* <BecomepartnerCard/ > */}
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
     </div>
   );

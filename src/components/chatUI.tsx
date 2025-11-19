@@ -201,7 +201,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 
 
-export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) {
+export function ChatUI({ apiKey,
+    shadowContainer,
+}: {
+    apiKey: string;
+    shadowContainer?: React.RefObject<HTMLDivElement | null>;
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const [isAllowed, setIsAllowed] = useState<boolean | null>(null);
@@ -266,7 +271,7 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
                 {isOpen && (
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} />
+                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} />
                     </div>
                 )}
             </div>
