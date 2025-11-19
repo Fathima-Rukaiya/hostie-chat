@@ -671,17 +671,19 @@ export function StandardUI({
                 // <div className="flex-shrink-0 relative flex items-center justify-center bg-purple-600  rounded-full h-[30px] w-[30px]">
                 //   <UserRound size="18" className="text-gray-200" />
                 // </div>
-                  <div className="flex-shrink-0 relative">
-                      {/* <img
+                <div className="flex-shrink-0 relative">
+                  {/* <img
                         src="/chat.png"
                         alt="user"
                         height={30}
                         width={30}
                         className="rounded-full object-cover h-[30px] w-[30px]"
                       /> */}
-                      <UserRound size="18" className="text-gray-200 rounded-full object-cover h-[30px] w-[30px]" />
-                      <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
-                    </div>
+                  <div className=" bg-purple-600 rounded-full h-[30px] w-[30px]">
+                    <UserRound size="18" className="text-gray-200" />
+                  </div>
+                  <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
+                </div>
               )}
             </div>
           ))}
@@ -752,7 +754,7 @@ export function StandardUI({
 
               </strong>
             </PopoverTrigger>
-            <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot}  className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
+            <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
               {/* <BecomepartnerCard/ > */}
             </PopoverContent>
           </Popover>
