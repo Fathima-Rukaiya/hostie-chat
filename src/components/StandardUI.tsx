@@ -1004,9 +1004,10 @@ export function StandardUI({
       border border-gray-200 dark:border-neutral-700 
       p-2 rounded-md shadow-md
       z-50
+      
     "
             >
-              Hover Popover Content
+             .....
             </div>
           </div>
 
