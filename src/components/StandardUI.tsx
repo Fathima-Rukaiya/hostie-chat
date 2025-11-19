@@ -57,6 +57,7 @@ export function StandardUI({
     return saved === "true"; // restore previous state
   });
 
+  const [openPopupIndex, setOpenPopupIndex] = useState<number | null>(null);
 
   const [userInfo, setUserInfo] = useState<{ name?: string; email?: string } | null>(null);
   const [askedForInfo, setAskedForInfo] = useState(false);
@@ -706,18 +707,41 @@ export function StandardUI({
                       </div>
                     )}
 
-                    {msg.sender === "user" && msg.timestamps?.received ? (
-                      // <span
-                      //   className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap cursor-default"
-                      //   title={
-                      //     msg.timestamps
-                      //       ? `Sent: ${msg.timestamps.sent || "-"}\nReceived: ${msg.timestamps.received || "-"}\nDelivered: ${msg.timestamps.delivered || "-"}\nRead: ${msg.timestamps.read || "-"}`
-                      //       : "Just now"
-                      //   }
-                      // >
-                      //   {msg.timestamps?.received || msg.timestamps?.sent || "Just now"}
-                      // </span>
 
+                    {msg.sender === "user" && msg.timestamps?.received ? (
+                      <>
+                        <span
+                          onClick={() =>
+                            setOpenPopupIndex(openPopupIndex === i ? null : i)
+                          }
+                          className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap cursor-pointer"
+                        >
+                          {msg.timestamps.received}
+                        </span>
+
+                        {openPopupIndex === i && (
+                          <div
+                            className="absolute z-50 mt-1 p-2 text-xs rounded-md shadow-md
+        bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700
+        text-black dark:text-white"
+                          >
+                            <div className="flex flex-col gap-0.5">
+                              <div>Sent: {msg.timestamps.received}</div>
+                              <div>Delivered: {msg.timestamps.received}</div>
+                              <div>Read: {msg.timestamps.received}</div>
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                        {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                      </span>
+                    )}
+
+
+                    {/* {msg.sender === "user" && msg.timestamps?.received ? (
+                    
                       <div className="relative group inline-block">
                         <span className="ml-1 text-[8px] opacity-70 cursor-default">
                           {msg.timestamps?.received || msg.timestamps?.sent || "Just now"}
@@ -728,10 +752,9 @@ export function StandardUI({
                   text-xs p-1 rounded shadow-lg border border-zinc-200 dark:border-neutral-700 whitespace-nowrap z-50">
                           {msg.timestamps && (
                             <div className="flex flex-col gap-0.5">
-                              {msg.timestamps.sent && <div>Sent: {msg.timestamps.sent}</div>}
-                              {msg.timestamps.received && <div>Received: {msg.timestamps.received}</div>}
-                              {msg.timestamps.delivered && <div>Delivered: {msg.timestamps.delivered}</div>}
-                              {msg.timestamps.read && <div>Read: {msg.timestamps.read}</div>}
+                              {msg.timestamps.received && <div>Sent: {msg.timestamps.received}</div>}
+                              {msg.timestamps.received && <div>Delivered: {msg.timestamps.received}</div>}
+                              {msg.timestamps.received && <div>Read: {msg.timestamps.received}</div>}
                             </div>
                           )}
                         </div>
@@ -761,12 +784,8 @@ export function StandardUI({
                       //       </div>
                       //     )}
                       //   </PopoverContent>
-                      // </Popover>
-                    ) : (
-                      <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                        {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                      </span>
-                    )}
+                      // </Popover>*/}
+
 
 
 
