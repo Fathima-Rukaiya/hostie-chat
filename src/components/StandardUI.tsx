@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Bot, FileText, Plus, SendHorizonal, UserRound } from "lucide-react";
+import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { PulsingBorder } from "@paper-design/shaders-react";
@@ -526,7 +526,7 @@ export function StandardUI({
         className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
+        {/* <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
           <div className="flex items-center gap-2">
             <Bot strokeWidth={1.75} className="text-purple-600" />
             <span className="font-semibold text-sm">Hostie</span>
@@ -546,6 +546,47 @@ export function StandardUI({
               ✕
             </button>
             </span>
+          </div>
+        </div> */}
+
+        <div className="flex items-center justify-between p-3 text-sm font-semibold">
+          <div className="flex items-center">
+            <BotMessageSquare className="mr-1.5" /> Hostie
+            <span
+              className="ml-2 h-2 w-2 rounded-full bg-green-500"
+              title="Online"
+            />
+            <span className="ml-1 text-xs text-green-500">Online</span>
+          </div>
+          <div className="flex gap-1">
+            <Popover>
+              <PopoverTrigger>
+                <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
+                  <LockIcon
+                    size="12"
+                    className="text-zinc-600 dark:text-zinc-200"
+                  />{" "}
+                  Premium
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="text-xs">
+                Upgrade to premium to customize your chat page logo and colors.
+              </PopoverContent>
+            </Popover>
+            <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
+              <Bot size="12" className="text-zinc-600 dark:text-zinc-200" />{" "}
+              AI
+            </div>
+            <div className="flex items-center px-2 py-0.5 rounded-md">
+
+              <span className=" text-xs font-medium"><button
+                onClick={() => setShowChat(false)}
+                className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
+              >
+                ✕
+              </button>
+              </span>
+            </div>
           </div>
         </div>
 
