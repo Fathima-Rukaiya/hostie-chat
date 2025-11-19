@@ -712,7 +712,7 @@ export function StandardUI({
                        </span>
                       
                       </PopoverTrigger>
-                      <PopoverContent  container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700">
+                      <PopoverContent  className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700 text-black dark:text-white">
                         {msg.timestamps && (
                           <div className="flex flex-col gap-0.5">
                             {msg.timestamps.received && (
