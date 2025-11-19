@@ -915,7 +915,7 @@ export function StandardUI({
         </div>
         <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
           Powered by{" "}
-          {/* <Popover>
+          <Popover>
             <PopoverTrigger>
               {" "}
               <strong>
@@ -938,45 +938,9 @@ export function StandardUI({
             </PopoverTrigger>
             <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
               {/* <BecomepartnerCard/ > */}
-          {/*} </PopoverContent>
-          </Popover> */}
-          <div className="relative group inline-block">
-            {/* Trigger */}
-            <strong>
-              <div className="flex items-center gap-1 hover:text-black cursor-default">
-                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
-                  &nbsp;Hostie
-                </div>
-
-                <div className="relative w-6 h-6 flex items-center justify-center">
-                  <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
-                  <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
-                  <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
-                  <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
-                  <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
-                  <span className="absolute text-xs text-gray-600 font-bold">AI</span>
-                </div>
-              </div>
-            </strong>
-
-            {/* Tooltip Content */}
-            <div
-              className="
-      absolute left-1/2 -translate-x-1/2 top-full mt-1
-      bg-white dark:bg-neutral-900
-      border dark:border-neutral-700
-      p-2 rounded shadow-lg z-50 text-xs
-      opacity-0 group-hover:opacity-100
-      pointer-events-none
-      transition-opacity duration-150
-    "
-            >
-              {/* Your content goes here */}
-              {/* <BecomepartnerCard /> */}
-              Tooltip content here…
-            </div>
-          </div>
-
+         </PopoverContent>
+          </Popover> 
+       
         </div>
       </div>
     </div>
