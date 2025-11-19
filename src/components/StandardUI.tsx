@@ -938,9 +938,48 @@ export function StandardUI({
             </PopoverTrigger>
             <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
               {/* <BecomepartnerCard/ > */}
-         </PopoverContent>
-          </Popover> 
-       
+            </PopoverContent>
+          </Popover>
+
+          <div className="relative group inline-block">
+            <strong>
+
+              <div className="flex items-center gap-1 hover:text-black">
+                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">&nbsp;Hostie</div>
+                <div className="relative w-6 h-6 flex items-center justify-center">
+                  <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
+                  <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                  <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
+                  <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
+                  <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
+                  <span className="absolute text-xs text-gray-600 font-bold">
+                    AI
+                  </span>
+                </div>
+              </div>
+
+            </strong>
+
+            {/* Popover content */}
+            <div
+              className="
+      absolute top-full left-0 mt-1
+      bg-white dark:bg-neutral-900
+      border border-neutral-200 dark:border-neutral-700
+      shadow-md
+      p-2 text-xs
+      opacity-0 group-hover:opacity-100
+      transition-opacity duration-150
+      pointer-events-none
+      z-50
+    "
+            >
+              {/* same as your PopoverContent — put anything here */}
+              Tooltip content here…
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
