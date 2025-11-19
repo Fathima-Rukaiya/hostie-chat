@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Bot, FileText, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { PulsingBorder } from "@paper-design/shaders-react";
 //import {  Wanchain } from "iconsax-react";
 
 type ChatMessage = {
@@ -551,19 +552,64 @@ export function StandardUI({
         {/* Chat area */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
           {chatHistory.length === 0 && (
-            <div className="mt-10 flex flex-col items-center justify-center text-center">
-              <Bot strokeWidth={1.75}
-                size={60}
-                className="text-purple-600 dark:text-purple-600 mb-2"
+            // <div className="mt-10 flex flex-col items-center justify-center text-center">
+            //   <Bot strokeWidth={1.75}
+            //     size={60}
+            //     className="text-purple-600 dark:text-purple-600 mb-2"
 
-              />
-              <div className="text-lg font-bold text-purple-600">
-                Hello, there...! 👋
-              </div>
-              <div className="mt-1 font-semibold text-gray-500 dark:text-gray-400 text-sm">
-                How can I help you today?
-              </div>
-            </div>
+            //   />
+            //   <div className="text-lg font-bold text-purple-600">
+            //     Hello, there...! 👋
+            //   </div>
+            //   <div className="mt-1 font-semibold text-gray-500 dark:text-gray-400 text-sm">
+            //     How can I help you today?
+            //   </div>
+            // </div>
+              <div className="mt-6 flex flex-col items-center justify-center">
+                  {/* <MessageCircle
+                    size="60"
+                    className="text-purple-600 dark:text-purple-600 mb-2"
+                  /> */}
+                  <PulsingBorder
+                    colors={[
+                      "#BEECFF",
+                      "#E77EDC",
+                      "#FF4C3E",
+                      "#00FF88",
+                      "#FFD700",
+                      "#FF6B35",
+                      "#8A2BE2",
+                    ]}
+                    colorBack="#00000000"
+                    speed={1.5}
+                    roundness={1}
+                    thickness={0.1}
+                    softness={0.2}
+                    intensity={5}
+                    spotSize={0.1}
+                    pulse={0.1}
+                    smoke={0.5}
+                    smokeSize={4}
+                    scale={0.65}
+                    rotation={0}
+                    frame={9161408.251009725}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
+                    Hello,&nbsp;<div>Choiseul!</div>
+                    <div className="ml-1 text-[22px]">👋</div>
+                  </div>
+                  <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
+                    How can I help you today?
+                  </div>
+                  <div className="text-center text-gray-400 text-sm mt-10">
+                    Start a conversation...
+                  </div>
+                </div>
           )}
 
           {chatHistory.map((msg, i) => (
