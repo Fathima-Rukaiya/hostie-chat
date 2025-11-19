@@ -511,6 +511,8 @@ export function StandardUI({
   };
  const fileInputRef = useRef<HTMLInputElement>(null);
 
+ const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
+
   if (!showChat) return null;
 
   return (
@@ -736,7 +738,7 @@ export function StandardUI({
 
                   </strong>
                 </PopoverTrigger>
-                <PopoverContent className="text-xs">
+                <PopoverContent  className="text-xs">
                   {/* <BecomepartnerCard/ > */}
                 </PopoverContent>
               </Popover>
