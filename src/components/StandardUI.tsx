@@ -579,15 +579,15 @@ export function StandardUI({
 
                 //   />
                 // </div>
-                 <div className="flex items-end relative">
-                      <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" />
-                      <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
-                    </div>
+                <div className="flex items-end relative">
+                  <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" />
+                  <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
+                </div>
               )}
 
               <div
-                className={`px-3 py-2 rounded-2xl max-w-[75%] text-sm shadow-sm break-words ${msg.sender === "user"
-                  ? "bg-purple-600 text-white rounded-br-none"
+                className={`px-3 py-2 rounded-xl max-w-[75%] text-sm shadow-sm break-words ${msg.sender === "user"
+                  ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none"
                   : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none"
                   }`}
               >
@@ -648,15 +648,24 @@ export function StandardUI({
                 {/* time stamp */}
 
                 {msg.sender === "user" && (
-                  <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                  // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                  //   {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                  // </span>
+                  <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
                     {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
                   </span>
+
                 )}
                 {msg.sender === "bot" && msg.timestamps?.received && (
-                  <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                  // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                  //   {msg.timestamps.received}
+                  // </span>
+                  <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
                     {msg.timestamps.received}
                   </span>
+
                 )}
+
 
 
 
