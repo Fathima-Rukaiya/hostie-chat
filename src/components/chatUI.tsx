@@ -251,8 +251,8 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
         // >
         <div className="fixed bottom-6 right-6 z-[9999]">
             {/* <div ref={popoverRef}> */}
-          
-            {/* <div ref={popoverRef} className="relative">
+
+            <div ref={popoverRef} className="relative">
 
                 <button
 
@@ -269,37 +269,37 @@ export function ChatUI({ apiKey, openAi }: { apiKey: string; openAi?: string }) 
                         <StandardUI apiKey={apiKey} />
                     </div>
                 )}
-            </div> */}
+            </div>
 
-             <Popover>
-      <PopoverTrigger asChild>
-        <button >Open popover</button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="leading-none font-medium">Dimensions</h4>
-            <p className="text-muted-foreground text-sm">
-              Set the dimensions for the layer.
-            </p>
-          </div>
-          <div className="grid gap-2">
-            <div className="grid grid-cols-3 items-center gap-4">
-              kjk
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-             kjkj
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-             jkjkj
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-             
-            </div>
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
+            {/* <Popover>
+                <PopoverTrigger asChild>
+                    <button >Open popover</button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80">
+                    <div className="grid gap-4">
+                        <div className="space-y-2">
+                            <h4 className="leading-none font-medium">Dimensions</h4>
+                            <p className="text-muted-foreground text-sm">
+                                Set the dimensions for the layer.
+                            </p>
+                        </div>
+                        <div className="grid gap-2">
+                            <div className="grid grid-cols-3 items-center gap-4">
+                                kjk
+                            </div>
+                            <div className="grid grid-cols-3 items-center gap-4">
+                                kjkj
+                            </div>
+                            <div className="grid grid-cols-3 items-center gap-4">
+                                jkjkj
+                            </div>
+                            <div className="grid grid-cols-3 items-center gap-4">
+
+                            </div>
+                        </div>
+                    </div>
+                </PopoverContent>
+            </Popover> */}
             {/* </ThemeProvider> */}
         </div>
 

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Bot, FileText, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 //import {  Wanchain } from "iconsax-react";
 
 type ChatMessage = {
@@ -693,32 +694,6 @@ export function StandardUI({
               <Plus className="w-4 h-4" />
             </button>
 
-            {/* <input
-            type="file"
-            id="hostieFileInput"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                handleFileUpload(e.target.files[0]);
-              }
-            }}
-          /> */}
-
-
-            {/* <button
-            onClick={() => window.dispatchEvent(new CustomEvent("hostie-open-file"))}
-            className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
-          >
-            <Plus className="w-4 h-4" />
-          </button> */}
-
-
-            {/* <button
-            onClick={() => document.getElementById("hostieFileInput")?.click()}
-            className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
-          >
-            <Plus className="w-4 h-4" />
-          </button> */}
             <input
               type="text"
               value={message}
@@ -735,9 +710,37 @@ export function StandardUI({
             </button>
         </div>
 
-        <div className="text-center text-xs text-zinc-400 py-2">
-          Hostie may produce inaccurate information
-        </div>
+        <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
+              Hostie may produce inaccurate information
+            </div>
+            <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
+              Powered by{" "}
+              <Popover>
+                <PopoverTrigger>
+                  {" "}
+                  <strong>
+
+                      <div className="flex items-center gap-1 hover:text-black">
+                        <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">&nbsp;Hostie</div>
+                        <div className="relative w-6 h-6 flex items-center justify-center">
+                          <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
+                          <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                          <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
+                          <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
+                          <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
+                          <span className="absolute text-xs text-gray-600 font-bold">
+                            AI
+                          </span>
+                        </div>
+                      </div>
+
+                  </strong>
+                </PopoverTrigger>
+                <PopoverContent className="text-xs">
+                  {/* <BecomepartnerCard/ > */}
+                </PopoverContent>
+              </Popover>
+            </div>
       </div>
     </div>
   );
