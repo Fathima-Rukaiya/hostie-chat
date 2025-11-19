@@ -700,9 +700,42 @@ export function StandardUI({
                       </div>
                     )}
 
-                    <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                      {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                    </span>
+                    {msg.sender === "user" && msg.timestamps?.received ? (
+                      // <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                      //   {msg.timestamps.received}
+                      // </span>
+                        <Popover>
+                      <PopoverTrigger asChild>
+                      
+                         <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                         {msg.timestamps.received}
+                       </span>
+                      
+                      </PopoverTrigger>
+                      <PopoverContent  container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700">
+                        {msg.timestamps && (
+                          <div className="flex flex-col gap-0.5">
+                            {msg.timestamps.sent && (
+                              <div>Sent: {msg.timestamps.received}</div>
+                            )}
+                            {msg.timestamps.delivered && (
+                              <div>Delivered: {msg.timestamps.received}</div>
+                            )}
+                            {msg.timestamps.read && (
+                              <div>Read: {msg.timestamps.received}</div>
+                            )}
+                          </div>
+                        )}
+                      </PopoverContent>
+                    </Popover>
+                    ) : (
+                      <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                        {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                      </span>
+                    )}
+
+
+
                   </div>
 
 
