@@ -972,10 +972,11 @@ export function StandardUI({
       transition-opacity duration-150
       pointer-events-none
       z-50
+      whitespace-nowrap
     "
             >
               {/* same as your PopoverContent — put anything here */}
-              Tooltip content here…
+             ...
             </div>
           </div>
 
