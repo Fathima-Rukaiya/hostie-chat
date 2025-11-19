@@ -915,7 +915,7 @@ export function StandardUI({
         </div>
         <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
           Powered by{" "}
-          <Popover>
+          {/* <Popover>
             <PopoverTrigger>
               {" "}
               <strong>
@@ -938,8 +938,8 @@ export function StandardUI({
             </PopoverTrigger>
             <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
               {/* <BecomepartnerCard/ > */}
-            </PopoverContent>
-          </Popover>
+           {/*} </PopoverContent>
+          </Popover> */}
 
           <div className="relative group inline-block">
             <strong>
