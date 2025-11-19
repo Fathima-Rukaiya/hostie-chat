@@ -679,7 +679,7 @@ export function StandardUI({
                         width={30}
                         className="rounded-full object-cover h-[30px] w-[30px]"
                       /> */}
-                  <div className=" bg-purple-600 rounded-full h-[30px] w-[30px]">
+                  <div className=" bg-purple-600 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
                     <UserRound size="18" className="text-gray-200" />
                   </div>
                   <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
