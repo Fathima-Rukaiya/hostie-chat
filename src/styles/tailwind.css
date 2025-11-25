@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+
   .markdown-body h1,
   .markdown-body h2,
   .markdown-body h3 {
@@ -29,4 +29,3 @@
     padding: 2px 4px;
     border-radius: 4px;
   }
-}

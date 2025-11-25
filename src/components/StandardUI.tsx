@@ -3,7 +3,6 @@ import './../styles/tailwind.css'
 
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
-import { ThemeProvider, useTheme } from "next-themes";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 //import { PulsingBorder } from "@paper-design/shaders-react";
 
