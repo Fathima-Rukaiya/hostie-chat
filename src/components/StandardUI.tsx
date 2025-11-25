@@ -1,10 +1,16 @@
 "use client";
+import './../styles/tailwind.css'
 
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { ThemeProvider, useTheme } from "next-themes";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { PulsingBorder } from "@paper-design/shaders-react";
+
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+
 //import {  Wanchain } from "iconsax-react";
 
 type ChatMessage = {
@@ -86,13 +92,18 @@ export function StandardUI({
   };
 
   // Usage in your StandardUI component
-  useEffect(() => {
-    getUserCountry().then(country => {
-      console.log("User country:", country);
-      // you can include it in guestData when saving contact
-    });
-  }, []);
+  // useEffect(() => {
+  //   getUserCountry().then(country => {
+  //     console.log("User country:", country);
+  //     // you can include it in guestData when saving contact
+  //   });
+  // }, []);
 
+  const [country, setCountry] = useState("Unknown");
+
+  useEffect(() => {
+    getUserCountry().then((c) => setCountry(c));
+  }, []);
 
   //
   //https://hostingate-client.vercel.app/sign-in
@@ -248,7 +259,7 @@ export function StandardUI({
 
 
 
-  const saveGuestContact = async (guestData: { name?: string; email?: string, room_id: string }) => {
+  const saveGuestContact = async (guestData: { name?: string; email?: string, room_id: string, country: string, }) => {
     const res = await fetch(`${API_BASE_URL}/saveContact`, {
       method: "POST",
       headers: {
@@ -368,8 +379,8 @@ export function StandardUI({
     if (askedForInfo && !userInfo) {
       if (roomName) {
         const guestData = message.includes("@")
-          ? { email: message, room_id: roomName }
-          : { name: message, room_id: roomName };
+          ? { email: message, room_id: roomName, country: country, }
+          : { name: message, room_id: roomName, country: country, };
         try {
           const savedGuest = await saveGuestContact(guestData);
           sessionStorage.setItem("guestContactId", savedGuest.id);
@@ -648,157 +659,22 @@ export function StandardUI({
                     <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-400" />
                   </div>
                 ) : (
-                  // <span>{msg.text}</span>
-                  <div>
-                    {msg.text && <span>{msg.text}</span>}
 
-                    {msg.uploaded_documents && (
-                      <div className="mt-2">
-                        {/\.(jpg|jpeg|png|gif)$/i.test(msg.uploaded_documents) ? (
-                          <a
-                            href={msg.uploaded_documents}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-200 text-xs"
-                          >
-                            <img
-                              src={msg.uploaded_documents}
-                              alt="Uploaded"
-                              width={180}
-                              height={120}
-                              className="rounded-lg border border-zinc-200 dark:border-neutral-700"
-                            />
-                          </a>
-                        ) :
-                          /\.(mp3|wav|ogg)$/i.test(msg.uploaded_documents) || msg.uploaded_documents.includes("audio") ? (
+                  msg.text &&
+                  //<span>{msg.text}</span>
 
-                            <audio controls className="mt-1 w-full">
-                              <source src={msg.uploaded_documents} />
-
-                            </audio>
-                          ) : (
-                            <a
-                              href={msg.uploaded_documents}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-200"
-                            >
-                              <div className="flex gap-2"> <FileText size={20} />View Document</div>
-
-                            </a>
-                          )}
-                      </div>
-                    )}
-
-                    {/* {msg.sender === "user" && msg.timestamps?.received ? (
-                    
-                      <div className="relative group inline-block">
-                        <span className="ml-1 text-[8px] opacity-70 cursor-default">
-                          {msg.timestamps?.received || msg.timestamps?.sent || "Just now"}
-                        </span>
-
-                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1   text-xs p-1 rounded shadow-lg border border-zinc-200 dark:border-neutral-700 whitespace-nowrap z-50">
-                          {msg.timestamps && (
-                            <div className="flex flex-col gap-0.5">
-                              {msg.timestamps.received && <div>Sent: {msg.timestamps.received}</div>}
-                              {msg.timestamps.received && <div>Delivered: {msg.timestamps.received}</div>}
-                              {msg.timestamps.received && <div>Read: {msg.timestamps.received}</div>}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-
-                      // <Popover>
-                      //   <PopoverTrigger asChild>
-
-                      //     <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                      //       {msg.timestamps.received}
-                      //     </span>
-
-                      //   </PopoverTrigger>
-                      //   <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700 text-black dark:text-white">
-                      //     {msg.timestamps && (
-                      //       <div className="flex flex-col gap-0.5">
-                      //         {msg.timestamps.received && (
-                      //           <div>Sent: {msg.timestamps.received}</div>
-                      //         )}
-                      //         {msg.timestamps.received && (
-                      //           <div>Delivered: {msg.timestamps.received}</div>
-                      //         )}
-                      //         {msg.timestamps.received && (
-                      //           <div>Read: {msg.timestamps.received}</div>
-                      //         )}
-                      //       </div>
-                      //     )}
-                      //   </PopoverContent>
-                      // </Popover>
+                  <div 
+                    key={i}
+                    className={`markdown-body message ${msg.sender === "user" ? "user" : "bot"}`}
+                  >
+                    {msg.sender === "bot" ? (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} >
+                        {msg.text}
+                      </ReactMarkdown>
                     ) : (
-                      <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                        {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                      </span>
-                    )} */}
-
-                    {/* USER MESSAGE TIMESTAMPS WITH POPUP */}
-                    {msg.sender === "user" && (msg.timestamps?.sent || msg.timestamps?.received) ? (
-                      // <Popover>
-                      //   <PopoverTrigger asChild>
-                      //     <span className="ml-1 text-[8px] opacity-70 cursor-pointer">
-                      //       {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                      //     </span>
-                      //   </PopoverTrigger>
-
-                      //   <PopoverContent
-                      //     container={shadowContainer?.current?.getRootNode() as ShadowRoot}
-                      //     className="w-max text-xs p-2 bg-white dark:bg-neutral-800 border border-zinc-200 dark:border-neutral-700 text-black dark:text-white"
-                      //   >
-                      //     <div className="flex flex-col gap-0.5">
-                      //       {msg.timestamps.sent && (
-                      //         <div>Sent: {msg.timestamps.sent}</div>
-                      //       )}
-                      //       {msg.timestamps.received && (
-                      //         <div>Delivered: {msg.timestamps.received}</div>
-                      //       )}
-                      //       {msg.timestamps.read && (
-                      //         <div>Read: {msg.timestamps.read}</div>
-                      //       )}
-                      //     </div>
-                      //   </PopoverContent>
-                      // </Popover>
-                      <div className="relative group inline-block">
-                        {/* Time text */}
-                        <span className="ml-1 text-[8px] opacity-70 cursor-default">
-                          {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                        </span>
-
-                        {/* Tooltip */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1  text-xs p-1 rounded shadow-lg border border-zinc-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-black dark:text-white whitespace-nowrap z-50 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150 "
-                        >
-                          <div className="flex flex-col gap-0.5">
-                            {msg.timestamps?.received || msg.timestamps.sent && (
-                              <div>Sent: {msg.timestamps.received || msg.timestamps.sent}</div>
-                            )}
-
-                            {msg.timestamps?.received || msg.timestamps.sent && (
-                              <div>Delivered: {msg.timestamps.received || msg.timestamps.sent}</div>
-                            )}
-
-                            {msg.timestamps?.received || msg.timestamps.sent && (
-                              <div>Read: {msg.timestamps.received || msg.timestamps.sent}</div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                    ) : (
-                      <span className="ml-1 text-[8px] opacity-70">
-                        {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                      </span>
+                      <div className="text">{msg.text}</div>
                     )}
-
-
                   </div>
-
 
                 )}
 

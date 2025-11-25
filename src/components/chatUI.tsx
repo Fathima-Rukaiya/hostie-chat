@@ -93,7 +93,7 @@ export function ChatUI({ apiKey,
                     //botIcon={botIcon} botName={botName}
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} />
+                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer}  />
                     </div>
                 )}
             </div>
