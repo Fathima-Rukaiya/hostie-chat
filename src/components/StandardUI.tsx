@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import ReactMarkdown from 'react-markdown';
+import Markdown from "react-markdown";
 // import './../styles/tailwind.css'
 // import './../styles/markdown.css';
 //import { PulsingBorder } from "@paper-design/shaders-react";
@@ -667,13 +668,19 @@ export function StandardUI({
                 ) : (
 
                   msg.text &&
+                  <div className="markdown-body">
+                    <Markdown>
+                      {msg.text}
+                    </Markdown>
+                  </div>
+
                   // <div className="prose prose-sm dark:prose-invert max-w-none">
                   //   <ReactMarkdown>{msg.text}</ReactMarkdown>
                   // </div>
 
-                  <div className="markdown-body prose prose-sm dark:prose-invert max-w-none">
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  </div>
+                  // <div className="markdown-body prose prose-sm dark:prose-invert max-w-none">
+                  //   <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  // </div>
 
 
 

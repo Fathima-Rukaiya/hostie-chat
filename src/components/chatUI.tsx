@@ -86,7 +86,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">hostie</span>
+                    <span className="font-semibold text-sm">hostie!</span>
                 </button>
 
                 {isOpen && (
