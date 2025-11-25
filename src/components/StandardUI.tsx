@@ -519,6 +519,7 @@ export function StandardUI({
 
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
+
   if (!showChat) return null;
 
   return (
@@ -671,13 +672,13 @@ export function StandardUI({
                   //     {msg.text}
                   //   </ReactMarkdown></div>
 
-                  <div className="markdown-body">
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  </div>
+                  // <div className="markdown-body">
+                  //   <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  // </div>
 
 
 
-                  // <span>{msg.text}</span>
+                  <span>{msg.text}</span>
 
                   /* <div
                         key={i}
