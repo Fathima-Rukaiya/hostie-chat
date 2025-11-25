@@ -360,7 +360,7 @@ export function StandardUI({
     //addUserMessage(messageText);
 
     //  Guest without info → ask info only
-    
+
     if (isGuest && !userInfo && !askedForInfo) {
       addUserMessage(messageText);
       setAskedForInfo(true);
@@ -551,11 +551,12 @@ export function StandardUI({
           <div className="flex items-center">
             {/* <BotMessageSquare className="mr-1.5" />*/}
             {botIcon ? (
+               <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
               <img
                 src={botIcon}
                 alt="Bot"
                 className="w-6 h-6 rounded-full object-cover"
-              />
+              /></div>
             ) : (
               <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
                 <BotMessageSquare size={20} />
@@ -587,7 +588,7 @@ export function StandardUI({
              */} <img
                 src={botIcon}
                 alt="Bot"
-                className="w-6 h-6 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
+                className="w-4 h-4 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
               />  {" "}
               AI
             </div>
@@ -633,7 +634,7 @@ export function StandardUI({
                 className="w-14 h-14 rounded-full object-cover mb-2"
               />
               <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
-                Hello,&nbsp;<div>{botName}</div>
+                Hello,&nbsp;<div>there...!</div>
                 <div className="ml-1 text-[22px]">👋</div>
               </div>
               <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
@@ -759,7 +760,7 @@ export function StandardUI({
         </div>
 
         <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
-          Hostie may produce inaccurate information
+          {botName} may produce inaccurate information
         </div>
         <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
           Powered by{" "}
