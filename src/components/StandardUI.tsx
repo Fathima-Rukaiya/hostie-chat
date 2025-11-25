@@ -661,9 +661,9 @@ export function StandardUI({
                 ) : (
 
                   msg.text &&
-                  //<span>{msg.text}</span>
+                  <span>{msg.text}</span>
 
-                  <div 
+                 /* <div 
                     key={i}
                     className={`markdown-body message ${msg.sender === "user" ? "user" : "bot"}`}
                   >
@@ -674,7 +674,7 @@ export function StandardUI({
                     ) : (
                       <div className="text">{msg.text}</div>
                     )}
-                  </div>
+                  </div>*/
 
                 )}
 
