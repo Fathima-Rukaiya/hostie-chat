@@ -666,7 +666,8 @@ export function StandardUI({
                   
                     msg.sender === "bot" ? (
                       <div className="markdown-body">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        <ReactMarkdown>
+                      {/*  remarkPlugins={[remarkGfm]}> */}
                         {msg.text}
                       </ReactMarkdown></div>
                     ) : (
