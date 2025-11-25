@@ -5,8 +5,8 @@ import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import ReactMarkdown from 'react-markdown';
-import './../styles/tailwind.css'
-import './../styles/markdown.css';
+// import './../styles/tailwind.css'
+// import './../styles/markdown.css';
 //import { PulsingBorder } from "@paper-design/shaders-react";
 
 //import ReactMarkdown from "react-markdown";
