@@ -1,13 +1,16 @@
 "use client";
-import './../styles/tailwind.css'
+
 
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import ReactMarkdown from 'react-markdown';
+import './../styles/tailwind.css'
+import './../styles/markdown.css';
 //import { PulsingBorder } from "@paper-design/shaders-react";
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+//import ReactMarkdown from "react-markdown";
+//import remarkGfm from "remark-gfm";
 //import dynamic from "next/dynamic";
 // const PulsingBorder = dynamic(
 //   () => import("@paper-design/shaders-react").then(mod => mod.PulsingBorder),
@@ -664,6 +667,15 @@ export function StandardUI({
                 ) : (
 
                   msg.text &&
+                  // <div className="prose prose-sm dark:prose-invert max-w-none">
+                  //   <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  // </div>
+
+                  <div className="markdown-body prose prose-sm dark:prose-invert max-w-none">
+                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  </div>
+
+
 
 
                   // <div className="markdown-body">
@@ -678,7 +690,7 @@ export function StandardUI({
 
 
 
-                  <span>{msg.text}</span>
+                  // <span>{msg.text}</span>
 
                   /* <div
                         key={i}
