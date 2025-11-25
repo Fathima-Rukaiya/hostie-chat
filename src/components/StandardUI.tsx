@@ -663,32 +663,34 @@ export function StandardUI({
                 ) : (
 
                   msg.text &&
-                  
-                    msg.sender === "bot" ? (
-                      <div className="markdown-body">
-                        <ReactMarkdown>
-                      {/*  remarkPlugins={[remarkGfm]}> */}
-                        {msg.text}
-                      </ReactMarkdown></div>
-                    ) : (
-                      <div className="text">{msg.text}</div>
-                    )
-                  
+
+
+                  // <div className="markdown-body">
+                  //   <ReactMarkdown
+                  //     remarkPlugins={[remarkGfm]}> 
+                  //     {msg.text}
+                  //   </ReactMarkdown></div>
+
+                  <div className="markdown-body">
+                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  </div>
+
+
 
                   // <span>{msg.text}</span>
 
-                  /* <div 
-                     key={i}
-                     className={`markdown-body message ${msg.sender === "user" ? "user" : "bot"}`}
-                   >
-                     {msg.sender === "bot" ? (
-                       <ReactMarkdown remarkPlugins={[remarkGfm]} >
-                         {msg.text}
-                       </ReactMarkdown>
-                     ) : (
-                       <div className="text">{msg.text}</div>
-                     )}
-                   </div>*/
+                  /* <div
+                        key={i}
+                        className={`markdown-body message ${msg.sender === "user" ? "user" : "bot"}`}
+                      >
+                        {msg.sender === "bot" ? (
+                          <ReactMarkdown remarkPlugins={[remarkGfm]} >
+                            {msg.text}
+                          </ReactMarkdown>
+                        ) : (
+                          <div className="text">{msg.text}</div>
+                        )}
+                      </div>*/
 
                 )}
 
@@ -727,7 +729,7 @@ export function StandardUI({
         </div>
 
         {/* Input */}
-        <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 ">
+        <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 " >
 
           <input
             type="file"
