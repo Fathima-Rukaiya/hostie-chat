@@ -18,6 +18,8 @@ export function ChatUI({ apiKey,
     const popoverRef = useRef<HTMLDivElement>(null);
     const [isAllowed, setIsAllowed] = useState<boolean | null>(null);
 
+    const [botName, setBotName] = useState("ChatBot");
+    const [botIcon, setBotIcon] = useState<string | null>(null);
 
     const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
@@ -37,6 +39,11 @@ export function ChatUI({ apiKey,
 
                 const data = await res.json();
                 setIsAllowed(data.allowed ?? false);
+
+                if (data.allowed) {
+                    setBotName(data.bot_name || "ChatBot");
+                    setBotIcon(data.bot_icon || null);
+                }
             } catch {
                 setIsAllowed(false);
             }
@@ -71,11 +78,18 @@ export function ChatUI({ apiKey,
                     onClick={() => setIsOpen(!isOpen)}
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-purple-600 bg-gradient-to-r from-purple-700 to-purple-500 text-white hover:from-purple-800 hover:to-purple-600"
                 >
-                    <Bot strokeWidth={1.75} size={22} />
-                    <span className="font-semibold text-sm">Ask Hostie</span>
+                    {/* <Bot strokeWidth={1.75} size={22} /> */}
+
+                    {botIcon ? (
+                        <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
+                    ) : (
+                        <Bot strokeWidth={1.75} size={22} />
+                    )}
+                    <span className="font-semibold text-sm">{botName}</span>
                 </button>
 
                 {isOpen && (
+                    //botIcon={botIcon} botName={botName}
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
                         <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} />
@@ -83,7 +97,7 @@ export function ChatUI({ apiKey,
                 )}
             </div>
 
-        
+
             {/* </ThemeProvider> */}
         </div>
 

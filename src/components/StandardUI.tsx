@@ -139,13 +139,6 @@ export function StandardUI({
           .filter((msg: any) => !msg.resolved && !msg.deleted)
           .map((msg: any) => ({
             sender: msg.sender_id || msg.guest_sender_id ? "user" : "bot",
-            // sender:
-            //   msg.sender_id || msg.guest_sender_id
-            //     ? "user"
-            //     : msg.is_admin
-            //       ? "bot"
-            //       : "bot",
-
             text: msg.message,
 
             uploaded_documents: msg.uploaded_documents || null,
@@ -167,35 +160,6 @@ export function StandardUI({
 
     fetchChatHistory();
   }, [roomName]);
-
-  // useEffect(() => {
-  //   const checkResolved = async () => {
-  //     if (!roomName) return;
-
-  //     const res = await fetch(`${API_BASE_URL}/checkResolved`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ room_id: roomName }),
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (data.resolved) {
-  //       setAiPaused(true);
-
-  //     } else {
-  //       setAiPaused(false);
-
-  //     }
-  //   };
-
-  //   checkResolved();
-  // }, [roomName]);
-
-
-
-
-  //ssseee
 
   useEffect(() => {
     if (!roomName) return;
@@ -788,12 +752,7 @@ export function StandardUI({
                         </span>
 
                         {/* Tooltip */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1  text-xs p-1 rounded shadow-lg
-      border border-zinc-200 dark:border-neutral-700
-      bg-white dark:bg-neutral-800 text-black dark:text-white
-      whitespace-nowrap z-50
-      opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150
-    "
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1  text-xs p-1 rounded shadow-lg border border-zinc-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-black dark:text-white whitespace-nowrap z-50 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150 "
                         >
                           <div className="flex flex-col gap-0.5">
                             {msg.timestamps?.received || msg.timestamps.sent && (
@@ -822,23 +781,7 @@ export function StandardUI({
 
 
                 )}
-                {/* time stamp */}
-
-
-                {/* {msg.sender === "bot" && msg.timestamps?.received && (
-                  // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                  //   {msg.timestamps.received}
-                  // </span>
-                  <span className="ml-1 text-[8px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                    {msg.timestamps.received}
-                  </span>
-
-                )} */}
-
-
-
-
-
+                
               </div>
 
               {msg.sender === "user" && (
@@ -915,66 +858,8 @@ export function StandardUI({
         </div>
         <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
           Powered by{" "}
-          {/* <Popover>
-            <PopoverTrigger>
-              {" "}
-              <strong>
 
-                <div className="flex items-center gap-1 hover:text-black">
-                  <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">&nbsp;Hostie</div>
-                  <div className="relative w-6 h-6 flex items-center justify-center">
-                    <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
-                    <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
-                    <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
-                    <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
-                    <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
-                    <span className="absolute text-xs text-gray-600 font-bold">
-                      AI
-                    </span>
-                  </div>
-                </div>
-
-              </strong>
-            </PopoverTrigger>
-            <PopoverContent container={shadowContainer?.current?.getRootNode() as ShadowRoot} className="text-xs bg-white dark:bg-neutral-900 border dark:border-neutral-700">
-              {/* <BecomepartnerCard/ > */}
-          {/* </PopoverContent>
-          </Popover>  */}
-
-
-          {/* <div className="relative group inline-block">
-
-            
-            <div className="flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer">
-              <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
-                &nbsp;Hostie
-              </div>
-
-              <div className="relative w-6 h-6 flex items-center justify-center">
-                <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60"></div>
-                <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
-                <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full top-1 right-1 opacity-60"></div>
-                <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full bottom-1 left-1 opacity-50"></div>
-                <div className="absolute w-2 h-0.5 bg-gray-400 dark:bg-gray-500 bottom-1.5 right-1 opacity-30"></div>
-                <span className="absolute text-xs text-gray-600 dark:text-gray-300 font-bold">AI</span>
-              </div>
-            </div>
-
-           
-            <div
-              className="
-      absolute left-0 mt-2 
-      hidden group-hover:block 
-      text-xs 
-      bg-white dark:bg-neutral-900 
-      border border-gray-200 dark:border-neutral-700 
-      p-2 rounded-md shadow-md
-      z-50
-    "
-            >
-              Hover Popover Content
-            </div>
-          </div> */}
+          {/* <BecomepartnerCard/ > */}
 
           <div className="relative group inline-block">
 
@@ -1007,7 +892,7 @@ export function StandardUI({
       
     "
             >
-             .....
+              .....
             </div>
           </div>
 
