@@ -672,7 +672,7 @@ export function StandardUI({
                   // </div>
 
                   <div className="markdown-body prose prose-sm dark:prose-invert max-w-none">
-                    {/* <ReactMarkdown></ReactMarkdown> */}{msg.text}
+                    <ReactMarkdown>{msg.text}</ReactMarkdown>
                   </div>
 
 
