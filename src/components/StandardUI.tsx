@@ -32,9 +32,13 @@ type ChatMessage = {
 export function StandardUI({
   apiKey,
   shadowContainer,
+  botIcon,
+  botName
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
+  botIcon: string,
+  botName: string
 }) {
 
 
@@ -356,10 +360,12 @@ export function StandardUI({
     //addUserMessage(messageText);
 
     //  Guest without info → ask info only
+    
     if (isGuest && !userInfo && !askedForInfo) {
       addUserMessage(messageText);
       setAskedForInfo(true);
-      const askMsg = "Before we continue, could you please share your name or email?";
+      // const askMsg = "Before we continue, could you please share your name or email?";
+      const askMsg = `👋 Hi! ${botName} here. Before we continue, could you share your name or email? I'd love to personalise the conversation for you.`;
       //addBotMessage(askMsg);
       await saveBotMessage(askMsg, senderId, apiKey,);
       return; // Don't save user message yet
@@ -543,7 +549,18 @@ export function StandardUI({
 
         <div className="flex items-center justify-between p-3 text-sm font-semibold">
           <div className="flex items-center">
-            <BotMessageSquare className="mr-1.5" /> Hostie
+            {/* <BotMessageSquare className="mr-1.5" />*/}
+            {botIcon ? (
+              <img
+                src={botIcon}
+                alt="Bot"
+                className="w-6 h-6 rounded-full object-cover"
+              />
+            ) : (
+              <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
+                <BotMessageSquare size={20} />
+              </div>
+            )} {botName}
             <span
               className="ml-2 h-2 w-2 rounded-full bg-green-500"
               title="Online"
@@ -566,7 +583,12 @@ export function StandardUI({
               </PopoverContent>
             </Popover>
             <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
-              <Bot size="12" className="text-zinc-600 dark:text-zinc-200" />{" "}
+              {/* <Bot size="12" className="text-zinc-600 dark:text-zinc-200" />
+             */} <img
+                src={botIcon}
+                alt="Bot"
+                className="w-6 h-6 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
+              />  {" "}
               AI
             </div>
             <div className="flex items-center px-2 py-0.5 rounded-md">
@@ -600,13 +622,18 @@ export function StandardUI({
             // </div>
             <div className="mt-6 flex flex-col items-center justify-center">
 
-              <Bot strokeWidth={1.75}
+              {/* <Bot strokeWidth={1.75}
                 size={60}
                 className="text-purple-600 dark:text-purple-600 mb-2"
 
+              /> */}
+              <img
+                src={botIcon}
+                alt="Bot Icon"
+                className="w-14 h-14 rounded-full object-cover mb-2"
               />
               <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
-                Hello,&nbsp;<div>xx!</div>
+                Hello,&nbsp;<div>{botName}</div>
                 <div className="ml-1 text-[22px]">👋</div>
               </div>
               <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
@@ -632,7 +659,12 @@ export function StandardUI({
                 //   />
                 // </div>
                 <div className="flex items-end relative" >
-                  <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" />
+                  {/* <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" /> */}
+                  <img
+                    src={botIcon}
+                    alt="Bot"
+                    className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-purple-600 dark:border-neutral-500"
+                  />
                   <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                 </div>
               )}
@@ -652,7 +684,7 @@ export function StandardUI({
                 ) : (
 
                   msg.text &&
-                   <span>{msg.text}</span>
+                  <span>{msg.text}</span>
                 )}
 
               </div>
