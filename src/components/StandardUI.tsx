@@ -1,23 +1,7 @@
 "use client";
-
-
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import ReactMarkdown from 'react-markdown';
-import Markdown from "react-markdown";
-// import './../styles/tailwind.css'
-// import './../styles/markdown.css';
-//import { PulsingBorder } from "@paper-design/shaders-react";
-
-//import ReactMarkdown from "react-markdown";
-//import remarkGfm from "remark-gfm";
-//import dynamic from "next/dynamic";
-// const PulsingBorder = dynamic(
-//   () => import("@paper-design/shaders-react").then(mod => mod.PulsingBorder),
-//   { ssr: false }
-// );
-//import {  Wanchain } from "iconsax-react";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -668,50 +652,7 @@ export function StandardUI({
                 ) : (
 
                   msg.text &&
-                  <div className="markdown-body">
-                    <Markdown>
-                      {msg.text}
-                    </Markdown>
-                  </div>
-
-                  // <div className="prose prose-sm dark:prose-invert max-w-none">
-                  //   <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  // </div>
-
-                  // <div className="markdown-body prose prose-sm dark:prose-invert max-w-none">
-                  //   <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  // </div>
-
-
-
-
-                  // <div className="markdown-body">
-                  //   <ReactMarkdown
-                  //     remarkPlugins={[remarkGfm]}> 
-                  //     {msg.text}
-                  //   </ReactMarkdown></div>
-
-                  // <div className="markdown-body">
-                  //   <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  // </div>
-
-
-
-                  // <span>{msg.text}</span>
-
-                  /* <div
-                        key={i}
-                        className={`markdown-body message ${msg.sender === "user" ? "user" : "bot"}`}
-                      >
-                        {msg.sender === "bot" ? (
-                          <ReactMarkdown remarkPlugins={[remarkGfm]} >
-                            {msg.text}
-                          </ReactMarkdown>
-                        ) : (
-                          <div className="text">{msg.text}</div>
-                        )}
-                      </div>*/
-
+                   <span>{msg.text}</span>
                 )}
 
               </div>
