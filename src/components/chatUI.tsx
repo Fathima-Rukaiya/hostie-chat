@@ -43,6 +43,7 @@ export function ChatUI({ apiKey,
                 if (data.allowed) {
                     setBotName(data.bot_name || "ChatBot");
                     setBotIcon(data.bot_icon || null);
+                    console.log(data.bot_name)
                 }
             } catch {
                 setIsAllowed(false);

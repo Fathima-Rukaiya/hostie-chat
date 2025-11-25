@@ -74,6 +74,26 @@ export function StandardUI({
     }
   }, [shadowContainer?.current]);
 
+  const getUserCountry = async () => {
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+      return data.country_name || data.country;
+    } catch (err) {
+      console.error("Failed to get country:", err);
+      return "Unknown";
+    }
+  };
+
+  // Usage in your StandardUI component
+  useEffect(() => {
+    getUserCountry().then(country => {
+      console.log("User country:", country);
+      // you can include it in guestData when saving contact
+    });
+  }, []);
+
+
   //
   //https://hostingate-client.vercel.app/sign-in
   const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
@@ -584,7 +604,7 @@ export function StandardUI({
 
               />
               <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
-                Hello,&nbsp;<div>Choiseul!</div>
+                Hello,&nbsp;<div>xx!</div>
                 <div className="ml-1 text-[22px]">👋</div>
               </div>
               <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
@@ -781,7 +801,7 @@ export function StandardUI({
 
 
                 )}
-                
+
               </div>
 
               {msg.sender === "user" && (
