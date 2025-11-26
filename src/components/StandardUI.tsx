@@ -562,13 +562,16 @@ inactivityTimer.current = null;
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
 const handleReviewSubmit = async () => {
-    console.log("guestId:", guestId);
-  console.log("click 12333");
+  
   // if (!guestId) {
   //   endChatSession();
   //   return;
   // }
-  const contactId = guestId || userInfo?.id; // fallback
+  const savedRoom = sessionStorage.getItem("room");     
+  const contactId = sessionStorage.getItem("guestContactId");
+    console.log("savedRoom:", savedRoom);
+     console.log("guestId:", guestId);
+  console.log("click 12333");
   if (!contactId) {
     endChatSession();
     return;
