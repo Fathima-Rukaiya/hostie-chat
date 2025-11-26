@@ -570,7 +570,7 @@ console.log("click clichh")
   const payload = {
     contact_id: guestId,
     sentiment: selectedSentiment,  // <-- only one column
-    review: reviewText || null     // optional
+    review: reviewText || "null"     // optional
   };
 
   try {
@@ -670,7 +670,8 @@ console.log("click clichh")
 
         <button
           className="bg-purple-600 text-white px-4 py-2 rounded-lg"
-          onClick={handleReviewSubmit}
+          // onClick={handleReviewSubmit}
+          onClick={() => { console.log("clicked!"); handleReviewSubmit(); }}
         >
           Submit
         </button>
