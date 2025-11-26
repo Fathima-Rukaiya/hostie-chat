@@ -562,6 +562,8 @@ inactivityTimer.current = null;
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
 const handleReviewSubmit = async () => {
+    console.log("guestId:", guestId);
+  console.log("click 12333");
   if (!guestId) {
     endChatSession();
     return;
