@@ -617,7 +617,7 @@ console.log("click clichh")
             <div className="flex gap-2 justify-center">
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                onClick={() => endChatSession()}
+                // onClick={() => endChatSession()}
               >
                 Yes, end
               </button>
