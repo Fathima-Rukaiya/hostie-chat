@@ -606,19 +606,20 @@ export function StandardUI({
       sentiment: selectedSentiment,  // <-- only one column
       review: reviewText || "null"     // optional
     };
+    console.log(payload);
 
-    try {
-      await fetch(`${API_BASE_URL}/saveReview`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey
-        },
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      console.error("Review save failed:", err);
-    }
+    // try {
+    //   await fetch(`${API_BASE_URL}/saveReview`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "x-api-key": apiKey
+    //     },
+    //     body: JSON.stringify(payload)
+    //   });
+    // } catch (err) {
+    //   console.error("Review save failed:", err);
+    // }
 
     setShowReviewPopup(false);
     endChatSession();
