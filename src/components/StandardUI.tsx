@@ -56,61 +56,62 @@ export function StandardUI({
   // let inactivityTimer: any = null;
   // let popupTimer: any = null;
   const inactivityTimer = useRef<any>(null);
-const popupTimer = useRef<any>(null);
+  const popupTimer = useRef<any>(null);
 
 
-// for review
-const [selectedSentiment, setSelectedSentiment] = useState<"positive" | "neutral" | "negative" | null>(null);
-const [reviewText, setReviewText] = useState("");
-const [showReviewPopup, setShowReviewPopup] = useState(false);
+  // for review
+  const [selectedSentiment, setSelectedSentiment] = useState<"positive" | "neutral" | "negative" | null>(null);
+  const [reviewText, setReviewText] = useState("");
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
 
 
 
   useEffect(() => {
-    resetInactivityTimer();
-    return () => clearTimeout(popupTimer.current);
-;
+    if (chatHistory.length > 1) {
+      resetInactivityTimer();
+      return () => clearTimeout(popupTimer.current);
+    }
   }, [lastActivity]);
 
-const resetInactivityTimer = () => {
-  clearTimeout(inactivityTimer.current);
-inactivityTimer.current = null;
-  inactivityTimer.current = setTimeout(() => {
-    setShowEndPopup(true);
+  const resetInactivityTimer = () => {
+    clearTimeout(inactivityTimer.current);
+    inactivityTimer.current = null;
+    inactivityTimer.current = setTimeout(() => {
+      setShowEndPopup(true);
 
-    // Auto-end after 30s
-    popupTimer.current = setTimeout(() => {
-      endChatSession();
-    }, 9000);
+      // Auto-end after 30s
+      popupTimer.current = setTimeout(() => {
+        endChatSession();
+      }, 9000);
 
-  }, 10* 1000); // 4 minutes
-};
+    }, 10 * 1000); // 4 minutes
+  };
 
 
   const endChatSession = () => {
- clearTimeout(inactivityTimer.current);
-  clearTimeout(popupTimer.current);
-  setShowReviewPopup(true);
+    clearTimeout(inactivityTimer.current);
+    clearTimeout(popupTimer.current);
+    // setShowReviewPopup(true);
 
-  // remove session
-  sessionStorage.removeItem("guestContactId");
-  sessionStorage.removeItem("room");
+    // remove session
+    //sessionStorage.removeItem("guestContactId");
+    //  sessionStorage.removeItem("room");
 
-  setShowEndPopup(false);
-  setChatHistory([]);
-  setGuestId("");
-  setSenderId(null);
-  setRoomName(null);
-  setIsGuest(true);
-  setUserInfo(null);
-  setAskedForInfo(false);
+    setShowEndPopup(false);
+    setChatHistory([]);
+    setGuestId("");
+    setSenderId(null);
+    setRoomName(null);
+    setIsGuest(true);
+    setUserInfo(null);
+    setAskedForInfo(false);
 
-  // create new room id
-  const newRoom = crypto.randomUUID();
-  setRoomName(newRoom);
+    // create new room id
+    const newRoom = crypto.randomUUID();
+    setRoomName(newRoom);
 
-  addBotMessage("Your previous chat has ended due to inactivity. How can I assist you now?");
-};
+    addBotMessage("Your previous chat has ended due to inactivity. How can I assist you now?");
+  };
 
 
 
@@ -156,7 +157,7 @@ inactivityTimer.current = null;
     const setupRoom = async () => {
       try {
         const guestContactId = sessionStorage.getItem("guestContactId");
-        resetInactivityTimer(); 
+        resetInactivityTimer();
 
         const savedRoom = sessionStorage.getItem("room");
         const savedGuestId = sessionStorage.getItem("guestContactId");
@@ -397,7 +398,7 @@ inactivityTimer.current = null;
 
   const sendMessage = async () => {
     if (!message.trim()) return;
-  resetInactivityTimer(); 
+    resetInactivityTimer();
     const messageText = message.trim();
     setMessage("");
 
@@ -561,44 +562,59 @@ inactivityTimer.current = null;
 
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
-const handleReviewSubmit = async (roomNo:string,contactno:string) => {
-  
-  // if (!guestId) {
-  //   endChatSession();
-  //   return;
-  // }
-  const savedRoom = sessionStorage.getItem("room");     
-  const contactId = sessionStorage.getItem("guestContactId");
-    console.log("savedRoom:", roomNo);
-     console.log("guestId:", contactno);
-  console.log("click 12333");
-  if (!contactId) {
+  const handleReviewSubmit = async () => {
+
+    // if (!guestId) {
+    //   endChatSession();
+    //   return;
+    // }
+    // const contactId = sessionStorage.getItem("guestContactId");
+    // const room = sessionStorage.getItem("room");
+
+    // if (!contactId || !room) {
+    //   // fallback, end chat if missing
+    //   endChatSession();
+    //   return;
+    // }
+
+      const contactId = sessionStorage.getItem("guestContactId");
+  const room = sessionStorage.getItem("room");
+
+  if (!contactId || !room) {
+    setShowReviewPopup(false);
     endChatSession();
     return;
   }
-console.log("click clichh")
-  const payload = {
-    contact_id: guestId,
-    sentiment: selectedSentiment,  // <-- only one column
-    review: reviewText || "null"     // optional
+    console.log("savedRoom:", room);
+    console.log("guestId:", contactId);
+    console.log("click 12333");
+    if (!contactId) {
+      endChatSession();
+      return;
+    }
+    console.log("click clichh")
+    const payload = {
+      contact_id: guestId,
+      sentiment: selectedSentiment,  // <-- only one column
+      review: reviewText || "null"     // optional
+    };
+
+    try {
+      await fetch(`${API_BASE_URL}/saveReview`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error("Review save failed:", err);
+    }
+
+    setShowReviewPopup(false);
+    endChatSession();
   };
-
-  try {
-    await fetch(`${API_BASE_URL}/saveReview`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey
-      },
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    console.error("Review save failed:", err);
-  }
-
-  setShowReviewPopup(false);
-  endChatSession();
-};
 
 
 
@@ -618,12 +634,21 @@ console.log("click clichh")
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded-lg"
                 // onClick={() => endChatSession()}
+                onClick={() => {
+                  setShowEndPopup(false);
+                  setShowReviewPopup(true); // only now ask for review
+                }}
               >
                 Yes, end
               </button>
 
               <button
                 className="bg-gray-300 dark:bg-gray-600 text-black dark:text-white px-4 py-2 rounded-lg"
+                // onClick={() => {
+                //   clearTimeout(popupTimer.current);
+                //   setShowEndPopup(false);
+                //   resetInactivityTimer();
+                // }}
                 onClick={() => {
                   clearTimeout(popupTimer.current);
                   setShowEndPopup(false);
@@ -638,57 +663,58 @@ console.log("click clichh")
       )}
 
       {showReviewPopup && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
-    <div className="bg-white dark:bg-neutral-800 p-5 rounded-xl text-center shadow-xl w-80">
-      <h3 className="font-semibold text-lg mb-2">Share your experience</h3>
-      <p className="text-sm mb-4">How was your chat today?</p>
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
+          <div className="bg-white dark:bg-neutral-800 p-5 rounded-xl text-center shadow-xl w-80">
+            <h3 className="font-semibold text-lg mb-2">Share your experience</h3>
+            <p className="text-sm mb-4">How was your chat today?</p>
 
-      <div className="flex justify-center gap-4 mb-4">
-        <button 
-          onClick={() => setSelectedSentiment("positive")}
-          className={selectedSentiment==="positive" ? "scale-125" : ""}
-        >😊</button>
+            <div className="flex justify-center gap-4 mb-4">
+              <button
+                onClick={() => setSelectedSentiment("positive")}
+                className={selectedSentiment === "positive" ? "scale-125" : ""}
+              >😊</button>
 
-        <button 
-          onClick={() => setSelectedSentiment("neutral")}
-          className={selectedSentiment==="neutral" ? "scale-125" : ""}
-        >😐</button>
+              <button
+                onClick={() => setSelectedSentiment("neutral")}
+                className={selectedSentiment === "neutral" ? "scale-125" : ""}
+              >😐</button>
 
-        <button 
-          onClick={() => setSelectedSentiment("negative")}
-          className={selectedSentiment==="negative" ? "scale-125" : ""}
-        >😞</button>
-      </div>
+              <button
+                onClick={() => setSelectedSentiment("negative")}
+                className={selectedSentiment === "negative" ? "scale-125" : ""}
+              >😞</button>
+            </div>
 
-      <textarea
-        className="w-full p-2 rounded-lg border dark:bg-neutral-700"
-        placeholder="Write a review (optional)"
-        value={reviewText}
-        onChange={(e) => setReviewText(e.target.value)}
-      ></textarea>
+            <textarea
+              className="w-full p-2 rounded-lg border dark:bg-neutral-700"
+              placeholder="Write a review (optional)"
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            ></textarea>
 
-      <div className="flex justify-center gap-2 mt-4">
-        <button
-          className="bg-gray-400 text-white px-4 py-2 rounded-lg"
-          onClick={() => {
-            setShowReviewPopup(false);
-             // Skip review
-          }}
-        >
-          Skip
-        </button>
+            <div className="flex justify-center gap-2 mt-4">
+              <button
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg"
+                onClick={() => {
+                  setShowReviewPopup(false);
+                  endChatSession(); 
+                  // Skip review
+                }}
+              >
+                Skip
+              </button>
 
-        <button
-          className="bg-purple-600 text-white px-4 py-2 rounded-lg"
-          // onClick={handleReviewSubmit}
-          onClick={() => { console.log("clicked!"); handleReviewSubmit(roomName||"",senderId||""); }}
-        >
-          Submit
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+              <button
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+                // onClick={handleReviewSubmit}
+                onClick={handleReviewSubmit}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
 
@@ -758,8 +784,8 @@ console.log("click clichh")
                 </PopoverContent>
               </Popover>
               <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
-               <Sparkles  size="12" className="text-zinc-600 dark:text-zinc-200" />
-             {/* <img
+                <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
+                {/* <img
                   src={botIcon}
                   alt="Bot"
                   className="w-4 h-4 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
@@ -986,6 +1012,6 @@ console.log("click clichh")
           </div>
         </div>
       </div>
-      </>
-      );
+    </>
+  );
 }
