@@ -66,12 +66,20 @@ export function StandardUI({
 
 
 
+  // useEffect(() => {
+  //   if (chatHistory.length > 1) {
+  //     resetInactivityTimer();
+  //     return () => clearTimeout(popupTimer.current);
+  //   }
+  // }, [lastActivity]);
+
   useEffect(() => {
-    if (chatHistory.length > 1) {
-      resetInactivityTimer();
-      return () => clearTimeout(popupTimer.current);
-    }
-  }, [lastActivity]);
+  if (chatHistory.length > 0) { // Start AFTER first message
+    resetInactivityTimer();
+  }
+  return () => clearTimeout(popupTimer.current);
+}, [lastActivity]);
+
 
   const resetInactivityTimer = () => {
     clearTimeout(inactivityTimer.current);
@@ -157,7 +165,7 @@ export function StandardUI({
     const setupRoom = async () => {
       try {
         const guestContactId = sessionStorage.getItem("guestContactId");
-        resetInactivityTimer();
+       // resetInactivityTimer();
 
         const savedRoom = sessionStorage.getItem("room");
         const savedGuestId = sessionStorage.getItem("guestContactId");
