@@ -566,7 +566,7 @@ const handleReviewSubmit = async () => {
     endChatSession();
     return;
   }
-
+console.log("click clichh")
   const payload = {
     contact_id: guestId,
     sentiment: selectedSentiment,  // <-- only one column
