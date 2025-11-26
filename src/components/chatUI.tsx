@@ -41,7 +41,11 @@ export function ChatUI({ apiKey,
                 setIsAllowed(data.allowed ?? false);
 
                 if (data.allowed) {
-                    setBotName(data.bot_name || "ChatBot");
+
+                    const name = data.bot_name || "ChatBot";
+                    const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+                    setBotName(capitalizedName);
+                    setBotName(capitalizedName || "ChatBot");
                     setBotIcon(data.bot_icon || null);
                     console.log(data.bot_name)
                 }
@@ -86,14 +90,14 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}</span>
+                    <span className="font-semibold text-sm">Ask {botName}!</span>
                 </button>
 
                 {isOpen && (
                     // {botName}
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon||""} botName={botName}  />
+                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} />
                     </div>
                 )}
             </div>

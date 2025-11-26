@@ -90,7 +90,8 @@ inactivityTimer.current = null;
   const endChatSession = () => {
  clearTimeout(inactivityTimer.current);
   clearTimeout(popupTimer.current);
-    setShowReviewPopup(true);
+    //setShowReviewPopup(true);
+    
   // remove session
   sessionStorage.removeItem("guestContactId");
   sessionStorage.removeItem("room");
@@ -661,7 +662,7 @@ const handleReviewSubmit = async () => {
           className="bg-gray-400 text-white px-4 py-2 rounded-lg"
           onClick={() => {
             setShowReviewPopup(false);
-            endChatSession(); // Skip review
+             // Skip review
           }}
         >
           Skip
