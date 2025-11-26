@@ -90,9 +90,9 @@ export function StandardUI({
       // Auto-end after 30s
       popupTimer.current = setTimeout(() => {
         endChatSession();
-      }, 9000);
+      }, 30 * 1000);
 
-    }, 10 * 1000); // 4 minutes
+    },  4 * 60 * 1000); // 4 minutes
   };
 
 
