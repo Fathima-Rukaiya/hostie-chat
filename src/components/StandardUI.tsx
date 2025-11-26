@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, Sparkles, UserRound } from "lucide-react";
+import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizonal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ChatMessage = {
@@ -608,18 +608,18 @@ export function StandardUI({
     };
     console.log(payload);
 
-    // try {
-    //   await fetch(`${API_BASE_URL}/saveReview`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "x-api-key": apiKey
-    //     },
-    //     body: JSON.stringify(payload)
-    //   });
-    // } catch (err) {
-    //   console.error("Review save failed:", err);
-    // }
+    try {
+      await fetch(`${API_BASE_URL}/saveReview`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error("Review save failed:", err);
+    }
 
     setShowReviewPopup(false);
     endChatSession();
@@ -681,17 +681,17 @@ export function StandardUI({
               <button
                 onClick={() => setSelectedSentiment("positive")}
                 className={selectedSentiment === "positive" ? "scale-125" : ""}
-              >😊</button>
+              ><Laugh size={48} color="#22c55e" /></button>
 
               <button
                 onClick={() => setSelectedSentiment("neutral")}
                 className={selectedSentiment === "neutral" ? "scale-125" : ""}
-              >😐</button>
+              ><Meh size={48} color="#6b7280" /></button>
 
               <button
                 onClick={() => setSelectedSentiment("negative")}
                 className={selectedSentiment === "negative" ? "scale-125" : ""}
-              >😞</button>
+              ><Frown size={48} color="#de3f3f" /></button>
             </div>
 
             <textarea
@@ -703,7 +703,7 @@ export function StandardUI({
 
             <div className="flex justify-center gap-2 mt-4">
               <button
-                className="bg-gray-400 text-white px-4 py-2 rounded-lg"
+                className="bg-gray-400 text-white px-2 py-1 rounded-lg text-sm"
                 onClick={() => {
                   setShowReviewPopup(false);
                   endChatSession(); 
@@ -714,7 +714,7 @@ export function StandardUI({
               </button>
 
               <button
-                className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+                className="bg-purple-600 text-white px-2 py-1 rounded-lg text-sm"
                 // onClick={handleReviewSubmit}
                 onClick={handleReviewSubmit}
               >
