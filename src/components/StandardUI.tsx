@@ -569,8 +569,8 @@ const handleReviewSubmit = async (roomNo:string,contactno:string) => {
   // }
   const savedRoom = sessionStorage.getItem("room");     
   const contactId = sessionStorage.getItem("guestContactId");
-    console.log("savedRoom:", savedRoom);
-     console.log("guestId:", guestId);
+    console.log("savedRoom:", roomNo);
+     console.log("guestId:", contactno);
   console.log("click 12333");
   if (!contactId) {
     endChatSession();
