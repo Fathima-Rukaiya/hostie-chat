@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, UserRound } from "lucide-react";
+import { Bot, BotMessageSquare, FileText, LockIcon, Plus, SendHorizonal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ChatMessage = {
@@ -90,8 +90,8 @@ inactivityTimer.current = null;
   const endChatSession = () => {
  clearTimeout(inactivityTimer.current);
   clearTimeout(popupTimer.current);
-    //setShowReviewPopup(true);
-    
+  setShowReviewPopup(true);
+
   // remove session
   sessionStorage.removeItem("guestContactId");
   sessionStorage.removeItem("room");
@@ -747,12 +747,12 @@ const handleReviewSubmit = async () => {
                 </PopoverContent>
               </Popover>
               <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
-                {/* <Bot size="12" className="text-zinc-600 dark:text-zinc-200" />
-             */} <img
+               <Sparkles  size="12" className="text-zinc-600 dark:text-zinc-200" />
+             {/* <img
                   src={botIcon}
                   alt="Bot"
                   className="w-4 h-4 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
-                />  {" "}
+                />  {" "} */}
                 AI
               </div>
               <div className="flex items-center px-2 py-0.5 rounded-md">
