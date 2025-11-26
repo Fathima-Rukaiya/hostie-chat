@@ -59,6 +59,13 @@ export function StandardUI({
 const popupTimer = useRef<any>(null);
 
 
+// for review
+const [selectedSentiment, setSelectedSentiment] = useState<"positive" | "neutral" | "negative" | null>(null);
+const [reviewText, setReviewText] = useState("");
+const [showReviewPopup, setShowReviewPopup] = useState(false);
+
+
+
   useEffect(() => {
     resetInactivityTimer();
     return () => clearTimeout(popupTimer.current);
@@ -83,6 +90,7 @@ inactivityTimer.current = null;
   const endChatSession = () => {
  clearTimeout(inactivityTimer.current);
   clearTimeout(popupTimer.current);
+    setShowReviewPopup(true);
   // remove session
   sessionStorage.removeItem("guestContactId");
   sessionStorage.removeItem("room");
@@ -552,6 +560,36 @@ inactivityTimer.current = null;
 
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
+const handleReviewSubmit = async () => {
+  if (!guestId) {
+    endChatSession();
+    return;
+  }
+
+  const payload = {
+    contact_id: guestId,
+    sentiment: selectedSentiment,  // <-- only one column
+    review: reviewText || null     // optional
+  };
+
+  try {
+    await fetch(`${API_BASE_URL}/saveReview`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.error("Review save failed:", err);
+  }
+
+  setShowReviewPopup(false);
+  endChatSession();
+};
+
+
 
   if (!showChat) return null;
 
@@ -587,6 +625,59 @@ inactivityTimer.current = null;
           </div>
         </div>
       )}
+
+      {showReviewPopup && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
+    <div className="bg-white dark:bg-neutral-800 p-5 rounded-xl text-center shadow-xl w-80">
+      <h3 className="font-semibold text-lg mb-2">Share your experience</h3>
+      <p className="text-sm mb-4">How was your chat today?</p>
+
+      <div className="flex justify-center gap-4 mb-4">
+        <button 
+          onClick={() => setSelectedSentiment("positive")}
+          className={selectedSentiment==="positive" ? "scale-125" : ""}
+        >😊</button>
+
+        <button 
+          onClick={() => setSelectedSentiment("neutral")}
+          className={selectedSentiment==="neutral" ? "scale-125" : ""}
+        >😐</button>
+
+        <button 
+          onClick={() => setSelectedSentiment("negative")}
+          className={selectedSentiment==="negative" ? "scale-125" : ""}
+        >😞</button>
+      </div>
+
+      <textarea
+        className="w-full p-2 rounded-lg border dark:bg-neutral-700"
+        placeholder="Write a review (optional)"
+        value={reviewText}
+        onChange={(e) => setReviewText(e.target.value)}
+      ></textarea>
+
+      <div className="flex justify-center gap-2 mt-4">
+        <button
+          className="bg-gray-400 text-white px-4 py-2 rounded-lg"
+          onClick={() => {
+            setShowReviewPopup(false);
+            endChatSession(); // Skip review
+          }}
+        >
+          Skip
+        </button>
+
+        <button
+          className="bg-purple-600 text-white px-4 py-2 rounded-lg"
+          onClick={handleReviewSubmit}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
 
       <div className="fixed bottom-6 right-6 z-50" >
@@ -705,7 +796,7 @@ inactivityTimer.current = null;
                   className="w-14 h-14 rounded-full object-cover mb-2"
                 />
                 <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
-                  Hello,&nbsp;<div>there!</div>
+                  Hello,&nbsp;<div>there..!</div>
                   <div className="ml-1 text-[22px]">👋</div>
                 </div>
                 <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
