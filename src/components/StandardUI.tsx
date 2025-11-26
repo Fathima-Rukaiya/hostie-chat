@@ -561,7 +561,7 @@ inactivityTimer.current = null;
 
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
-const handleReviewSubmit = async () => {
+const handleReviewSubmit = async (roomNo:string,contactno:string) => {
   
   // if (!guestId) {
   //   endChatSession();
@@ -681,7 +681,7 @@ console.log("click clichh")
         <button
           className="bg-purple-600 text-white px-4 py-2 rounded-lg"
           // onClick={handleReviewSubmit}
-          onClick={() => { console.log("clicked!"); handleReviewSubmit(); }}
+          onClick={() => { console.log("clicked!"); handleReviewSubmit(roomName||"",senderId||""); }}
         >
           Submit
         </button>
