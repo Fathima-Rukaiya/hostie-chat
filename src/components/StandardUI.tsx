@@ -681,17 +681,17 @@ export function StandardUI({
               <button
                 onClick={() => setSelectedSentiment("positive")}
                 className={selectedSentiment === "positive" ? "scale-125" : ""}
-              ><Laugh size={48} color="#22c55e" /></button>
+              ><Laugh size={30} color="#22c55e" /></button>
 
               <button
                 onClick={() => setSelectedSentiment("neutral")}
                 className={selectedSentiment === "neutral" ? "scale-125" : ""}
-              ><Meh size={48} color="#6b7280" /></button>
+              ><Meh size={30} color="#6b7280" /></button>
 
               <button
                 onClick={() => setSelectedSentiment("negative")}
                 className={selectedSentiment === "negative" ? "scale-125" : ""}
-              ><Frown size={48} color="#de3f3f" /></button>
+              ><Frown size={30} color="#de3f3f" /></button>
             </div>
 
             <textarea
@@ -703,7 +703,7 @@ export function StandardUI({
 
             <div className="flex justify-center gap-2 mt-4">
               <button
-                className="bg-gray-400 text-white px-2 py-1 rounded-lg text-sm"
+                className="flex-1 bg-gray-400 text-white px-2 py-2 rounded-lg text-sm"
                 onClick={() => {
                   setShowReviewPopup(false);
                   endChatSession(); 
@@ -714,7 +714,7 @@ export function StandardUI({
               </button>
 
               <button
-                className="bg-purple-600 text-white px-2 py-1 rounded-lg text-sm"
+                className="flex-1 bg-purple-600 text-white px-2 py-1 rounded-lg text-sm"
                 // onClick={handleReviewSubmit}
                 onClick={handleReviewSubmit}
               >
