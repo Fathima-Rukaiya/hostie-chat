@@ -564,7 +564,12 @@ inactivityTimer.current = null;
 const handleReviewSubmit = async () => {
     console.log("guestId:", guestId);
   console.log("click 12333");
-  if (!guestId) {
+  // if (!guestId) {
+  //   endChatSession();
+  //   return;
+  // }
+  const contactId = guestId || userInfo?.id; // fallback
+  if (!contactId) {
     endChatSession();
     return;
   }
