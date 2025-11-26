@@ -16,19 +16,7 @@ type ChatMessage = {
   isTyping?: boolean;
   uploaded_documents?: any;
 };
-// export function ChatUIWrapper({ apiKey }: { apiKey: string }) {
 
-//   return (
-//     <ThemeProvider 
-//       attribute="class"
-//       defaultTheme="system"
-//       enableSystem={true}
-//       >
-//       <StandardUI apiKey={apiKey} />
-//     </ThemeProvider>
-//   );
-// }
-//export function StandardUI({ apiKey }: { apiKey: string }) {
 export function StandardUI({
   apiKey,
   shadowContainer,
@@ -62,6 +50,61 @@ export function StandardUI({
   const [askedForInfo, setAskedForInfo] = useState(false);
   const [showChat, setShowChat] = useState(true);
 
+
+  const [lastActivity, setLastActivity] = useState(Date.now());
+  const [showEndPopup, setShowEndPopup] = useState(false);
+  // let inactivityTimer: any = null;
+  // let popupTimer: any = null;
+  const inactivityTimer = useRef<any>(null);
+const popupTimer = useRef<any>(null);
+
+
+  useEffect(() => {
+    resetInactivityTimer();
+    return () => clearTimeout(popupTimer.current);
+;
+  }, [lastActivity]);
+
+const resetInactivityTimer = () => {
+  clearTimeout(inactivityTimer.current);
+inactivityTimer.current = null;
+  inactivityTimer.current = setTimeout(() => {
+    setShowEndPopup(true);
+
+    // Auto-end after 30s
+    popupTimer.current = setTimeout(() => {
+      endChatSession();
+    }, 9000);
+
+  }, 10* 1000); // 4 minutes
+};
+
+
+  const endChatSession = () => {
+ clearTimeout(inactivityTimer.current);
+  clearTimeout(popupTimer.current);
+  // remove session
+  sessionStorage.removeItem("guestContactId");
+  sessionStorage.removeItem("room");
+
+  setShowEndPopup(false);
+  setChatHistory([]);
+  setGuestId("");
+  setSenderId(null);
+  setRoomName(null);
+  setIsGuest(true);
+  setUserInfo(null);
+  setAskedForInfo(false);
+
+  // create new room id
+  const newRoom = crypto.randomUUID();
+  setRoomName(newRoom);
+
+  addBotMessage("Your previous chat has ended due to inactivity. How can I assist you now?");
+};
+
+
+
   useEffect(() => {
     sessionStorage.setItem("aiPaused", aiPaused.toString());
   }, [aiPaused]);
@@ -85,14 +128,6 @@ export function StandardUI({
     }
   };
 
-  // Usage in your StandardUI component
-  // useEffect(() => {
-  //   getUserCountry().then(country => {
-  //     console.log("User country:", country);
-  //     // you can include it in guestData when saving contact
-  //   });
-  // }, []);
-
   const [country, setCountry] = useState("Unknown");
 
   useEffect(() => {
@@ -112,6 +147,7 @@ export function StandardUI({
     const setupRoom = async () => {
       try {
         const guestContactId = sessionStorage.getItem("guestContactId");
+        resetInactivityTimer(); 
 
         const savedRoom = sessionStorage.getItem("room");
         const savedGuestId = sessionStorage.getItem("guestContactId");
@@ -352,7 +388,7 @@ export function StandardUI({
 
   const sendMessage = async () => {
     if (!message.trim()) return;
-
+  resetInactivityTimer(); 
     const messageText = message.trim();
     setMessage("");
 
@@ -362,6 +398,9 @@ export function StandardUI({
     //  Guest without info → ask info only
 
     if (isGuest && !userInfo && !askedForInfo) {
+      setLastActivity(Date.now());
+      resetInactivityTimer();
+
       addUserMessage(messageText);
       setAskedForInfo(true);
       // const askMsg = "Before we continue, could you please share your name or email?";
@@ -517,14 +556,46 @@ export function StandardUI({
   if (!showChat) return null;
 
   return (
+    <>
+      {showEndPopup && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
+          <div className="bg-white dark:bg-neutral-800 p-5 rounded-xl text-center shadow-xl w-72">
+            <h3 className="font-semibold text-lg mb-3">End chat?</h3>
+            <p className="text-sm mb-4">
+              You’ve been inactive for a while. Do you want to end this chat?
+            </p>
 
-    <div className="fixed bottom-6 right-6 z-50" >
-      <div
-        id="hostie-chat-box"
-        className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
-      >
-        {/* Header */}
-        {/* <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
+            <div className="flex gap-2 justify-center">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                onClick={() => endChatSession()}
+              >
+                Yes, end
+              </button>
+
+              <button
+                className="bg-gray-300 dark:bg-gray-600 text-black dark:text-white px-4 py-2 rounded-lg"
+                onClick={() => {
+                  clearTimeout(popupTimer.current);
+                  setShowEndPopup(false);
+                  resetInactivityTimer();
+                }}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      <div className="fixed bottom-6 right-6 z-50" >
+        <div
+          id="hostie-chat-box"
+          className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
+        >
+          {/* Header */}
+          {/* <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
           <div className="flex items-center gap-2">
             <Bot strokeWidth={1.75} className="text-purple-600" />
             <span className="font-semibold text-sm">Hostie</span>
@@ -547,247 +618,252 @@ export function StandardUI({
           </div>
         </div> */}
 
-        <div className="flex items-center justify-between p-3 text-sm font-semibold">
-          <div className="flex items-center">
-            {/* <BotMessageSquare className="mr-1.5" />*/}
-            {botIcon ? (
-               <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
-              <img
-                src={botIcon}
-                alt="Bot"
-                className="w-6 h-6 rounded-full object-cover"
-              /></div>
-            ) : (
-              <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
-                <BotMessageSquare size={20} />
-              </div>
-            )} {botName}
-            <span
-              className="ml-2 h-2 w-2 rounded-full bg-green-500"
-              title="Online"
-            />
-            <span className="ml-1 text-xs text-green-500">Online</span>
-          </div>
-          <div className="flex gap-1">
-            <Popover>
-              <PopoverTrigger>
-                <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
-                  <LockIcon
-                    size="12"
-                    className="text-zinc-600 dark:text-zinc-200"
-                  />{" "}
-                  Premium
+          <div className="flex items-center justify-between p-3 text-sm font-semibold">
+            <div className="flex items-center gap-1">
+              {/* <BotMessageSquare className="mr-1.5" />*/}
+              {botIcon ? (
+                <div className="bg-purple-600 p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
+                  <img
+                    src={botIcon}
+                    alt="Bot"
+                    className="rounded-full object-cover"
+                  /></div>
+              ) : (
+                <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
+                  <BotMessageSquare size={20} />
                 </div>
-              </PopoverTrigger>
-              <PopoverContent className="text-xs">
-                Upgrade to premium to customize your chat page logo and colors.
-              </PopoverContent>
-            </Popover>
-            <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
-              {/* <Bot size="12" className="text-zinc-600 dark:text-zinc-200" />
-             */} <img
-                src={botIcon}
-                alt="Bot"
-                className="w-4 h-4 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
-              />  {" "}
-              AI
+              )} {botName}
+              <span
+                className="ml-2 h-2 w-2 rounded-full bg-green-500"
+                title="Online"
+              />
+              <span className="ml-1 text-xs text-green-500">Online</span>
             </div>
-            <div className="flex items-center px-2 py-0.5 rounded-md">
+            <div className="flex gap-1">
+              <Popover>
+                <PopoverTrigger>
+                  <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
+                    <LockIcon
+                      size="12"
+                      className="text-zinc-600 dark:text-zinc-200"
+                    />{" "}
+                    Premium
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="text-xs">
+                  Upgrade to premium to customize your chat page logo and colors.
+                </PopoverContent>
+              </Popover>
+              <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
+                {/* <Bot size="12" className="text-zinc-600 dark:text-zinc-200" />
+             */} <img
+                  src={botIcon}
+                  alt="Bot"
+                  className="w-4 h-4 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
+                />  {" "}
+                AI
+              </div>
+              <div className="flex items-center px-2 py-0.5 rounded-md">
 
-              <span className=" text-xs font-medium"><button
-                onClick={() => setShowChat(false)}
-                className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
-              >
-                ✕
-              </button>
-              </span>
+                <span className=" text-xs font-medium"><button
+                  onClick={() => setShowChat(false)}
+                  className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
+                >
+                  ✕
+                </button>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Chat area */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
-          {chatHistory.length === 0 && (
-            // <div className="mt-10 flex flex-col items-center justify-center text-center">
-            //   <Bot strokeWidth={1.75}
-            //     size={60}
-            //     className="text-purple-600 dark:text-purple-600 mb-2"
+          {/* Chat area */}
+          <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
+            {chatHistory.length === 0 && (
+              // <div className="mt-10 flex flex-col items-center justify-center text-center">
+              //   <Bot strokeWidth={1.75}
+              //     size={60}
+              //     className="text-purple-600 dark:text-purple-600 mb-2"
 
-            //   />
-            //   <div className="text-lg font-bold text-purple-600">
-            //     Hello, there...! 👋
-            //   </div>
-            //   <div className="mt-1 font-semibold text-gray-500 dark:text-gray-400 text-sm">
-            //     How can I help you today?
-            //   </div>
-            // </div>
-            <div className="mt-6 flex flex-col items-center justify-center">
+              //   />
+              //   <div className="text-lg font-bold text-purple-600">
+              //     Hello, there...! 👋
+              //   </div>
+              //   <div className="mt-1 font-semibold text-gray-500 dark:text-gray-400 text-sm">
+              //     How can I help you today?
+              //   </div>
+              // </div>
+              <div className="mt-6 flex flex-col items-center justify-center">
 
-              {/* <Bot strokeWidth={1.75}
+                {/* <Bot strokeWidth={1.75}
                 size={60}
                 className="text-purple-600 dark:text-purple-600 mb-2"
 
               /> */}
-              <img
-                src={botIcon}
-                alt="Bot Icon"
-                className="w-14 h-14 rounded-full object-cover mb-2"
-              />
-              <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
-                Hello,&nbsp;<div>there...!</div>
-                <div className="ml-1 text-[22px]">👋</div>
-              </div>
-              <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
-                How can I help you today?
-              </div>
-              <div className="text-center text-gray-400 text-sm mt-10">
-                Start a conversation...
-              </div>
-            </div>
-          )}
-
-          {chatHistory.map((msg, i) => (
-            <div
-              key={i}
-              className={`flex items-end gap-2 ${msg.sender === "user" ? "justify-end" : "justify-start"
-                }`}
-            >
-              {msg.sender === "bot" && (
-                // <div className="flex items-end relative">
-                //   <Bot strokeWidth={1.75}
-                //     className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
-
-                //   />
-                // </div>
-                <div className="flex items-end relative" >
-                  {/* <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" /> */}
-                  <img
-                    src={botIcon}
-                    alt="Bot"
-                    className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-purple-600 dark:border-neutral-500"
-                  />
-                  <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
+                <img
+                  src={botIcon}
+                  alt="Bot Icon"
+                  className="w-14 h-14 rounded-full object-cover mb-2"
+                />
+                <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
+                  Hello,&nbsp;<div>there!</div>
+                  <div className="ml-1 text-[22px]">👋</div>
                 </div>
-              )}
+                <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
+                  How can I help you today?
+                </div>
+                <div className="text-center text-gray-400 text-sm mt-10">
+                  Start a conversation...
+                </div>
+              </div>
+            )}
 
+            {chatHistory.map((msg, i) => (
               <div
-                className={`px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
-                  ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
-                  : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
+                key={i}
+                className={`flex items-end gap-2 ${msg.sender === "user" ? "justify-end" : "justify-start"
                   }`}
               >
-                {msg.isTyping ? (
-                  <div className="flex gap-1 px-1.5">
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce" />
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-200" />
-                    <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-400" />
-                  </div>
-                ) : (
+                {msg.sender === "bot" && (
+                  // <div className="flex items-end relative">
+                  //   <Bot strokeWidth={1.75}
+                  //     className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
 
-                  msg.text &&
-                  <span>{msg.text}</span>
+                  //   />
+                  // </div>
+                  <div className="flex items-end relative" >
+                    {/* <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" /> */}
+                    <img
+                      src={botIcon}
+                      alt="Bot"
+                      className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-purple-600 dark:border-neutral-500"
+                    />
+                    <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
+                  </div>
                 )}
 
-              </div>
+                <div
+                  className={`px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
+                    ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
+                    : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
+                    }`}
+                >
+                  {msg.isTyping ? (
+                    <div className="flex gap-1 px-1.5">
+                      <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce" />
+                      <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-200" />
+                      <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-400" />
+                    </div>
+                  ) : (
 
-              {msg.sender === "user" && (
-                // <div className="flex-shrink-0 relative">
-                //   <img
-                //     src="../chat.jpg"
-                //     alt="user"
-                //     className="h-[30px] w-[30px] rounded-full object-cover"
-                //   />
-                // </div>
+                    msg.text &&
+                    <span>{msg.text}</span>
+                  )}
 
-                // <div className="flex-shrink-0 relative flex items-center justify-center bg-purple-600  rounded-full h-[30px] w-[30px]">
-                //   <UserRound size="18" className="text-gray-200" />
-                // </div>
-                <div className="flex-shrink-0 relative">
-                  {/* <img
+                </div>
+
+                {msg.sender === "user" && (
+                  // <div className="flex-shrink-0 relative">
+                  //   <img
+                  //     src="../chat.jpg"
+                  //     alt="user"
+                  //     className="h-[30px] w-[30px] rounded-full object-cover"
+                  //   />
+                  // </div>
+
+                  // <div className="flex-shrink-0 relative flex items-center justify-center bg-purple-600  rounded-full h-[30px] w-[30px]">
+                  //   <UserRound size="18" className="text-gray-200" />
+                  // </div>
+                  <div className="flex-shrink-0 relative">
+                    {/* <img
                         src="/chat.png"
                         alt="user"
                         height={30}
                         width={30}
                         className="rounded-full object-cover h-[30px] w-[30px]"
                       /> */}
-                  <div className=" bg-purple-600 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
-                    <UserRound size="18" className="text-gray-200" />
+                    <div className=" bg-purple-600 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
+                      <UserRound size="18" className="text-gray-200" />
+                    </div>
+                    <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
-                  <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
+                )}
+              </div>
+            ))}
+
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* Input */}
+          <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 " >
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handleFileUpload(e.target.files[0]);
+                }
+              }}
+            />
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+
+            <input
+              type="text"
+              value={message}
+              // onChange={(e) => setMessage(e.target.value)}
+              onChange={(e) => {
+                setMessage(e.target.value);
+                setLastActivity(Date.now());
+                resetInactivityTimer();
+              }}
+              onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+              placeholder="Ask your question"
+              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
+            />
+            <button
+              onClick={sendMessage}
+              className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
+            >
+              <SendHorizonal className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
+            {botName} may produce inaccurate information
+          </div>
+          <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
+            Powered by{" "}
+
+            {/* <BecomepartnerCard/ > */}
+
+            <div className="relative group inline-block">
+
+              {/* Trigger */}
+              <div className="flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer">
+                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
+                  &nbsp;Hostie
                 </div>
-              )}
-            </div>
-          ))}
 
-          <div ref={chatEndRef} />
-        </div>
-
-        {/* Input */}
-        <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 " >
-
-          <input
-            type="file"
-            ref={fileInputRef}
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                handleFileUpload(e.target.files[0]);
-              }
-            }}
-          />
-
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
-          >
-            <Plus className="w-4 h-4" />
-          </button>
-
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask your question"
-            className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
-          />
-          <button
-            onClick={sendMessage}
-            className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
-          >
-            <SendHorizonal className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
-          {botName} may produce inaccurate information
-        </div>
-        <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
-          Powered by{" "}
-
-          {/* <BecomepartnerCard/ > */}
-
-          <div className="relative group inline-block">
-
-            {/* Trigger */}
-            <div className="flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer">
-              <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
-                &nbsp;Hostie
+                <div className="relative w-6 h-6 flex items-center justify-center">
+                  <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60"></div>
+                  <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                  <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full top-1 right-1 opacity-60"></div>
+                  <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full bottom-1 left-1 opacity-50"></div>
+                  <div className="absolute w-2 h-0.5 bg-gray-400 dark:bg-gray-500 bottom-1.5 right-1 opacity-30"></div>
+                  <span className="absolute text-xs text-gray-600 dark:text-gray-300 font-bold">AI</span>
+                </div>
               </div>
 
-              <div className="relative w-6 h-6 flex items-center justify-center">
-                <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60"></div>
-                <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
-                <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full top-1 right-1 opacity-60"></div>
-                <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full bottom-1 left-1 opacity-50"></div>
-                <div className="absolute w-2 h-0.5 bg-gray-400 dark:bg-gray-500 bottom-1.5 right-1 opacity-30"></div>
-                <span className="absolute text-xs text-gray-600 dark:text-gray-300 font-bold">AI</span>
-              </div>
-            </div>
-
-            {/* Popover Above */}
-            <div
-              className="
+              {/* Popover Above */}
+              <div
+                className="
       absolute left-0 bottom-full mb-2   /* makes it go UP */
       hidden group-hover:block 
       text-xs 
@@ -797,15 +873,16 @@ export function StandardUI({
       z-50
       
     "
-            >
-              .....
+              >
+                .....
+              </div>
             </div>
+
+
+
           </div>
-
-
-
         </div>
       </div>
-    </div>
-  );
+      </>
+      );
 }
