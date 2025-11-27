@@ -130,12 +130,38 @@ export function StandardUI({
     try {
       const res = await fetch("https://ipapi.co/json/");
       const data = await res.json();
-      return data.country_name || data.country;
+      return data.country_name || data.country || "Unknown";
     } catch (err) {
       console.error("Failed to get country:", err);
       return "Unknown";
     }
   };
+
+  //   const getUserCountry = async () => {
+  //   try {
+  //     const controller = new AbortController();
+
+  //     // Timeout (optional but safe)
+  //     const timeout = setTimeout(() => controller.abort(), 3000);
+
+  //     const res = await fetch("https://ipapi.co/json/", {
+  //       signal: controller.signal,
+  //     });
+
+  //     clearTimeout(timeout);
+
+  //     if (!res.ok) return "Unknown";
+
+  //     const data = await res.json();
+
+  //     return data?.country_name || data?.country || "Unknown";
+  //   } catch (err) {
+  //     console.warn("Country fetch failed (safe):", err.message);
+  //     return "Unknown"; // <--- Fallback always
+  //   }
+  // };
+
+
 
   const [country, setCountry] = useState("Unknown");
 
@@ -145,9 +171,9 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in
-  const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+  //const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
-  //const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -280,6 +306,7 @@ export function StandardUI({
             },
           },
         ]);
+
       } catch (err) {
         console.error("SSE parse error:", err);
       }
@@ -964,27 +991,7 @@ export function StandardUI({
               <SendHorizonal className="w-4 h-4" />
             </button> 
              background: "linear-gradient(to right, #7c3aed, #ec4899, #3b82f6)",*/}
-            {/* <style>{`
-    .send-button {
-     background: "linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9)";
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px; 
-      width: 36px;
-      height: 36px;
-      color: white;
-    }
 
-    .send-button svg {
-      width: 16px;
-      height: 16px;
-    }
-  `}</style>
-
-            <button onClick={sendMessage} className="send-button">
-              <SendHorizontal />
-            </button> */}
             <style>{`
   .send-button {
     background: linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9) !important;
