@@ -979,10 +979,8 @@ export function StandardUI({
                 {/* <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
                   &nbsp;Hostie
                 </div> */}
-                <div className="inline-block">
-                  <span className="bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent font-bold text-sm">
-                    Hostie
-                  </span>
+
+                <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 ..."> &nbsp;Hostie
                 </div>
 
                 <div className="relative w-6 h-6 flex items-center justify-center">
