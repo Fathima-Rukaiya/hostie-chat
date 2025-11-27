@@ -956,13 +956,37 @@ export function StandardUI({
               placeholder="Ask your question"
               className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
             />
-            <button
+            {/* <button
               onClick={sendMessage}
               className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
             >
-              {/* <SendHorizonal className="w-4 h-4" /> */}
+
               <SendHorizontal className="w-4 h-4" />
-            </button>
+            </button> */}
+            
+              <style>{`
+    .send-button {
+      background: linear-gradient(to right, #7c3aed, #ec4899, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px; /* fully rounded */
+      width: 36px;
+      height: 36px;
+      color: white;
+    }
+
+    .send-button svg {
+      width: 16px;
+      height: 16px;
+    }
+  `}</style>
+
+              <button onClick={sendMessage} className="send-button">
+                <SendHorizontal />
+              </button>
+           
+
           </div>
 
           <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
@@ -994,7 +1018,7 @@ export function StandardUI({
 
                 {/* Use the class */}
                 <div className="gradient-text font-bold text-sm">
-                 &nbsp;Hostie
+                  &nbsp;Hostie
                 </div>
 
 
