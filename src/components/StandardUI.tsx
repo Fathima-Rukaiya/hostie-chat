@@ -961,10 +961,11 @@ export function StandardUI({
               className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
             >
               <SendHorizonal className="w-4 h-4" />
-            </button> */}
+            </button> 
+             background: "linear-gradient(to right, #7c3aed, #ec4899, #3b82f6)",*/}
             <style>{`
     .send-button {
-     background: "linear-gradient(to right, #7c3aed, #6D28D9)"
+     background: "linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9)"
       display: flex;
       align-items: center;
       justify-content: center;
