@@ -986,7 +986,7 @@ export function StandardUI({
             </button> */}
             <style>{`
   .send-button {
-    background: linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9);
+    background: linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9) !important;
     display: flex;
     align-items: center;
     justify-content: center;
