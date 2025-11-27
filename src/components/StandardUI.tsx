@@ -923,7 +923,7 @@ export function StandardUI({
           </div>
 
           {/* Input */}
-          <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 " >
+          <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
 
             <input
               type="file"
@@ -938,8 +938,9 @@ export function StandardUI({
 
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 mr-2"
+              className="flex items-center justify-center h-9 w-9 rounded-full border border-zinc-200 dark:border-neutral-700 text-zinc-500 dark:text-zinc-400 "
             >
+              {/* mr-2 */}
               <Plus className="w-4 h-4" />
             </button>
 
