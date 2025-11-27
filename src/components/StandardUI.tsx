@@ -980,7 +980,7 @@ export function StandardUI({
                   &nbsp;Hostie
                 </div> */}
 
-                <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 ..."> &nbsp;Hostie
+                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent ..."> &nbsp;Hostie
                 </div>
 
                 <div className="relative w-6 h-6 flex items-center justify-center">
