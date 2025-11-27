@@ -53,8 +53,7 @@ export function StandardUI({
 
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [showEndPopup, setShowEndPopup] = useState(false);
-  // let inactivityTimer: any = null;
-  // let popupTimer: any = null;
+
   const inactivityTimer = useRef<any>(null);
   const popupTimer = useRef<any>(null);
 
@@ -64,21 +63,12 @@ export function StandardUI({
   const [reviewText, setReviewText] = useState("");
   const [showReviewPopup, setShowReviewPopup] = useState(false);
 
-
-
-  // useEffect(() => {
-  //   if (chatHistory.length > 1) {
-  //     resetInactivityTimer();
-  //     return () => clearTimeout(popupTimer.current);
-  //   }
-  // }, [lastActivity]);
-
   useEffect(() => {
-  if (chatHistory.length > 0) { // Start AFTER first message
-    resetInactivityTimer();
-  }
-  return () => clearTimeout(popupTimer.current);
-}, [lastActivity]);
+    if (chatHistory.length > 0) { // Start AFTER first message
+      resetInactivityTimer();
+    }
+    return () => clearTimeout(popupTimer.current);
+  }, [lastActivity]);
 
 
   const resetInactivityTimer = () => {
@@ -93,7 +83,7 @@ export function StandardUI({
         endChatSession();
       }, 30 * 1000);
 
-    },  4 * 60 * 1000); // 4 minutes
+    }, 4 * 60 * 1000); // 4 minutes
   };
 
 
@@ -103,7 +93,7 @@ export function StandardUI({
     // setShowReviewPopup(true);
 
     // remove session
-    //sessionStorage.removeItem("guestContactId");
+    // sessionStorage.removeItem("guestContactId");
     //  sessionStorage.removeItem("room");
 
     setShowEndPopup(false);
@@ -166,7 +156,7 @@ export function StandardUI({
     const setupRoom = async () => {
       try {
         const guestContactId = sessionStorage.getItem("guestContactId");
-       // resetInactivityTimer();
+        // resetInactivityTimer();
 
         const savedRoom = sessionStorage.getItem("room");
         const savedGuestId = sessionStorage.getItem("guestContactId");
@@ -586,14 +576,14 @@ export function StandardUI({
     //   return;
     // }
 
-      const contactId = sessionStorage.getItem("guestContactId");
-  const room = sessionStorage.getItem("room");
+    const contactId = sessionStorage.getItem("guestContactId");
+    const room = sessionStorage.getItem("room");
 
-  if (!contactId || !room) {
-    setShowReviewPopup(false);
-    endChatSession();
-    return;
-  }
+    if (!contactId || !room) {
+      setShowReviewPopup(false);
+      endChatSession();
+      return;
+    }
     console.log("savedRoom:", room);
     console.log("guestId:", contactId);
     console.log("click 12333");
@@ -707,7 +697,7 @@ export function StandardUI({
                 className="flex-1 bg-gray-400 text-white px-2 py-2 rounded-lg text-sm"
                 onClick={() => {
                   setShowReviewPopup(false);
-                  endChatSession(); 
+                  endChatSession();
                   // Skip review
                 }}
               >
@@ -986,8 +976,13 @@ export function StandardUI({
 
               {/* Trigger */}
               <div className="flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer">
-                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
+                {/* <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
                   &nbsp;Hostie
+                </div> */}
+                <div className="inline-block">
+                  <span className="bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent font-bold text-sm">
+                    Hostie
+                  </span>
                 </div>
 
                 <div className="relative w-6 h-6 flex items-center justify-center">
