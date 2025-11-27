@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizonal, Sparkles, UserRound } from "lucide-react";
+import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizonal, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ChatMessage = {
@@ -960,7 +960,8 @@ export function StandardUI({
               onClick={sendMessage}
               className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
             >
-              <SendHorizonal className="w-4 h-4" />
+              {/* <SendHorizonal className="w-4 h-4" /> */}
+              <SendHorizontal className="w-4 h-4" />
             </button>
           </div>
 
@@ -993,7 +994,7 @@ export function StandardUI({
 
                 {/* Use the class */}
                 <div className="gradient-text font-bold text-sm">
-                  Hostie
+                 &nbsp;Hostie
                 </div>
 
 
