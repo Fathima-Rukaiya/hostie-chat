@@ -963,13 +963,13 @@ export function StandardUI({
               <SendHorizonal className="w-4 h-4" />
             </button> 
              background: "linear-gradient(to right, #7c3aed, #ec4899, #3b82f6)",*/}
-            <style>{`
+            {/* <style>{`
     .send-button {
      background: "linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9)";
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 9999px; /* fully rounded */
+      border-radius: 9999px; 
       width: 36px;
       height: 36px;
       color: white;
@@ -983,7 +983,30 @@ export function StandardUI({
 
             <button onClick={sendMessage} className="send-button">
               <SendHorizontal />
+            </button> */}
+            <style>{`
+  .send-button {
+    background: linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px; /* fully rounded */
+    width: 36px;
+    height: 36px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .send-button svg {
+    width: 16px;
+    height: 16px;
+  }
+`}</style>
+
+            <button onClick={sendMessage} className="send-button">
+              <SendHorizontal />
             </button>
+
           </div>
 
           <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">

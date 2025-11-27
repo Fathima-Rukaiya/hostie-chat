@@ -90,7 +90,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}6</span>
+                    <span className="font-semibold text-sm">{botName}#</span>
                 </button>
 
                 {isOpen && (
