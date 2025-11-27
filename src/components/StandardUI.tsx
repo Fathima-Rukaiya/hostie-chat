@@ -89,6 +89,7 @@ export function StandardUI({
 
       // Auto-end after 30s
       popupTimer.current = setTimeout(() => {
+        setShowReviewPopup(false);
         endChatSession();
       }, 30 * 1000);
 
@@ -154,9 +155,9 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in
-  const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+  //const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
-  //const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
