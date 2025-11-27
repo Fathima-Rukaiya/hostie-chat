@@ -980,8 +980,25 @@ export function StandardUI({
                   &nbsp;Hostie
                 </div> */}
 
-                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent ..."> &nbsp;Hostie
+                {/* Inline CSS for this page only */}
+                <style>
+                  {`
+          .gradient-text {
+            background: linear-gradient(to right, #7c3aed, #ec4899, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        `}
+                </style>
+
+                {/* Use the class */}
+                <div className="gradient-text font-bold text-sm">
+                  Hostie
                 </div>
+
+
+                {/* <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent ..."> &nbsp;Hostie
+                </div> */}
 
                 <div className="relative w-6 h-6 flex items-center justify-center">
                   <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60"></div>
