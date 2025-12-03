@@ -101,10 +101,29 @@ export function StandardUI({
 
     }, 30 * 1000); // 4 minutes
   };
-  const endChatSession = () => {
+  const endChatSession = async () => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
     // setShowReviewPopup(true);
+    const payload = {
+      contact_id: guestId,
+      sentiment: "",  // <-- only one column
+      review: reviewText || "null"     // optional
+    };
+    console.log(payload);
+
+    try {
+      await fetch(`${API_BASE_URL}/saveReview`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error("Review save failed:", err);
+    }
 
     // remove session
     sessionStorage.removeItem("guestContactId");
