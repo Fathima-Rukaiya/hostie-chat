@@ -107,7 +107,7 @@ export function StandardUI({
     // setShowReviewPopup(true);
     const payload = {
       contact_id: guestId,
-      sentiment: "",  // <-- only one column
+      sentiment: null,  // <-- only one column
       review: reviewText || "null"     // optional
     };
     console.log(payload);
