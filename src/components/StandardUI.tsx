@@ -397,6 +397,9 @@ export function StandardUI({
   };
   //C:\Users\User\Desktop\amez\hostie-dashboard\src\app\api\clientCustomerChatBox\aiResponceGenerate
   const generateAIResponse = async (room_id: string, message: string, sender_id: string) => {
+    const typingMessage: ChatMessage = { sender: "bot", text: "", isTyping: true };
+    setChatHistory(prev => [...prev, typingMessage]);
+
     const res = await fetch(`${API_BASE_URL}/aiResponceGenerate`, {
       method: "POST",
       headers: {
@@ -405,7 +408,11 @@ export function StandardUI({
       },
       body: JSON.stringify({ room_id, prompt: message, sender_id }),
     });
+    setChatHistory(prev => {
+      const newHistory = prev.filter(msg => !msg.isTyping); // remove typing
 
+      return newHistory;
+    });
     return res.json();
   };
 
@@ -508,8 +515,6 @@ export function StandardUI({
         const aiResp = await saveUserMessage(messageText, false);
         //setAiTyping(true);
         // const reply = aiResp.reply || "Sorry, I couldn't generate a reply.";
-        const typingMessage: ChatMessage = { sender: "bot", text: "", isTyping: true };
-        setChatHistory(prev => [...prev, typingMessage]);
 
         const generated = await generateAIResponse(
           roomName,
@@ -517,19 +522,7 @@ export function StandardUI({
           senderId,
         );
 
-        setChatHistory(prev => {
-          const newHistory = prev.filter(msg => !msg.isTyping); // remove typing
-          if (generated.reply) {
-            newHistory.push({
-              sender: "bot",
-              text: generated.reply,
-              timestamps: {
-                received: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-              },
-            });
-          }
-          return newHistory;
-        });
+
       } catch (err) {
         console.error("AI call failed:", err);
         setChatHistory(prev => prev.filter(msg => !msg.isTyping));
