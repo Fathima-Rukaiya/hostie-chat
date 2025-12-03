@@ -394,6 +394,20 @@ export function StandardUI({
       body: JSON.stringify({ room_id: roomName, message: text, receiver_id: receiverId }),
     });
   };
+//C:\Users\User\Desktop\amez\hostie-dashboard\src\app\api\clientCustomerChatBox\aiResponceGenerate
+  const generateAIResponse = async (room_id: string, message: string, sender_id: string) => {
+    const res = await fetch(`${API_BASE_URL}/aiResponceGenerate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+      body: JSON.stringify({ room_id, prompt: message, sender_id }),
+    });
+
+    return res.json();
+  };
+
 
   const addBotMessage = (text: string) => {
     setChatHistory((prev) => [
@@ -485,10 +499,19 @@ export function StandardUI({
 
     //  Guest/user already has info → save user message & get AI reply
     if (!aiPaused) {
+      if (!roomName || !senderId) return;
+
+    
+
       try {
         const aiResp = await saveUserMessage(messageText, false);
-        const reply = aiResp.reply || "Sorry, I couldn't generate a reply.";
 
+        // const reply = aiResp.reply || "Sorry, I couldn't generate a reply.";
+        const generated = await generateAIResponse(
+          roomName,
+          messageText,
+          senderId,
+        );
       } catch (err) {
         console.error("AI call failed:", err);
 
