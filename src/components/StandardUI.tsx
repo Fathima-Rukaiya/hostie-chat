@@ -72,21 +72,6 @@ export function StandardUI({
   }, [lastActivity]);
 
 
-  // const resetInactivityTimer = () => {
-  //   clearTimeout(inactivityTimer.current);
-  //   inactivityTimer.current = null;
-  //   inactivityTimer.current = setTimeout(() => {
-  //     setShowEndPopup(true);
-
-  //     // Auto-end after 30s
-  //     popupTimer.current = setTimeout(() => {
-  //       setShowReviewPopup(false);
-  //       endChatSession();
-  //     }, 30 * 1000);
-
-  //   }, 4 * 60 * 1000); // 4 minutes
-  // };
-
   const resetInactivityTimer = () => {
     clearTimeout(inactivityTimer.current);
     inactivityTimer.current = null;
@@ -97,10 +82,25 @@ export function StandardUI({
       popupTimer.current = setTimeout(() => {
         setShowReviewPopup(false);
         endChatSession();
-      }, 10 * 1000);
+      }, 30 * 1000);
 
-    }, 30 * 1000); // 4 minutes
+    }, 4 * 60 * 1000); // 4 minutes
   };
+
+  // const resetInactivityTimer = () => {
+  //   clearTimeout(inactivityTimer.current);
+  //   inactivityTimer.current = null;
+  //   inactivityTimer.current = setTimeout(() => {
+  //     setShowEndPopup(true);
+
+  //     // Auto-end after 30s
+  //     popupTimer.current = setTimeout(() => {
+  //       setShowReviewPopup(false);
+  //       endChatSession();
+  //     }, 10 * 1000);
+
+  //   }, 30 * 1000); // 4 minutes
+  // };
   const endChatSession = async () => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
@@ -210,9 +210,9 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in
-  //const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+  const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
 
-  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  //const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
