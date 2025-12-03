@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizonal, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import ReactMarkdown from "react-markdown";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -229,12 +230,12 @@ export function StandardUI({
           console.error("Failed to fetch chat history:", result.error);
           return;
         }
-
+        //sender: (msg.sender_id || msg.guest_sender_id) ? "user" : "bot"
         const data = result.data || [];
         const formattedHistory: ChatMessage[] = data
           .filter((msg: any) => !msg.resolved && !msg.deleted)
           .map((msg: any) => ({
-            sender: msg.sender_id || msg.guest_sender_id ? "user" : "bot",
+            sender: (msg.sender_id || msg.guest_sender_id) ? "user" : "bot",
             text: msg.message,
 
             uploaded_documents: msg.uploaded_documents || null,
@@ -294,7 +295,7 @@ export function StandardUI({
           ...prev,
           {
             sender:
-              newMsg.sender_id || newMsg.guest_sender_id
+              (newMsg.sender_id || newMsg.guest_sender_id)
                 ? "user"
                 : "bot",
             //sender: newMsg.sender as "user" | "bot",
@@ -394,7 +395,7 @@ export function StandardUI({
       body: JSON.stringify({ room_id: roomName, message: text, receiver_id: receiverId }),
     });
   };
-//C:\Users\User\Desktop\amez\hostie-dashboard\src\app\api\clientCustomerChatBox\aiResponceGenerate
+  //C:\Users\User\Desktop\amez\hostie-dashboard\src\app\api\clientCustomerChatBox\aiResponceGenerate
   const generateAIResponse = async (room_id: string, message: string, sender_id: string) => {
     const res = await fetch(`${API_BASE_URL}/aiResponceGenerate`, {
       method: "POST",
@@ -501,7 +502,7 @@ export function StandardUI({
     if (!aiPaused) {
       if (!roomName || !senderId) return;
 
-    
+
 
       try {
         const aiResp = await saveUserMessage(messageText, false);
@@ -919,9 +920,36 @@ export function StandardUI({
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
                 )}
+                <style>
+                  {`
+         /* global.css or module.css */
+.chat-bubble p {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
 
+.chat-bubble a {
+  color: #7c3aed; /* purple link */
+  text-decoration: underline;
+}
+
+.chat-bubble ul {
+  padding-left: 1rem;
+  list-style-type: disc;
+}
+
+.chat-bubble strong {
+  font-weight: 600;
+}
+
+.chat-bubble em {
+  font-style: italic;
+}
+
+        `}
+                </style>
                 <div
-                  className={`px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
+                  className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
                     ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                     }`}
@@ -935,7 +963,15 @@ export function StandardUI({
                   ) : (
 
                     msg.text &&
-                    <span>{msg.text}</span>
+                      // <span>{msg.text}</span>
+                      msg.sender === "bot" ? (
+                      <ReactMarkdown>
+                        {msg.text}
+                      </ReactMarkdown>
+                    ) : (
+                      <span>{msg.text}</span>
+                    )
+
                   )}
 
                 </div>
