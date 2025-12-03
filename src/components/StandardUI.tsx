@@ -123,7 +123,13 @@ export function StandardUI({
     const newRoom = crypto.randomUUID();
     setRoomName(newRoom);
 
+    sessionStorage.setItem("room", newRoom);
+
+    setIsGuest(true);
+
     addBotMessage("Your previous chat has ended due to inactivity. How can I assist you now?");
+    console.log("roomName", roomName, "senderid", senderId)
+
   };
 
 
@@ -219,14 +225,17 @@ export function StandardUI({
           setIsGuest(true);
           setSenderId(null); // unknown guest until info provided
         }
-        console.log("roomName",roomName,"senderid",senderId)
+        console.log("roomName", roomName, "senderid", senderId)
       } catch (err) {
         console.error("Error setting up room:", err);
       }
     };
+
+
     setupRoom();
+
     //  setupRoom();
-  }, [roomName]);
+  }, []);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
