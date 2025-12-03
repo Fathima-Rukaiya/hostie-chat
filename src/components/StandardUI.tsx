@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizonal, SendHorizontal, Sparkles, UserRound } from "lucide-react";
+import { Bot, BotMessageSquare, Frown, Laugh, LockIcon, Meh, Plus, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ChatMessage = {
@@ -72,6 +72,21 @@ export function StandardUI({
   }, [lastActivity]);
 
 
+  // const resetInactivityTimer = () => {
+  //   clearTimeout(inactivityTimer.current);
+  //   inactivityTimer.current = null;
+  //   inactivityTimer.current = setTimeout(() => {
+  //     setShowEndPopup(true);
+
+  //     // Auto-end after 30s
+  //     popupTimer.current = setTimeout(() => {
+  //       setShowReviewPopup(false);
+  //       endChatSession();
+  //     }, 30 * 1000);
+
+  //   }, 4 * 60 * 1000); // 4 minutes
+  // };
+
   const resetInactivityTimer = () => {
     clearTimeout(inactivityTimer.current);
     inactivityTimer.current = null;
@@ -82,20 +97,18 @@ export function StandardUI({
       popupTimer.current = setTimeout(() => {
         setShowReviewPopup(false);
         endChatSession();
-      }, 30 * 1000);
+      }, 6 * 1000);
 
-    }, 4 * 60 * 1000); // 4 minutes
+    }, 12 * 1000); // 4 minutes
   };
-
-
   const endChatSession = () => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
     // setShowReviewPopup(true);
 
     // remove session
-    // sessionStorage.removeItem("guestContactId");
-    //  sessionStorage.removeItem("room");
+    sessionStorage.removeItem("guestContactId");
+    sessionStorage.removeItem("room");
 
     setShowEndPopup(false);
     setChatHistory([]);
@@ -210,9 +223,9 @@ export function StandardUI({
         console.error("Error setting up room:", err);
       }
     };
-
     setupRoom();
-  }, []);
+    //  setupRoom();
+  }, [roomName]);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
