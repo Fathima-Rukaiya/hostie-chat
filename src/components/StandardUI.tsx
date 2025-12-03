@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizonal, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import ReactMarkdown from "react-markdown";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -40,6 +39,7 @@ export function StandardUI({
   const [isGuest, setIsGuest] = useState(false);
   const [roomName, setRoomName] = useState<string | null>(null);
   //const [aiPaused, setAiPaused] = useState(false)
+  const [aiTyping, setAiTyping] = useState(false);
 
   const [aiPaused, setAiPaused] = useState(() => {
     const saved = sessionStorage.getItem("aiPaused");
@@ -506,15 +506,33 @@ export function StandardUI({
 
       try {
         const aiResp = await saveUserMessage(messageText, false);
-
+        //setAiTyping(true);
         // const reply = aiResp.reply || "Sorry, I couldn't generate a reply.";
+        const typingMessage: ChatMessage = { sender: "bot", text: "", isTyping: true };
+        setChatHistory(prev => [...prev, typingMessage]);
+
         const generated = await generateAIResponse(
           roomName,
           messageText,
           senderId,
         );
+
+        setChatHistory(prev => {
+          const newHistory = prev.filter(msg => !msg.isTyping); // remove typing
+          if (generated.reply) {
+            newHistory.push({
+              sender: "bot",
+              text: generated.reply,
+              timestamps: {
+                received: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+              },
+            });
+          }
+          return newHistory;
+        });
       } catch (err) {
         console.error("AI call failed:", err);
+        setChatHistory(prev => prev.filter(msg => !msg.isTyping));
 
       }
     } else {
@@ -963,14 +981,9 @@ export function StandardUI({
                   ) : (
 
                     msg.text &&
-                      // <span>{msg.text}</span>
-                      msg.sender === "bot" ? (
-                      <ReactMarkdown>
-                        {msg.text}
-                      </ReactMarkdown>
-                    ) : (
-                      <span>{msg.text}</span>
-                    )
+                    <span>{msg.text}</span>
+
+
 
                   )}
 
