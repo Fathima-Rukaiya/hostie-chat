@@ -97,9 +97,9 @@ export function StandardUI({
       popupTimer.current = setTimeout(() => {
         setShowReviewPopup(false);
         endChatSession();
-      }, 6 * 1000);
+      }, 10 * 1000);
 
-    }, 12 * 1000); // 4 minutes
+    }, 30 * 1000); // 4 minutes
   };
   const endChatSession = () => {
     clearTimeout(inactivityTimer.current);
@@ -219,6 +219,7 @@ export function StandardUI({
           setIsGuest(true);
           setSenderId(null); // unknown guest until info provided
         }
+        console.log("roomName",roomName,"senderid",senderId)
       } catch (err) {
         console.error("Error setting up room:", err);
       }
