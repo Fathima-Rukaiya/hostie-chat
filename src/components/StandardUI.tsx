@@ -104,6 +104,9 @@ export function StandardUI({
   const endChatSession = async () => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
+
+    inactivityTimer.current = null;
+    popupTimer.current = null;
     // setShowReviewPopup(true);
     const payload = {
       contact_id: guestId,
@@ -356,9 +359,19 @@ export function StandardUI({
     };
 
 
+    // eventSource.onerror = (err) => {
+    //   console.error("SSE connection error:", err);
+    //   eventSource.close();
+    // };
     eventSource.onerror = (err) => {
-      console.error("SSE connection error:", err);
-      eventSource.close();
+      console.warn("SSE error:", err);
+      // optionally reconnect after delay
+      setTimeout(() => {
+        if (roomName) {
+          const newEventSource = new EventSource(`${API_BASE_URL}/stream?room=${roomName}&api_key=${apiKey}`);
+          // reassign handlers
+        }
+      }, 3000);
     };
 
     return () => eventSource.close();
@@ -1015,7 +1028,7 @@ export function StandardUI({
                     </div>
                   ) : (
                     <div>
-                     { msg.text && <span>{msg.text}</span>}
+                      {msg.text && <span>{msg.text}</span>}
 
                       {msg.uploaded_documents && (
                         <div className="mt-2">
@@ -1048,11 +1061,11 @@ export function StandardUI({
                                 rel="noopener noreferrer"
                                 className="text-gray-200"
                               >
-                                <div className ={`flex gap-2 
+                                <div className={`flex gap-2 
                                 ${msg.sender === "user"
-                    ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
-                    : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
-                    }`}> <FileText size={20} />View Document</div>
+                                    ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
+                                    : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
+                                  }`}> <FileText size={20} />View Document</div>
 
                               </a>
                             )}
