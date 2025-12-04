@@ -345,6 +345,7 @@ export function StandardUI({
                 : "bot",
             //sender: newMsg.sender as "user" | "bot",
             text: newMsg.message,
+            uploaded_documents: newMsg.uploaded_documents || null,
 
             timestamps: {
               received: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
@@ -1071,6 +1072,7 @@ export function StandardUI({
                             )}
                         </div>
                       )}
+
                     </div>
 
 
@@ -1079,6 +1081,19 @@ export function StandardUI({
 
 
                   )}
+                  {/* time stamp */}
+
+                  {msg.sender === "user" && (
+                    <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                      {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                    </span>
+                  )}
+                  {msg.sender === "bot" && msg.timestamps?.received && (
+                    <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                      {msg.timestamps.received}
+                    </span>
+                  )}
+
 
                 </div>
 
