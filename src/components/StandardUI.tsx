@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Bot, BotMessageSquare, Frown, Laugh, LockIcon, Meh, Plus, SendHorizontal, Sparkles, UserRound } from "lucide-react";
+import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ChatMessage = {
@@ -1014,9 +1014,49 @@ export function StandardUI({
                       <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-400" />
                     </div>
                   ) : (
+                    <div>
+                     { msg.text && <span>{msg.text}</span>}
+                      {msg.uploaded_documents && (
+                        <div className="mt-2">
+                          {/\.(jpg|jpeg|png|gif)$/i.test(msg.uploaded_documents) ? (
+                            <a
+                              href={msg.uploaded_documents}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-200 text-xs"
+                            >
+                              <img
+                                src={msg.uploaded_documents}
+                                alt="Uploaded"
+                                width={180}
+                                height={120}
+                                className="rounded-lg border border-zinc-200 dark:border-neutral-700"
+                              />
+                            </a>
+                          ) :
+                            /\.(mp3|wav|ogg)$/i.test(msg.uploaded_documents) || msg.uploaded_documents.includes("audio") ? (
 
-                    msg.text &&
-                    <span>{msg.text}</span>
+                              <audio controls className="mt-1 w-full">
+                                <source src={msg.uploaded_documents} />
+
+                              </audio>
+                            ) : (
+                              <a
+                                href={msg.uploaded_documents}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-200"
+                              >
+                                <div className="flex gap-2"> <FileText size={20} />View Document</div>
+
+                              </a>
+                            )}
+                        </div>
+                      )}
+                    </div>
+
+
+
 
 
 
