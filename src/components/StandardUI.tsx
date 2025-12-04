@@ -650,7 +650,7 @@ export function StandardUI({
         ...prev,
         {
           sender: "user",
-          text: file.name,
+          text: "",
           uploaded_documents: data.fileUrl,
           timestamps: { sent: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) },
         },
@@ -1016,6 +1016,7 @@ export function StandardUI({
                   ) : (
                     <div>
                      { msg.text && <span>{msg.text}</span>}
+
                       {msg.uploaded_documents && (
                         <div className="mt-2">
                           {/\.(jpg|jpeg|png|gif)$/i.test(msg.uploaded_documents) ? (
@@ -1047,7 +1048,11 @@ export function StandardUI({
                                 rel="noopener noreferrer"
                                 className="text-gray-200"
                               >
-                                <div className="flex gap-2"> <FileText size={20} />View Document</div>
+                                <div className ={`flex gap-2 
+                                ${msg.sender === "user"
+                    ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
+                    : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
+                    }`}> <FileText size={20} />View Document</div>
 
                               </a>
                             )}
