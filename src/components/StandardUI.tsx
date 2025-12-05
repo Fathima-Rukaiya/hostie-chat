@@ -834,10 +834,26 @@ export function StandardUI({
         </div>
       )}
 
+            <style>{`
+  @media (max-width: 480px) {
+   #hostie-chat-box {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+}
+
+`}</style>
 
 
       <div className="fixed bottom-6 right-6 z-50" >
-        {/*  */}
+        {/* <div className="fixed bottom-6 right-6 z-50 " > */}
         <div
           id="hostie-chat-box"
           className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
