@@ -835,8 +835,25 @@ export function StandardUI({
       )}
 
 
+      <div
+        className="
+    fixed z-50
+    bottom-6 right-6     /* desktop */
+    w-[380px] h-[550px]  /* desktop size */
 
-      <div className="fixed bottom-6 right-6 z-50" >
+    md:bottom-6 md:right-6
+    md:w-[380px] md:h-[550px]
+
+    /* FULLSCREEN on small devices */
+    max-md:inset-0
+    max-md:w-full max-md:h-full
+    max-md:rounded-none
+    max-md:m-0
+  "
+      >
+
+
+        {/*  <div className="fixed bottom-6 right-6 z-50" > */}
         <div
           id="hostie-chat-box"
           className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
@@ -1072,6 +1089,18 @@ export function StandardUI({
                             )}
                         </div>
                       )}
+                      {/* time stamp */}
+
+                      {msg.sender === "user" && (
+                        <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                          {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                        </span>
+                      )}
+                      {msg.sender === "bot" && msg.timestamps?.received && (
+                        <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                          {msg.timestamps.received}
+                        </span>
+                      )}
 
                     </div>
 
@@ -1081,18 +1110,7 @@ export function StandardUI({
 
 
                   )}
-                  {/* time stamp */}
 
-                  {msg.sender === "user" && (
-                    <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                      {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                    </span>
-                  )}
-                  {msg.sender === "bot" && msg.timestamps?.received && (
-                    <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                      {msg.timestamps.received}
-                    </span>
-                  )}
 
 
                 </div>
