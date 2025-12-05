@@ -840,8 +840,8 @@ export function StandardUI({
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
+    width: 100% !important;
+    height: 100% !important;
     margin: 0 !important;
     border-radius: 0 !important;
     max-width: none !important;
