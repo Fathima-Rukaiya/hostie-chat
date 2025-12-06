@@ -168,16 +168,32 @@ export function StandardUI({
     }
   }, [shadowContainer?.current]);
 
+  // const getUserCountry = async () => {
+  //   try {
+  //     const res = await fetch("https://ipapi.co/json/");
+  //     const data = await res.json();
+  //     return data.country_name || data.country || "Unknown";
+  //   } catch (err) {
+  //     console.error("Failed to get country:", err);
+  //     return "Unknown";
+  //   }
+  // };
+
   const getUserCountry = async () => {
     try {
       const res = await fetch("https://ipapi.co/json/");
       const data = await res.json();
-      return data.country_name || data.country || "Unknown";
+
+      // ipapi.co returns the short country code in 'country' (ISO 2-letter)
+      const countryCode = data.country?.toLowerCase() || "un"; // "un" for unknown
+
+      return countryCode; // save this in DB
     } catch (err) {
       console.error("Failed to get country:", err);
-      return "Unknown";
+      return "un"; // unknown
     }
   };
+
 
   //   const getUserCountry = async () => {
   //   try {
@@ -834,7 +850,7 @@ export function StandardUI({
         </div>
       )}
 
-            <style>{`
+      <style>{`
   @media (max-width: 480px) {
    #hostie-chat-box {
     position: fixed !important;
@@ -1089,18 +1105,18 @@ export function StandardUI({
                             )}
                         </div>
                       )}
-                            {/* time stamp */}
+                      {/* time stamp */}
 
-                  {msg.sender === "user" && (
-                    <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                      {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                    </span>
-                  )}
-                  {msg.sender === "bot" && msg.timestamps?.received && (
-                    <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                      {msg.timestamps.received}
-                    </span>
-                  )}
+                      {msg.sender === "user" && (
+                        <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                          {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                        </span>
+                      )}
+                      {msg.sender === "bot" && msg.timestamps?.received && (
+                        <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                          {msg.timestamps.received}
+                        </span>
+                      )}
 
                     </div>
 
@@ -1110,7 +1126,7 @@ export function StandardUI({
 
 
                   )}
-            
+
 
 
                 </div>
