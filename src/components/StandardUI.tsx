@@ -1269,8 +1269,8 @@ export function StandardUI({
                 </div> */}
 
                 <div className="relative w-6 h-6 flex items-center justify-center">
-                  <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60"></div>
-                  <div className="absolute w-2 h-2 bg-pink-600 rounded-full top-1 left-1 opacity-60"></div>
+                  <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60 "></div>
+                  <div className="absolute w-2 h-2 bg-pink-600 rounded-full top-1 left-1 rounded-full opacity-60"></div>
                   <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full top-1 right-1 opacity-60"></div>
                   <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full bottom-1 left-1 opacity-50"></div>
                   <div className="absolute w-2 h-0.5 bg-gray-400 dark:bg-gray-500 bottom-1.5 right-1 opacity-30"></div>
