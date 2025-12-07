@@ -99,7 +99,7 @@ id="hertzora-btn"
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">Ask {botName}</span>
+                    <span className="font-semibold text-sm">{botName}</span>
                 </button>
 
                 {isOpen && (

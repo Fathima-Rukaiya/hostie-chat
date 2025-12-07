@@ -878,13 +878,16 @@ export function StandardUI({
 }
      .hertzora-color {
    color: "#fff" !important;
-  backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
-  
+   background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
 }
 
 `}</style>
 
-
+{/*      .hertzora-color {
+   color: "#fff" !important;
+  // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
+  
+}*/}
       <div className="fixed bottom-6 right-6 z-50" >
         {/* <div className="fixed bottom-6 right-6 z-50 " > */}
         <div
