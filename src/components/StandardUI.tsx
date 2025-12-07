@@ -839,7 +839,7 @@ export function StandardUI({
               </button>
 
               <button
-                className="flex-1 bg-purple-600 text-white px-2 py-1 rounded-lg text-sm"
+                className="flex-1 bg-pink-600 text-white px-2 py-1 rounded-lg text-sm"
                 // onClick={handleReviewSubmit}
                 onClick={handleReviewSubmit}
               >
@@ -877,12 +877,12 @@ export function StandardUI({
           {/* Header */}
           {/* <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
           <div className="flex items-center gap-2">
-            <Bot strokeWidth={1.75} className="text-purple-600" />
+            <Bot strokeWidth={1.75} className="text-pink-600" />
             <span className="font-semibold text-sm">Hostie</span>
             <span className="ml-1 h-2 w-2 rounded-full bg-green-500" />
             <span className="text-xs text-green-500">Online</span>
           </div>
-          <div className="flex items-center px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-800">
+          <div className="flex items-center px-2 py-0.5 rounded-md bg-pink-50 dark:bg-pink-800">
             <Bot size={12} className="text-zinc-600 dark:text-zinc-200" />
             <span className="ml-1 text-xs font-medium">AI</span>
           </div>
@@ -902,14 +902,14 @@ export function StandardUI({
             <div className="flex items-center gap-1">
               {/* <BotMessageSquare className="mr-1.5" />*/}
               {botIcon ? (
-                <div className="bg-purple-600 p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
+                <div className="bg-pink-600 p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
                   <img
                     src={botIcon}
                     alt="Bot"
                     className="rounded-full object-cover"
                   /></div>
               ) : (
-                <div className="bg-purple-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
+                <div className="bg-pink-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
                   <BotMessageSquare size={20} />
                 </div>
               )} {botName}
@@ -922,7 +922,7 @@ export function StandardUI({
             <div className="flex gap-1">
               <Popover>
                 <PopoverTrigger>
-                  <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
+                  <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
                     <LockIcon
                       size="12"
                       className="text-zinc-600 dark:text-zinc-200"
@@ -934,7 +934,7 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover>
-              <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50 dark:bg-purple-800">
+              <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
                 {/* <img
                   src={botIcon}
@@ -962,10 +962,10 @@ export function StandardUI({
               // <div className="mt-10 flex flex-col items-center justify-center text-center">
               //   <Bot strokeWidth={1.75}
               //     size={60}
-              //     className="text-purple-600 dark:text-purple-600 mb-2"
+              //     className="text-pink-600 dark:text-pink-600 mb-2"
 
               //   />
-              //   <div className="text-lg font-bold text-purple-600">
+              //   <div className="text-lg font-bold text-pink-600">
               //     Hello, there...! 👋
               //   </div>
               //   <div className="mt-1 font-semibold text-gray-500 dark:text-gray-400 text-sm">
@@ -976,7 +976,7 @@ export function StandardUI({
 
                 {/* <Bot strokeWidth={1.75}
                 size={60}
-                className="text-purple-600 dark:text-purple-600 mb-2"
+                className="text-pink-600 dark:text-pink-600 mb-2"
 
               /> */}
                 <img
@@ -984,7 +984,7 @@ export function StandardUI({
                   alt="Bot Icon"
                   className="w-14 h-14 rounded-full object-cover mb-2"
                 />
-                <div className="flex items-center text-lg justify-center font-bold text-purple-600 dark:text-purple-600">
+                <div className="flex items-center text-lg justify-center font-bold text-pink-600 dark:text-pink-600">
                   Hello,&nbsp;<div>there..!</div>
                   <div className="ml-1 text-[22px]">👋</div>
                 </div>
@@ -1006,16 +1006,16 @@ export function StandardUI({
                 {msg.sender === "bot" && (
                   // <div className="flex items-end relative">
                   //   <Bot strokeWidth={1.75}
-                  //     className="h-[31px] w-[31px] text-purple-600 dark:text-purple-600 border border-purple-600 rounded-full p-1"
+                  //     className="h-[31px] w-[31px] text-pink-600 dark:text-pink-600 border border-pink-600 rounded-full p-1"
 
                   //   />
                   // </div>
                   <div className="flex items-end relative" >
-                    {/* <Bot className="h-[31px] w-[31px] rounded-full text-purple-600 dark:text-purple-600 p-1 border border-purple-600 dark:border-neutral-500" /> */}
+                    {/* <Bot className="h-[31px] w-[31px] rounded-full text-pink-600 dark:text-pink-600 p-1 border border-pink-600 dark:border-neutral-500" /> */}
                     <img
                       src={botIcon}
                       alt="Bot"
-                      className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-purple-600 dark:border-neutral-500"
+                      className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-pink-600 dark:border-neutral-500 bg-pink-600"
                     />
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
@@ -1029,7 +1029,7 @@ export function StandardUI({
 }
 
 .chat-bubble a {
-  color: #7c3aed; /* purple link */
+  color: #ed3ab7ff; /* pink link */
   text-decoration: underline;
 }
 
@@ -1050,7 +1050,7 @@ export function StandardUI({
                 </style>
                 <div
                   className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
-                    ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
+                    ? "bg-pink-600 dark:bg-pink-700 text-white rounded-br-none relative"
                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                     }`}
                 >
@@ -1097,7 +1097,7 @@ export function StandardUI({
                               >
                                 <div className={`flex gap-2 
                                 ${msg.sender === "user"
-                                    ? "bg-purple-600 dark:bg-purple-700 text-white rounded-br-none relative"
+                                    ? "bg-pink-600 dark:bg-pink-700 text-white rounded-br-none relative"
                                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                                   }`}> <FileText size={20} />View Document</div>
 
@@ -1140,7 +1140,7 @@ export function StandardUI({
                   //   />
                   // </div>
 
-                  // <div className="flex-shrink-0 relative flex items-center justify-center bg-purple-600  rounded-full h-[30px] w-[30px]">
+                  // <div className="flex-shrink-0 relative flex items-center justify-center bg-pink-600  rounded-full h-[30px] w-[30px]">
                   //   <UserRound size="18" className="text-gray-200" />
                   // </div>
                   <div className="flex-shrink-0 relative">
@@ -1151,7 +1151,7 @@ export function StandardUI({
                         width={30}
                         className="rounded-full object-cover h-[30px] w-[30px]"
                       /> */}
-                    <div className=" bg-purple-600 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
+                    <div className=" bg-pink-600 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
                       <UserRound size="18" className="text-gray-200" />
                     </div>
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
@@ -1196,11 +1196,11 @@ export function StandardUI({
               }}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your question"
-              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-purple-600"
+              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-pink-600"
             />
             {/* <button
               onClick={sendMessage}
-              className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white ml-2"
+              className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-pink-600 to-pink-700 text-white ml-2"
             >
               <SendHorizonal className="w-4 h-4" />
             </button> 
@@ -1243,7 +1243,7 @@ export function StandardUI({
 
               {/* Trigger */}
               <div className="flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer">
-                {/* <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
+                {/* <div className="text-sm font-bold bg-gradient-to-r from-pink-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
                   &nbsp;Hostie
                 </div> */}
 
@@ -1264,12 +1264,12 @@ export function StandardUI({
                 </div>
 
 
-                {/* <div className="text-sm font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 bg-clip-text text-transparent ..."> &nbsp;Hostie
+                {/* <div className="text-sm font-bold bg-gradient-to-r from-pink-600 via-pink-400 to-blue-600 bg-clip-text text-transparent ..."> &nbsp;Hostie
                 </div> */}
 
                 <div className="relative w-6 h-6 flex items-center justify-center">
                   <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60"></div>
-                  <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                  <div className="absolute w-2 h-2 bg-pink-600 rounded-full top-1 left-1 opacity-60"></div>
                   <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full top-1 right-1 opacity-60"></div>
                   <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full bottom-1 left-1 opacity-50"></div>
                   <div className="absolute w-2 h-0.5 bg-gray-400 dark:bg-gray-500 bottom-1.5 right-1 opacity-30"></div>
