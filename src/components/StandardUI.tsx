@@ -933,7 +933,7 @@ export function StandardUI({
                     Premium
                   </div>
                 </PopoverTrigger>
-                <PopoverContent className="text-xs">
+                <PopoverContent className="text-xs z-[999999]">
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover>
