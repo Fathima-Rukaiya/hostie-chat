@@ -919,14 +919,8 @@ export function StandardUI({
                 className="ml-2 h-2 w-2 rounded-full bg-green-500"
                 title="Online"
               />
-              <span className="mr-1 text-xs text-green-500">Online</span>
-              <div>
-                <span
-                className="ml-2 h-2 w-2 rounded-full bg-green-500"
-                title="Online"
-              />
-              <span className="mr-1 text-xs text-green-500">Online</span>
-              </div>
+              <span className="mr-2 text-xs text-green-500">Online</span>
+             
             </div>
             <div className="flex gap-1">
               <Popover>
