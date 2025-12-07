@@ -967,7 +967,7 @@ export function StandardUI({
                   <div
                     className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50 whitespace-normal break-words"
                   >
-                    Upgrade to premium to customize your chat page logo and colors.
+                    Upgrade to premium <br />to customize your <br />chat page logo and colors.
                   </div>
 
                 )}</div>
