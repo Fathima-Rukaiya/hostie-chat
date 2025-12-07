@@ -229,7 +229,8 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in
-  const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+ // const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+ const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
 
   //const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
@@ -1208,7 +1209,7 @@ export function StandardUI({
 
             <style>{`
   .send-button {
-    background: linear-gradient(to right, #7c3aed, #6D28D9, #6D28D9) !important;
+    background: linear-gradient(to right, #db2777, #da1e72ff, #db2777) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1224,7 +1225,7 @@ export function StandardUI({
     height: 16px;
   }
 `}</style>
-
+{/* #db2777 */}
             <button onClick={sendMessage} className="send-button">
               <SendHorizontal />
             </button>
