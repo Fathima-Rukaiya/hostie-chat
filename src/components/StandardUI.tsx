@@ -1268,14 +1268,24 @@ export function StandardUI({
                 {/* <div className="text-sm font-bold bg-gradient-to-r from-pink-600 via-pink-400 to-blue-600 bg-clip-text text-transparent ..."> &nbsp;Hostie
                 </div> */}
 
-                <div className="relative w-6 h-6 flex items-center justify-center">
+                {/* <div className="relative w-6 h-6 flex items-center justify-center">
                   <div className="absolute inset-0 border border-gray-400 dark:border-gray-600 rounded-sm opacity-60 "></div>
                   <div className="absolute w-2 h-2 bg-pink-600 rounded-full top-1 left-1 rounded-full opacity-60"></div>
                   <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full top-1 right-1 opacity-60"></div>
                   <div className="absolute w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full bottom-1 left-1 opacity-50"></div>
                   <div className="absolute w-2 h-0.5 bg-gray-400 dark:bg-gray-500 bottom-1.5 right-1 opacity-30"></div>
                   <span className="absolute text-xs text-gray-600 dark:text-gray-300 font-bold">AI</span>
-                </div>
+                </div> */}
+                   <div className="relative w-6 h-6 flex items-center justify-center">
+                          <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
+                          <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                          <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
+                          <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
+                          <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
+                          <span className="absolute text-xs text-gray-600 font-bold">
+                            AI
+                          </span>
+                        </div>
               </div>
 
               {/* Popover Above */}
