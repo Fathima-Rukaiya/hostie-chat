@@ -81,7 +81,7 @@ export function ChatUI({ apiKey,
  
      .hertzora-color {
    color: "#fff" !important;
-   background: linear-gradient(to right, #db2777, #7526b9ff, #7e22ce) !important;
+   background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
 }
 
 `}</style>
@@ -98,7 +98,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">Ask {botName}x</span>
+                    <span className="font-semibold text-sm">Ask {botName}!</span>
                 </button>
 
                 {isOpen && (
