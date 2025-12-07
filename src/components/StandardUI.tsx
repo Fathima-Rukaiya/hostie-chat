@@ -189,7 +189,7 @@ export function StandardUI({
 
       return countryCode; // save this in DB
     } catch (err) {
-      console.error("Failed to get country:", err);
+     
       return "un"; // unknown
     }
   };
@@ -372,7 +372,7 @@ export function StandardUI({
         ]);
 
       } catch (err) {
-        console.error("SSE parse error:", err);
+       // console.error("SSE parse error:", err);
       }
     };
 
@@ -382,7 +382,7 @@ export function StandardUI({
     //   eventSource.close();
     // };
     eventSource.onerror = (err) => {
-      console.warn("SSE error:", err);
+     
       // optionally reconnect after delay
       setTimeout(() => {
         if (roomName) {
