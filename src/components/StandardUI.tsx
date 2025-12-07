@@ -935,7 +935,7 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover>
-              <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
+              <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
                 {/* <img
                   src={botIcon}
@@ -985,7 +985,7 @@ export function StandardUI({
                   alt="Bot Icon"
                   className="w-14 h-14 rounded-full object-cover mb-2"
                 />
-                <div className="flex items-center text-lg justify-center font-bold text-pink-600 dark:text-pink-600">
+                <div className="flex items-center text-lg justify-center font-bold text-pink-600 dark:text-pink-500">
                   Hello,&nbsp;<div>there..!</div>
                   <div className="ml-1 text-[22px]">👋</div>
                 </div>
@@ -1209,7 +1209,7 @@ export function StandardUI({
 
             <style>{`
   .send-button {
-    background: linear-gradient(to right, #db2777, #da1e72ff, #db2777) !important;
+    background: linear-gradient(to right, #db2777, #7e22ce, #7e22ce) !important;
     display: flex;
     align-items: center;
     justify-content: center;

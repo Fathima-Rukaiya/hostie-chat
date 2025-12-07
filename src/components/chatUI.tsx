@@ -81,7 +81,7 @@ export function ChatUI({ apiKey,
                 <button
 
                     onClick={() => setIsOpen(!isOpen)}
-                    className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-pink-600 bg-gradient-to-r from-pink-700 to-pink-500 text-white hover:from-pink-800 hover:to-pink-600"
+                    className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white hover:from-pink-800 hover:to-pink-600"
                 >
                     {/* <Bot strokeWidth={1.75} size={22} /> */}
 
