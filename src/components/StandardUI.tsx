@@ -1051,7 +1051,7 @@ export function StandardUI({
                 </style>
                 <div
                   className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
-                    ? "bg-pink-700 dark:bg-pink-800 text-white rounded-br-none relative"
+                    ? "bg-pink-600 dark:bg-pink-700 text-white rounded-br-none relative"
                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                     }`}
                 >
@@ -1209,7 +1209,7 @@ export function StandardUI({
 
             <style>{`
   .send-button {
-    background: linear-gradient(to right, #db2777, #7e22ce, #7e22ce) !important;
+    background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
     display: flex;
     align-items: center;
     justify-content: center;
