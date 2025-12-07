@@ -751,6 +751,17 @@ export function StandardUI({
     endChatSession();
   };
 
+  const [showPremiumPopup, setShowPremiumPopup] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
+        setShowPremiumPopup(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
 
   if (!showChat) return null;
@@ -914,18 +925,18 @@ export function StandardUI({
                   <BotMessageSquare size={20} />
                 </div>
               )} {botName}
-            
+
               <span
                 className="ml-2 h-2 w-2 rounded-full bg-green-500"
                 title="Online"
               />
               <span className="mr-2 text-xs text-green-500">Online</span>
-             
+
             </div>
             <div className="flex gap-1 z-[99999]">
-              <Popover >
+              {/* <Popover >
                 <PopoverTrigger>
-                  <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
+                  <div  className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
                     <LockIcon
                       size="12"
                       className="text-zinc-600 dark:text-zinc-200"
@@ -936,7 +947,23 @@ export function StandardUI({
                 <PopoverContent className="text-xs z-[999999]">
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
-              </Popover>
+              </Popover> */}
+              <div>
+                <button
+                  onClick={() => setShowPremiumPopup((prev) => !prev)}
+                  className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
+                  <LockIcon
+                    size="12"
+                    className="text-zinc-600 dark:text-zinc-200"
+                  />{" "}
+                  Premium
+                </button>
+
+                {showPremiumPopup && (
+                  <div className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50">
+                    Upgrade to premium to customize your chat page logo and colors.
+                  </div>
+                )}</div>
               <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
                 {/* <img
