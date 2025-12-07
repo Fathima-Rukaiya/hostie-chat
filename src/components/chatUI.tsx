@@ -79,7 +79,7 @@ export function ChatUI({ apiKey,
             <div ref={popoverRef} className="relative">
     <style>{`
  
-   #hertzora-btn {
+   .hertzora-color {
    color: "#fff" !important;
   backgroundImage: "linear-gradient(to right, #db2777, #6b21a8)" !important;
   
@@ -90,7 +90,7 @@ export function ChatUI({ apiKey,
                 <button
 id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white hover:from-pink-700 hover:to-purple-800"
+                    className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white hover:from-pink-700 hover:to-purple-800"
                 >
                     {/* <Bot strokeWidth={1.75} size={22} /> */}
 
@@ -99,7 +99,7 @@ id="hertzora-btn"
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">Ask {botName}!</span>
+                    <span className="font-semibold text-sm">Ask {botName}</span>
                 </button>
 
                 {isOpen && (
