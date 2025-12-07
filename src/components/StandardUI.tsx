@@ -914,11 +914,12 @@ export function StandardUI({
                   <BotMessageSquare size={20} />
                 </div>
               )} {botName}
+            
               <span
                 className="ml-2 h-2 w-2 rounded-full bg-green-500"
                 title="Online"
               />
-              <span className="ml-1 text-xs text-green-500">Online</span>
+              <span className="mr-1 text-xs text-green-500">Online</span>
             </div>
             <div className="flex gap-1">
               <Popover>
@@ -1016,7 +1017,7 @@ export function StandardUI({
                     <img
                       src={botIcon}
                       alt="Bot"
-                      className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-pink-600 dark:border-neutral-500 bg-pink-600"
+                      className="h-[31px] w-[31px] rounded-full object-cover p-1 border border-pink-600 dark:border-neutral-500 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white"
                     />
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
@@ -1051,7 +1052,7 @@ export function StandardUI({
                 </style>
                 <div
                   className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
-                    ? "bg-pink-600 dark:bg-pink-700 text-white rounded-br-none relative"
+                    ? "bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white text-white rounded-br-none relative"
                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                     }`}
                 >
