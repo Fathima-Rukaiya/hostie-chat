@@ -20,8 +20,8 @@ export function ChatUI({ apiKey,
     const [botIcon, setBotIcon] = useState<string | null>(null);
 
     //const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
-  const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
-  //https://app.hertzora.ai/hostie/overview
+    const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
+    //https://app.hertzora.ai/hostie/overview
 
     useEffect(() => {
         const verifyDomain = async () => {
@@ -75,20 +75,19 @@ export function ChatUI({ apiKey,
         // >
         <div className="fixed bottom-6 right-6 z-[9999]">
             {/* <div ref={popoverRef}> */}
-{/* , */}
+            {/* , */}
             <div ref={popoverRef} className="relative">
-    {/* <style>{`
+                <style>{`
  
-   .hertzora-color {
+     .hertzora-color {
    color: "#fff" !important;
-  backgroundImage: "linear-gradient(to right, #db2777, #6b21a8)" !important;
-  
+   background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
 }
 
-`}</style> */}
+`}</style>
 
                 <button
-id="hertzora-btn"
+                    id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
                     className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white hover:from-pink-700 hover:to-purple-800"
                 >
@@ -99,7 +98,7 @@ id="hertzora-btn"
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">Ask {botName}</span>
+                    <span className="font-semibold text-sm">Ask {botName}!</span>
                 </button>
 
                 {isOpen && (

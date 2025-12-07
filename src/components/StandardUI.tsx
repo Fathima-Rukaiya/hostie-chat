@@ -876,16 +876,14 @@ export function StandardUI({
     max-height: none !important;
   }
 }
-  
-
-`}</style>
-
-{/* 
-   .hertzora-color {
+     .hertzora-color {
    color: "#fff" !important;
    background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
 }
-.hertzora-color {
+
+`}</style>
+
+{/*      .hertzora-color {
    color: "#fff" !important;
   // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
   
