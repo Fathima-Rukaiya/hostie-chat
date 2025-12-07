@@ -77,7 +77,7 @@ export function ChatUI({ apiKey,
             {/* <div ref={popoverRef}> */}
 {/* , */}
             <div ref={popoverRef} className="relative">
-    <style>{`
+    {/* <style>{`
  
    .hertzora-color {
    color: "#fff" !important;
@@ -85,7 +85,7 @@ export function ChatUI({ apiKey,
   
 }
 
-`}</style>
+`}</style> */}
 
                 <button
 id="hertzora-btn"
@@ -99,7 +99,7 @@ id="hertzora-btn"
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}</span>
+                    <span className="font-semibold text-sm">Ask {botName}</span>
                 </button>
 
                 {isOpen && (
