@@ -903,7 +903,7 @@ export function StandardUI({
             <div className="flex items-center gap-1">
               {/* <BotMessageSquare className="mr-1.5" />*/}
               {botIcon ? (
-                <div className="bg-pink-700 p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
+                <div className="bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
                   <img
                     src={botIcon}
                     alt="Bot"
@@ -984,7 +984,7 @@ export function StandardUI({
                 <img
                   src={botIcon}
                   alt="Bot Icon"
-                  className="w-14 h-14 rounded-full object-cover mb-2"
+                  className="w-14 h-14 rounded-full object-cover mb-2 p-3 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white"
                 />
                 <div className="flex items-center text-lg justify-center font-bold text-pink-600 dark:text-pink-500">
                   Hello,&nbsp;<div>there..!</div>
