@@ -75,11 +75,20 @@ export function ChatUI({ apiKey,
         // >
         <div className="fixed bottom-6 right-6 z-[9999]">
             {/* <div ref={popoverRef}> */}
-
+{/* , */}
             <div ref={popoverRef} className="relative">
+    <style>{`
+ 
+   #hertzora-btn {
+   color: "#fff" !important;
+  backgroundImage: "linear-gradient(to right, #db2777, #6b21a8)" !important;
+  
+}
+
+`}</style>
 
                 <button
-
+id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
                     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white hover:from-pink-700 hover:to-purple-800"
                 >
