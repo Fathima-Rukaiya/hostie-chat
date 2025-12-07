@@ -922,7 +922,7 @@ export function StandardUI({
               <span className="mr-2 text-xs text-green-500">Online</span>
              
             </div>
-            <div className="flex gap-1 z-[9999] overflow-visible">
+            <div className="flex gap-1 z-[99999]">
               <Popover >
                 <PopoverTrigger>
                   <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
