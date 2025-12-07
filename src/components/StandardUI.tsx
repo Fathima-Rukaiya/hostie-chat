@@ -948,7 +948,7 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover> */}
-              <div>
+              <div className="relative">
                 <button
                   onClick={() => setShowPremiumPopup((prev) => !prev)}
                   className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
@@ -960,9 +960,16 @@ export function StandardUI({
                 </button>
 
                 {showPremiumPopup && (
-                  <div className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50">
+                  // <div className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50">
+
+                  //   Upgrade to premium to customize your chat page logo and colors.
+                  // </div>
+                  <div
+                    className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50 whitespace-normal break-words"
+                  >
                     Upgrade to premium to customize your chat page logo and colors.
                   </div>
+
                 )}</div>
               <div className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
