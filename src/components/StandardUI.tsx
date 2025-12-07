@@ -903,7 +903,7 @@ export function StandardUI({
             <div className="flex items-center gap-1">
               {/* <BotMessageSquare className="mr-1.5" />*/}
               {botIcon ? (
-                <div className="bg-pink-600 p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
+                <div className="bg-pink-700 p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
                   <img
                     src={botIcon}
                     alt="Bot"
@@ -1051,7 +1051,7 @@ export function StandardUI({
                 </style>
                 <div
                   className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
-                    ? "bg-pink-600 dark:bg-pink-700 text-white rounded-br-none relative"
+                    ? "bg-pink-700 dark:bg-pink-800 text-white rounded-br-none relative"
                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                     }`}
                 >
