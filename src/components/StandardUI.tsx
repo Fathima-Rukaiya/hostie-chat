@@ -1288,7 +1288,7 @@ export function StandardUI({
                         </div> */}
                 <div className="relative w-6 h-6 flex items-center justify-center">
                   {/* Outer curved border */}
-                  <div className="absolute inset-0 border border-gray-400 rounded-md opacity-60"></div>
+                  <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
 
                   <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
                   <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
