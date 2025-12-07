@@ -1260,7 +1260,7 @@ export function StandardUI({
 
                 {/* Use the class */}
                 <div className="gradient-text font-bold text-sm">
-                  &nbsp;Hostie
+                  &nbsp;HertZora
                 </div>
 
 
