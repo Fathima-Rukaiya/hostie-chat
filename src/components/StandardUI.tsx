@@ -1290,20 +1290,12 @@ export function StandardUI({
                   {/* Outer curved border */}
                   <div className="absolute inset-0 border border-gray-400 rounded-md opacity-60"></div>
 
-                  {/* Top-left circle */}
-                  <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-0.5 left-0.5 opacity-60"></div>
-
-                  {/* Top-right small dot */}
-                  <div className="absolute w-1.5 h-1.5 bg-gray-400 rounded-full top-0.5 right-0.5 opacity-60"></div>
-
-                  {/* Bottom-left small dot */}
-                  <div className="absolute w-1.5 h-1.5 bg-gray-400 rounded-full bottom-0.5 left-0.5 opacity-50"></div>
-
-                  {/* Bottom-right line with curved edges */}
-                  <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1 right-0.5 rounded-full opacity-40"></div>
-
-                  {/* Center text */}
-                  <span className="absolute text-[9px] text-gray-600 font-semibold">
+                  <div className="absolute inset-0 border border-gray-400 rounded-sm opacity-60"></div>
+                  <div className="absolute w-2 h-2 bg-purple-600 rounded-full top-1 left-1 opacity-60"></div>
+                  <div className="absolute w-1 h-1 bg-gray-400 rounded-full top-1 right-1 opacity-60"></div>
+                  <div className="absolute w-1 h-1 bg-gray-400 rounded-full bottom-1 left-1 opacity-50"></div>
+                  <div className="absolute w-2 h-0.5 bg-gray-400 bottom-1.5 right-1 opacity-30"></div>
+                  <span className="absolute text-xs text-gray-600 font-bold">
                     AI
                   </span>
                 </div>
