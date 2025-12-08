@@ -1248,7 +1248,7 @@ export function StandardUI({
               }}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your question"
-              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-pink-600 text-zinc-500 dark:text-zinc-400 dark:bg-neutral-600"
+              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-pink-600 text-zinc-500 dark:text-zinc-400 dark:bg-neutral-900"
             />
             {/* <button
               onClick={sendMessage}
