@@ -961,29 +961,31 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover> */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowPremiumPopup((prev) => !prev)}
-                  className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
-                  <LockIcon
-                    size="12"
-                    className="text-zinc-600 dark:text-zinc-200"
-                  />{" "}
-                  Premium
-                </button>
+              {botName !== "HertZora"  && (
+                <div className="relative">
+                  <button
+                    onClick={() => setShowPremiumPopup((prev) => !prev)}
+                    className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
+                    <LockIcon
+                      size="12"
+                      className="text-zinc-600 dark:text-zinc-200"
+                    />{" "}
+                    Premium
+                  </button>
 
-                {showPremiumPopup && (
-                  // <div className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50">
+                  {showPremiumPopup && (
+                    // <div className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50">
 
-                  //   Upgrade to premium to customize your chat page logo and colors.
-                  // </div>
-                  <div
-                    className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50 whitespace-normal break-words"
-                  >
-                    Upgrade to premium <br />to customize your <br />chat page logo and colors.
-                  </div>
+                    //   Upgrade to premium to customize your chat page logo and colors.
+                    // </div>
+                    <div
+                      className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50 whitespace-normal break-words"
+                    >
+                      Upgrade to premium <br />to customize your <br />chat page logo and colors.
+                    </div>
 
-                )}</div>
+                  )}</div>
+              )}
               <div className="hertzora-color flex items-center px-2 py-0.5 rounded-md gap-1 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
                 {/* <img
@@ -1202,7 +1204,7 @@ export function StandardUI({
                         className="rounded-full object-cover h-[30px] w-[30px]"
                       /> */}
                     <div className="hertzora-color bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
-                      <UserRound size="18" className="text-gray-200" />
+                      <UserRound size="18" className="uIcon text-gray-200" />
                     </div>
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
