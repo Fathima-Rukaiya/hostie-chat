@@ -1108,9 +1108,9 @@ export function StandardUI({
                 >
                   {msg.isTyping ? (
                     <div className="flex gap-1 px-1.5">
-                      <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce" />
-                      <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-200" />
-                      <span className="w-1.5 h-1.5 bg-gray-600 rounded-full animate-bounce delay-400" />
+                      <span className="w-1.5 h-1.5 bg-gray-600 dark:text-white rounded-full animate-bounce" />
+                      <span className="w-1.5 h-1.5 bg-gray-600 dark:text-white rounded-full animate-bounce delay-200" />
+                      <span className="w-1.5 h-1.5 bg-gray-600 dark:text-white rounded-full animate-bounce delay-400" />
                     </div>
                   ) : (
                     <div>
@@ -1248,7 +1248,7 @@ export function StandardUI({
               }}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your question"
-              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-pink-600"
+              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-pink-600 text-zinc-500 dark:text-zinc-400 dark:bg-neutral-600"
             />
             {/* <button
               onClick={sendMessage}
