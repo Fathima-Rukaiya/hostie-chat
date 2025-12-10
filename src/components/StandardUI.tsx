@@ -961,7 +961,7 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover> */}
-              {botName !== "HertZora"  && (
+              {botName !== "HertZora" && (
                 <div className="relative">
                   <button
                     onClick={() => setShowPremiumPopup((prev) => !prev)}
@@ -1149,8 +1149,8 @@ export function StandardUI({
                               >
                                 <div className={`flex gap-2 
                                 ${msg.sender === "user"
-                                    ? "bg-pink-600 dark:bg-pink-700 text-white rounded-br-none relative"
-                                    : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
+                                    ? "text-white rounded-br-none relative"
+                                    : " text-gray-800 dark:text-white rounded-bl-none relative"
                                   }`}> <FileText size={20} />View Document</div>
 
                               </a>
