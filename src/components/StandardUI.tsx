@@ -21,12 +21,20 @@ export function StandardUI({
   apiKey,
   shadowContainer,
   botIcon,
-  botName
+  botName,
+  gradient,
+  darkGradient,
+  borderColor,
+  darkBorderColor,
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
   botIcon: string,
   botName: string
+  gradient?: string;
+  darkGradient?: string;
+  borderColor?: string;
+  darkBorderColor?: string;
 }) {
 
 
@@ -63,6 +71,13 @@ export function StandardUI({
   const [selectedSentiment, setSelectedSentiment] = useState<"positive" | "neutral" | "negative" | null>(null);
   const [reviewText, setReviewText] = useState("");
   const [showReviewPopup, setShowReviewPopup] = useState(false);
+
+  //to get assgnee data 
+  const [assignedAgent, setAssignedAgent] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+
 
   useEffect(() => {
     if (chatHistory.length > 0) { // Start AFTER first message
@@ -140,6 +155,10 @@ export function StandardUI({
     setIsGuest(true);
     setUserInfo(null);
     setAskedForInfo(false);
+    // reset AI pause state
+    setAiPaused(false);
+    sessionStorage.removeItem("aiPaused");
+
 
     // create new room id
     const newRoom = crypto.randomUUID();
@@ -228,11 +247,11 @@ export function StandardUI({
   }, []);
 
   //
-  //https://hostingate-client.vercel.app/sign-in
-  // const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
-  const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
+  //https://hostingate-client.vercel.app/sign-in https://app.hostingate.com/dashboard/profile
+  const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+  //const API_BASE_URL = "https://app.hostie.ai/api/clientCustomerChatBox";
 
-  //const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -342,6 +361,17 @@ export function StandardUI({
         if (msgText === "You are now connected to a live agent. AI responses are paused.") {
           setAiPaused(true);
           addBotMessage(msgText);
+
+          getAssignee()
+            .then((agent) => {
+              if (agent?.id && agent?.name) {
+                setAssignedAgent({
+                  id: agent.id,
+                  name: agent.name,
+                });
+              }
+            })
+            .catch(() => { });
           return; // admin message already sent, don’t add again
         }
 
@@ -349,6 +379,7 @@ export function StandardUI({
         if (msgText === "AI responses resumed.") {
           setAiPaused(false);
           addBotMessage(msgText);
+          setAssignedAgent(null);
           return;
         }
 
@@ -396,7 +427,21 @@ export function StandardUI({
   }, [roomName]);
 
 
-
+  //save normal msg 
+  const getAssignee = async () => {
+    const res = await fetch(`${API_BASE_URL}/getAssignee`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+      body: JSON.stringify({
+        room_id: roomName,
+        sender_id: senderId,
+      }),
+    });
+    return res.json(); // { reply: "AI response" }
+  };
 
 
   const saveGuestContact = async (guestData: { name?: string; email?: string, room_id: string, country: string, }) => {
@@ -763,6 +808,13 @@ export function StandardUI({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const getInitials = (name: string) => {
+    if (!name) return "";
+    const parts = name.trim().split(" ");
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  };
+
 
   if (!showChat) return null;
 
@@ -876,19 +928,42 @@ export function StandardUI({
     max-height: none !important;
   }
 }
-     .hertzora-color {
+     .hostie-color {
    color: "#fff" !important;
-   background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
+   
 
+`}</style>
+      <style>{`
+  .hostie-background {
+    background: ${gradient};
+    border: 1px solid ${borderColor || "#e9e4e6ff"};
+    transition: border-color 0.3s;
+  }
+  .dark .hostie-background {
+    background: ${darkGradient};
+    border-color: ${darkBorderColor || "#50484cff"};
+  }
+
+   .hostie-hello-text {
+    color: ${borderColor};
+    opacity: 0.85;
+    transition: border-color 0.3s;
+
+  }
+  .dark .hostie-hello-text {
+    color: ${borderColor};
+    opacity: 1;
+    
+  }
 `}</style>
 
       {/* 
-.hertzora-color {
+.hostie-color {
    color: "#fff" !important;
    background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
 }
 
- .hertzora-color {
+ .hostie-color {
    color: "#fff" !important;
   // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
   
@@ -900,44 +975,34 @@ export function StandardUI({
           className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
         >
           {/* Header */}
-          {/* <div className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-neutral-700 ">
-          <div className="flex items-center gap-2">
-            <Bot strokeWidth={1.75} className="text-pink-600" />
-            <span className="font-semibold text-sm">Hostie</span>
-            <span className="ml-1 h-2 w-2 rounded-full bg-green-500" />
-            <span className="text-xs text-green-500">Online</span>
-          </div>
-          <div className="flex items-center px-2 py-0.5 rounded-md bg-pink-50 dark:bg-pink-800">
-            <Bot size={12} className="text-zinc-600 dark:text-zinc-200" />
-            <span className="ml-1 text-xs font-medium">AI</span>
-          </div>
-          <div className="flex items-center px-2 py-0.5 rounded-md">
 
-            <span className=" text-xs font-medium"><button
-              onClick={() => setShowChat(false)}
-              className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
-            >
-              ✕
-            </button>
-            </span>
-          </div>
-        </div> */}
 
           <div className="flex items-center justify-between p-3 text-sm font-semibold">
             <div className="flex items-center gap-1">
               {/* <BotMessageSquare className="mr-1.5" />*/}
-              {botIcon ? (
-                <div className="hertzora-color bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
-                  <img
-                    src={botIcon}
-                    alt="Bot"
-                    className="rounded-full object-cover"
-                  /></div>
-              ) : (
-                <div className="bg-pink-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
-                  <BotMessageSquare size={20} />
+
+
+              {assignedAgent ? (
+                <div className="h-6 w-6 rounded-full hostie-background hostie-color text-white flex items-center justify-center text-xs font-semibold">
+                  {getInitials(assignedAgent.name)}
                 </div>
-              )} {botName}
+              ) :
+
+
+                botIcon ? (
+                  <div
+                    className="hostie-background hostie-color text-white p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
+                    <img
+                      src={botIcon}
+                      alt="Bot"
+                      className="rounded-full object-cover"
+                    /></div>
+                ) : (
+                  <div className="bg-pink-600 p-[6px] w-5 h-5 rounded-full flex items-center justify-center">
+                    <BotMessageSquare size={20} />
+                  </div>
+                )}
+              {assignedAgent ? assignedAgent.name : botName}
 
               <span
                 className="ml-2 h-2 w-2 rounded-full bg-green-500"
@@ -961,11 +1026,11 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover> */}
-              {botName !== "HertZora" && (
+              {botName !== "hostie" && (
                 <div className="relative">
                   <button
                     onClick={() => setShowPremiumPopup((prev) => !prev)}
-                    className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
+                    className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-purple-50   dark:bg-neutral-700">
                     <LockIcon
                       size="12"
                       className="text-zinc-600 dark:text-zinc-200"
@@ -986,7 +1051,7 @@ export function StandardUI({
 
                   )}</div>
               )}
-              <div className="hertzora-color flex items-center px-2 py-0.5 rounded-md gap-1 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900">
+              <div className="hostie-background hostie-color flex items-center px-2 py-0.5 rounded-md gap-1 ">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
                 {/* <img
                   src={botIcon}
@@ -1034,9 +1099,10 @@ export function StandardUI({
                 <img
                   src={botIcon}
                   alt="Bot Icon"
-                  className="hertzora-color w-14 h-14 rounded-full object-cover mb-2 p-3 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white"
+
+                  className="hostie-color hostie-background w-14 h-14 rounded-full object-cover mb-2 p-3 text-white"
                 />
-                <div className="flex items-center text-lg justify-center font-bold text-pink-600 dark:text-pink-500">
+                <div className="flex items-center text-lg justify-center font-bold hostie-hello-text">
                   Hello,&nbsp;<div>there..!</div>
                   <div className="ml-1 text-[22px]">👋</div>
                 </div>
@@ -1067,7 +1133,8 @@ export function StandardUI({
                     <img
                       src={botIcon}
                       alt="Bot"
-                      className="hertzora-color h-[31px] w-[31px] rounded-full object-cover p-1 border border-pink-600 dark:border-neutral-500 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white"
+
+                      className="hostie-color hostie-background h-[31px] w-[31px] rounded-full object-cover p-1 text-white"
                     />
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
@@ -1102,9 +1169,10 @@ export function StandardUI({
                 </style>
                 <div
                   className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
-                    ? "hertzora-color bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white text-white rounded-br-none relative"
+                    ? "hostie-color hostie-background text-white text-white rounded-br-none relative"
                     : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                     }`}
+
                 >
                   {msg.isTyping ? (
                     <div className="flex gap-1 px-1.5">
@@ -1150,7 +1218,7 @@ export function StandardUI({
                                 <div className={`flex gap-2 
                                 ${msg.sender === "user"
                                     ? "text-white rounded-br-none relative"
-                                    : " text-gray-800 dark:text-white rounded-bl-none relative"
+                                    : "bg-gray-200 dark:bg-neutral-600 text-gray-800 dark:text-white rounded-bl-none relative"
                                   }`}> <FileText size={20} />View Document</div>
 
                               </a>
@@ -1203,7 +1271,7 @@ export function StandardUI({
                         width={30}
                         className="rounded-full object-cover h-[30px] w-[30px]"
                       /> */}
-                    <div className="hertzora-color bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
+                    <div className="hostie-color hostie-background  relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
                       <UserRound size="18" className="uIcon text-gray-200" />
                     </div>
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
@@ -1248,7 +1316,17 @@ export function StandardUI({
               }}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your question"
-              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm focus:ring-1 focus:ring-pink-600 text-zinc-500 dark:text-zinc-400 dark:bg-neutral-900"
+              className="flex-1 outline-none border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 dark:bg-neutral-900"
+
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = borderColor || "#e9e4e6"; // normal mode
+                if (document.body.classList.contains("dark")) {
+                  e.currentTarget.style.borderColor = darkBorderColor || "#50484c"; // dark mode
+                }
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = ""; // reset to Tailwind default
+              }}
             />
             {/* <button
               onClick={sendMessage}
@@ -1260,7 +1338,7 @@ export function StandardUI({
 
             <style>{`
   .send-button {
-    background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
+   
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1277,7 +1355,7 @@ export function StandardUI({
   }
 `}</style>
             {/* #db2777 */}
-            <button onClick={sendMessage} className="send-button">
+            <button onClick={sendMessage} style={{ background: gradient }} className="send-button hostie-background">
               <SendHorizontal />
             </button>
 
@@ -1311,9 +1389,9 @@ export function StandardUI({
                 </style>
 
                 {/* Use the class */}
-                <a href="https://app.hertzora.ai/">
+                <a href="https://app.hostingate.com/">
                   <div className="gradient-text font-bold text-sm">
-                    &nbsp;HertZora
+                    &nbsp;hostie
                   </div>
                 </a>
 

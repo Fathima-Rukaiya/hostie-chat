@@ -18,11 +18,13 @@ export function ChatUI({ apiKey,
 
     const [botName, setBotName] = useState("ChatBot");
     const [botIcon, setBotIcon] = useState<string | null>(null);
+    const [botColors, setBotColors] = useState<string[] | null>(null);
 
-    //const API_BASE_URL = "https://hostie-dashboard.vercel.app/api/clientCustomerChatBox";
+
+    // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
     //https://app.hertzora.ai/hostie/overview
-
+    // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
     useEffect(() => {
         const verifyDomain = async () => {
             try {
@@ -48,6 +50,8 @@ export function ChatUI({ apiKey,
                     setBotName(capitalizedName || "ChatBot");
                     setBotIcon(data.bot_icon || null);
                     console.log(data.bot_name)
+                    setBotColors(data.colors || null);
+
                 }
             } catch {
                 setIsAllowed(false);
@@ -57,15 +61,60 @@ export function ChatUI({ apiKey,
         verifyDomain();
     }, [apiKey]);
 
+
+
+    function darkenColor(hex: string, amount = 20) {
+        hex = hex.replace("#", "");
+        const num = parseInt(hex, 16);
+
+        let r = (num >> 16) - amount;
+        let g = ((num >> 8) & 0x00ff) - amount;
+        let b = (num & 0x0000ff) - amount;
+
+        r = Math.max(0, r);
+        g = Math.max(0, g);
+        b = Math.max(0, b);
+
+        return `#${(b | (g << 8) | (r << 16)).toString(16).padStart(6, "0")}`;
+    }
+
+
     if (isAllowed === null) return null;
 
     if (isAllowed === false)
+
         return (
             <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow">
                 <p className="text-gray-600 text-sm">This chat widget is not authorized for this domain.</p>
                 <p className="text-gray-400 text-xs mt-2">Please contact the admin.</p>
             </div>
         );
+
+    const gradient = botColors
+        ? `linear-gradient(to right, ${botColors[0]}, ${botColors[1]}, ${botColors[2]})`
+        : `linear-gradient(to right, #db2777, #A724A8, #7e22ce)`;
+
+    const hoverGradient = botColors
+        ? `linear-gradient(to right, 
+       ${darkenColor(botColors[0], 30)}, 
+       ${darkenColor(botColors[1], 30)}, 
+       ${darkenColor(botColors[2], 30)}
+     )`
+        : `linear-gradient(to right, #be1f66, #8b1d8b, #6b1cae)`;
+
+    // slight darker tone for dark mode
+    const darkModeGradient = botColors
+        ? `linear-gradient(to right, 
+       ${darkenColor(botColors[0], 40)}, 
+       ${darkenColor(botColors[1], 40)}, 
+       ${darkenColor(botColors[2], 40)}
+     )`
+        : gradient;
+
+    const borderColor = botColors ? darkenColor(botColors[0], 20) : "#e9e4e6ff";
+const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
+
+
 
     return (
         // <ThemeProvider
@@ -79,17 +128,29 @@ export function ChatUI({ apiKey,
             <div ref={popoverRef} className="relative">
                 <style>{`
  
+ 
      .hertzora-color {
    color: "#fff" !important;
-   background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
+ 
 }
 
 `}</style>
-
+                <style>{`
+  .dark #hertzora-btn {
+     background: ${darkModeGradient} !important;
+  }
+`}</style>
+                {/*     .hertzora-color {
+   color: "#fff" !important;
+   background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
+} */}
                 <button
                     id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-700 dark:from-purple-800 dark:to-pink-900 text-white hover:from-pink-700 hover:to-purple-800"
+                    style={{ background: gradient }}
+                    className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white "
+                    onMouseEnter={(e) => (e.currentTarget.style.background = hoverGradient)}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = gradient)}
                 >
                     {/* <Bot strokeWidth={1.75} size={22} /> */}
 
@@ -98,14 +159,16 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">Ask {botName}!</span>
+                    <span className="font-semibold text-sm">Ask {botName}!
+                        
+                    </span>
                 </button>
 
                 {isOpen && (
                     // {botName}
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} />
+                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor}  darkBorderColor={darkBorderColor} />
                     </div>
                 )}
             </div>
