@@ -89,7 +89,7 @@ Error generating stack: `+l.message+`
     width: 16px;
     height: 16px;
   }
-`}),(0,S.jsx)("button",{onClick:Dn,style:{background:u},className:"send-button hostie-background",children:(0,S.jsx)(mt,{})})]}),(0,S.jsxs)("div",{className:"font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400",children:[l," may produce inaccurate information"]}),(0,S.jsxs)("div",{className:"flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400",children:["Powered by"," ",(0,S.jsxs)("div",{className:"relative group inline-block",children:[(0,S.jsxs)("div",{className:"flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer",children:[(0,S.jsx)("style",{children:`
+`}),(0,S.jsx)("button",{onClick:Dn,className:"send-button hostie-background",children:(0,S.jsx)(mt,{})})]}),(0,S.jsxs)("div",{className:"font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400",children:[l," may produce inaccurate information"]}),(0,S.jsxs)("div",{className:"flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400",children:["Powered by"," ",(0,S.jsxs)("div",{className:"relative group inline-block",children:[(0,S.jsxs)("div",{className:"flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer",children:[(0,S.jsx)("style",{children:`
           .gradient-text {
             background: linear-gradient(to right, #7c3aed, #ec4899, #3b82f6);
             -webkit-background-clip: text;

@@ -1355,7 +1355,7 @@ export function StandardUI({
   }
 `}</style>
             {/* #db2777 */}
-            <button onClick={sendMessage} style={{ background: gradient }} className="send-button hostie-background">
+            <button onClick={sendMessage} className="send-button hostie-background">
               <SendHorizontal />
             </button>
 
