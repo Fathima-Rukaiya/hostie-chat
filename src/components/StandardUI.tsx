@@ -1026,7 +1026,7 @@ export function StandardUI({
                   Upgrade to premium to customize your chat page logo and colors.
                 </PopoverContent>
               </Popover> */}
-              {botName !== "hostie" && (
+              {botName !== "Hostie"  && (
                 <div className="relative">
                   <button
                     onClick={() => setShowPremiumPopup((prev) => !prev)}
