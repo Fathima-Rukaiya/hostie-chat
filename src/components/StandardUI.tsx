@@ -978,12 +978,12 @@ export function StandardUI({
      background: #171717;
       border-color: ${darkBorderColor || "#50484cff"};
     }
-        #hostie-chat-box button{
+        #hostie-chat-box .btnBorder{
      background: ${backgroundColor};
       border: 1px solid ${borderColor || "#e9e4e6ff"};
     transition: border-color 0.3s;
     }
-      .dark #hostie-chat-box button{
+      .dark #hostie-chat-box .btnBorder{
      background: #171717;
       border-color: ${darkBorderColor || "#50484cff"};
     }
@@ -1334,7 +1334,7 @@ export function StandardUI({
 
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 "
+              className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder"
             >
               {/* border border-zinc-200 dark:border-neutral-700 */}
               {/* mr-2 */}
