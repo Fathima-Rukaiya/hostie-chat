@@ -1026,7 +1026,7 @@ const darkFocusBorderColor = darkBorderColor
   #hostie-chat-box input:focus,
   #hostie-chat-box input:focus-visible {
     border-color: ${focusBorderColor};
-    box-shadow: 0 0 0 1px ${focusBorderColor};
+    box-shadow: 0 0 0 0.5px ${focusBorderColor};
     outline: none;
   }
 
@@ -1038,7 +1038,7 @@ const darkFocusBorderColor = darkBorderColor
   .dark #hostie-chat-box input:focus,
   .dark #hostie-chat-box input:focus-visible {
     border-color: ${darkFocusBorderColor};
-    box-shadow: 0 0 0 1px ${darkFocusBorderColor};
+    box-shadow: 0 0 0 0.5px ${darkFocusBorderColor};
     outline: none;
   }
 

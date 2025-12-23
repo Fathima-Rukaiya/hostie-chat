@@ -82,7 +82,7 @@ Error generating stack: `+l.message+`
   #hostie-chat-box input:focus,
   #hostie-chat-box input:focus-visible {
     border-color: ${_n};
-    box-shadow: 0 0 0 1px ${_n};
+    box-shadow: 0 0 0 0.5px ${_n};
     outline: none;
   }
 
@@ -94,7 +94,7 @@ Error generating stack: `+l.message+`
   .dark #hostie-chat-box input:focus,
   .dark #hostie-chat-box input:focus-visible {
     border-color: ${Fn};
-    box-shadow: 0 0 0 1px ${Fn};
+    box-shadow: 0 0 0 0.5px ${Fn};
     outline: none;
   }
 
