@@ -1344,7 +1344,7 @@ export function StandardUI({
               }}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your question"
-              className="flex-1 outline-none "
+              className="flex-1 outline-none rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400"
 
               onFocus={(e) => {
                 e.currentTarget.style.borderColor = borderColor || "#e9e4e6"; // normal mode
@@ -1356,7 +1356,7 @@ export function StandardUI({
                 e.currentTarget.style.borderColor = ""; // reset to Tailwind default
               }}
             />
-            {/* border border-zinc-200 dark:border-neutral-700 rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 dark:bg-neutral-900 */}
+            {/* border border-zinc-200 dark:border-neutral-700  dark:bg-neutral-900 */}
             {/* <button
               onClick={sendMessage}
               className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-pink-600 to-pink-700 text-white ml-2"
