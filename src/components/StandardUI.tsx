@@ -29,6 +29,7 @@ export function StandardUI({
    greeting,
   introduction,
   startButtonText,
+  backgroundColor
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
@@ -41,6 +42,7 @@ export function StandardUI({
    greeting: string;
   introduction: string;
   startButtonText: string;
+   backgroundColor: string;
 }) {
 
 
@@ -254,10 +256,10 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in https://app.hostingate.com/dashboard/profile
-  const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+  // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
   //const API_BASE_URL = "https://app.hostie.ai/api/clientCustomerChatBox";
 
-  // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -961,6 +963,18 @@ export function StandardUI({
     opacity: 1;
     
   }
+    #hostie-chat-box{
+     background: ${backgroundColor};
+    }
+      .dark #hostie-chat-box{
+     background: #171717;
+    }
+     #hostie-chat-box input{
+     background: ${backgroundColor};
+    }
+      .dark #hostie-chat-box input{
+     background: #171717;
+    }
 `}</style>
 
       {/* 
@@ -978,9 +992,9 @@ export function StandardUI({
         {/* <div className="fixed bottom-6 right-6 z-50 " > */}
         <div
           id="hostie-chat-box"
-          className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 bg-white dark:bg-neutral-900"
+          className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 "
         >
-          {/* Header */}
+          {/* Header bg-white dark:bg-neutral-900*/}
 
 
           <div className="flex items-center justify-between p-3 text-sm font-semibold">

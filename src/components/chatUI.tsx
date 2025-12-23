@@ -23,13 +23,14 @@ export function ChatUI({ apiKey,
     const [greeting, setGreeting] = useState<string>("");
     const [introduction, setIntroduction] = useState<string>("");
     const [startButtonText, setStartButtonText] = useState<string>("Start Chat");
+    const [backgroundColor, setBackgroundColor] = useState<string>("#ffffffff");
 
 
 
-    const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+    // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     // const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
     //https://app.hertzora.ai/hostie/overview
-    // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+    const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
     useEffect(() => {
         const verifyDomain = async () => {
             try {
@@ -60,7 +61,7 @@ export function ChatUI({ apiKey,
                     setGreeting(data.greeting || "Hello 👋");
                     setIntroduction(data.introduction || "How can I help you today?");
                     setStartButtonText(data.start_button_text || "Start Chat");
-
+                    setBackgroundColor(data.backgroundColor||"#ffffff")
                 }
             } catch {
                 setIsAllowed(false);
@@ -180,7 +181,9 @@ export function ChatUI({ apiKey,
                         <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
                             greeting={greeting}
                             introduction={introduction}
-                            startButtonText={startButtonText} />
+                            startButtonText={startButtonText}
+                            backgroundColor={backgroundColor}
+                        />
                     </div>
                 )}
             </div>
