@@ -1341,7 +1341,7 @@ export function StandardUI({
               <Plus className="w-4 h-4" />
             </button>
 
-            <input
+            <input 
               type="text"
               value={message}
               // onChange={(e) => setMessage(e.target.value)}
@@ -1352,7 +1352,7 @@ export function StandardUI({
               }}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your question"
-              className="flex-1 outline-none rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400"
+              className="flex-1 outline-none rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 btnBorder"
 
               onFocus={(e) => {
                 e.currentTarget.style.borderColor = borderColor || "#e9e4e6"; // normal mode
