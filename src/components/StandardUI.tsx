@@ -823,6 +823,32 @@ export function StandardUI({
     return (parts[0][0] + parts[1][0]).toUpperCase();
   };
 
+  function darkenColor(hex: string, amount = 20) {
+  if (!hex) return hex;
+
+  hex = hex.replace("#", "");
+  const num = parseInt(hex, 16);
+
+  let r = (num >> 16) - amount;
+  let g = ((num >> 8) & 0x00ff) - amount;
+  let b = (num & 0x0000ff) - amount;
+
+  r = Math.max(0, r);
+  g = Math.max(0, g);
+  b = Math.max(0, b);
+
+  return `#${(b | (g << 8) | (r << 16))
+    .toString(16)
+    .padStart(6, "0")}`;
+}
+
+const focusBorderColor = borderColor
+  ? darkenColor(borderColor, 20)
+  : "#d1cbd0";
+
+const darkFocusBorderColor = darkBorderColor
+  ? darkenColor(darkBorderColor, 20)
+  : "#3a3538";
 
   if (!showChat) return null;
 
@@ -969,6 +995,7 @@ export function StandardUI({
       .dark #hostie-chat-box{
      background: #171717;
     }
+     /*
      #hostie-chat-box input{
      background: ${backgroundColor};
       border: 1px solid ${borderColor || "#e9e4e6ff"};
@@ -986,9 +1013,47 @@ export function StandardUI({
       .dark #hostie-chat-box .btnBorder{
      background: #171717;
       border-color: ${darkBorderColor || "#50484cff"};
-    }
+    }*/
       
 `}</style>
+<style>{`
+  #hostie-chat-box input {
+    background: ${backgroundColor};
+    border: 1px solid ${borderColor || "#e9e4e6ff"};
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #hostie-chat-box input:focus,
+  #hostie-chat-box input:focus-visible {
+    border-color: ${focusBorderColor};
+    box-shadow: 0 0 0 1px ${focusBorderColor};
+    outline: none;
+  }
+
+  .dark #hostie-chat-box input {
+    background: #171717;
+    border-color: ${darkBorderColor || "#50484cff"};
+  }
+
+  .dark #hostie-chat-box input:focus,
+  .dark #hostie-chat-box input:focus-visible {
+    border-color: ${darkFocusBorderColor};
+    box-shadow: 0 0 0 1px ${darkFocusBorderColor};
+    outline: none;
+  }
+
+  #hostie-chat-box .btnBorder {
+    background: ${backgroundColor};
+    border: 1px solid ${borderColor || "#e9e4e6ff"};
+    transition: border-color 0.25s ease;
+  }
+
+  .dark #hostie-chat-box .btnBorder {
+    background: #171717;
+    border-color: ${darkBorderColor || "#50484cff"};
+  }
+`}</style>
+
 
       {/* 
 .hostie-color {
