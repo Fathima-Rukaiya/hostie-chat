@@ -26,6 +26,9 @@ export function StandardUI({
   darkGradient,
   borderColor,
   darkBorderColor,
+   greeting,
+  introduction,
+  startButtonText,
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
@@ -35,6 +38,9 @@ export function StandardUI({
   darkGradient?: string;
   borderColor?: string;
   darkBorderColor?: string;
+   greeting: string;
+  introduction: string;
+  startButtonText: string;
 }) {
 
 
@@ -248,10 +254,10 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in https://app.hostingate.com/dashboard/profile
-  const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+  // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
   //const API_BASE_URL = "https://app.hostie.ai/api/clientCustomerChatBox";
 
-  // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -1099,18 +1105,20 @@ export function StandardUI({
                 <img
                   src={botIcon}
                   alt="Bot Icon"
-
                   className="hostie-color hostie-background w-14 h-14 rounded-full object-cover mb-2 p-3 text-white"
                 />
                 <div className="flex items-center text-lg justify-center font-bold hostie-hello-text">
-                  Hello,&nbsp;<div>there..!</div>
-                  <div className="ml-1 text-[22px]">👋</div>
+                  {/* Hello,&nbsp;<div>there..!</div> */}
+                  {greeting}
+                  {/* <div className="ml-1 text-[22px]">👋</div> */}
                 </div>
                 <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
-                  How can I help you today?
+                  {/* How can I help you today? */}
+                  {introduction}
                 </div>
                 <div className="text-center text-gray-400 text-sm mt-10">
-                  Start a conversation...
+                  {/* Start a conversation... */}
+                  {startButtonText}
                 </div>
               </div>
             )}
@@ -1391,7 +1399,7 @@ export function StandardUI({
                 {/* Use the class */}
                 <a href="https://app.hostingate.com/">
                   <div className="gradient-text font-bold text-sm">
-                    &nbsp;hostie
+                    &nbsp;Hostie
                   </div>
                 </a>
 

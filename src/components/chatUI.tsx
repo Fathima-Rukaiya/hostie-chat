@@ -20,11 +20,16 @@ export function ChatUI({ apiKey,
     const [botIcon, setBotIcon] = useState<string | null>(null);
     const [botColors, setBotColors] = useState<string[] | null>(null);
 
+    const [greeting, setGreeting] = useState<string>("");
+    const [introduction, setIntroduction] = useState<string>("");
+    const [startButtonText, setStartButtonText] = useState<string>("Start Chat");
 
-    const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+
+
+    // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     // const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
     //https://app.hertzora.ai/hostie/overview
-    // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+    const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
     useEffect(() => {
         const verifyDomain = async () => {
             try {
@@ -51,6 +56,10 @@ export function ChatUI({ apiKey,
                     setBotIcon(data.bot_icon || null);
                     console.log(data.bot_name)
                     setBotColors(data.colors || null);
+
+                    setGreeting(data.greeting || "Hello 👋");
+                    setIntroduction(data.introduction || "How can I help you today?");
+                    setStartButtonText(data.start_button_text || "Start Chat");
 
                 }
             } catch {
@@ -112,7 +121,7 @@ export function ChatUI({ apiKey,
         : gradient;
 
     const borderColor = botColors ? darkenColor(botColors[0], 20) : "#e9e4e6ff";
-const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
+    const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
 
 
 
@@ -160,7 +169,7 @@ const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
                         <Bot strokeWidth={1.75} size={22} />
                     )}
                     <span className="font-semibold text-sm">Ask {botName}!
-                        
+
                     </span>
                 </button>
 
@@ -168,7 +177,10 @@ const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
                     // {botName}
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor}  darkBorderColor={darkBorderColor} />
+                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
+                            greeting={greeting}
+                            introduction={introduction}
+                            startButtonText={startButtonText} />
                     </div>
                 )}
             </div>
