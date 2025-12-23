@@ -971,15 +971,16 @@ export function StandardUI({
     }
      #hostie-chat-box input{
      background: ${backgroundColor};
-      border-color: ${borderColor || "#E4E4E7"};
+      border: 1px solid ${borderColor || "#e9e4e6ff"};
+    transition: border-color 0.3s;
     }
       .dark #hostie-chat-box input{
      background: #171717;
-      border-color: ${darkBorderColor || "#E4E4E7"};
-       transition: border-color 0.3s;
+      border-color: ${darkBorderColor || "#50484cff"};
 
 
     }
+      
 `}</style>
 
       {/* 
