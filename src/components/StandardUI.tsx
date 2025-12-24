@@ -588,9 +588,14 @@ export function StandardUI({
       addUserMessage(messageText);
       setAskedForInfo(true);
       // const askMsg = "Before we continue, could you please share your name or email?";
-      const askMsg = `👋 Hi! ${botName} here. Before we continue, could you share your name or email? I'd love to personalise the conversation for you.`;
+      const askMsg = `👋 Hi! ${botName} here.`;
+      const askMsg2="Before we continue, could you share your name or email?"
+
       //addBotMessage(askMsg);
       await saveBotMessage(askMsg, senderId, apiKey,);
+      
+      await saveBotMessage(askMsg2, senderId, apiKey,);
+
       return; // Don't save user message yet
     }
 
