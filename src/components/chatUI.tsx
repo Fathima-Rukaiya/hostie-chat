@@ -206,7 +206,7 @@ export function ChatUI({ apiKey,
     buttonPosition === "left" ? "left-6" : "right-6"
   }`}>
                     <div
-                        className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
+                        className="absolute bottom-full  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
                         <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
                             greeting={greeting}
                             introduction={introduction}
