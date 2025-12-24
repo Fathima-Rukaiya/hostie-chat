@@ -188,7 +188,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}..
+                    <span className="font-semibold text-sm">{botName}!
 
                     </span>
                 </button>
@@ -213,6 +213,7 @@ export function ChatUI({ apiKey,
                                 backgroundColor={backgroundColor}
                                 allowFileUpload={allowFileUpload}
                                 linkBehavior={linkBehavior}
+                                position={buttonPosition}
                             />
                         </div>
                     // </div>

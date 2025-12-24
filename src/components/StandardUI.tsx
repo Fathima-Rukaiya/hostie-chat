@@ -33,6 +33,7 @@ export function StandardUI({
   backgroundColor,
   allowFileUpload,
   linkBehavior,
+  position,
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
@@ -48,6 +49,7 @@ export function StandardUI({
   backgroundColor: string;
   allowFileUpload?: boolean;
   linkBehavior?: "newTab" | "sameTab";
+  position?:"left" | "right"
 }) {
 
 
@@ -1076,7 +1078,8 @@ export function StandardUI({
   // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
   
 }*/}
-      <div >
+    <div className={`fixed bottom-6 z-50 ${position === "left" ? "left-6" : "right-6"
+                            }`}>
         {/* <div className="fixed bottom-6 right-6 z-50 " > */}
         <div
           id="hostie-chat-box"
