@@ -200,7 +200,7 @@ export function ChatUI({ apiKey,
   
 
       {/* Chat UI */}
-    <div className="fixed bottom-6 right-6 z-[9999]">
+    {/* <div className="fixed bottom-6 right-6 z-[9999]"> */}
   {/* Floating button */}
   <button
     onClick={() => setIsOpen((v) => !v)}
@@ -212,12 +212,12 @@ export function ChatUI({ apiKey,
     ) : (
       <Bot size={22} />
     )}
-    <span className="text-sm font-semibold">Ask {botName}!</span>
+    <span className="text-sm font-semibold">Ask {botName}</span>
   </button>
 
   {/* Chat window */}
   {isOpen && (
-    <div className="absolute bottom-full mb-3 right-0 w-80 shadow-2xl rounded-xl">
+    <div className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
       <StandardUI
         apiKey={apiKey}
         shadowContainer={shadowContainer}
@@ -236,7 +236,7 @@ export function ChatUI({ apiKey,
   )}
 </div>
 
-    </div>
+    {/* </div> */}
 
 
             {/* </ThemeProvider> */}
