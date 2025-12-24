@@ -188,7 +188,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}...
+                    <span className="font-semibold text-sm">{botName}..
 
                     </span>
                 </button>
@@ -203,8 +203,8 @@ export function ChatUI({ apiKey,
                     //     {`fixed bottom-6 z-[50] ${buttonPosition === "left" ? "left-6" : "right-6"
                     //         }`}>
                         <div
-                            className={`absolute bottom-full  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200
-                            ${buttonPosition === "left" ? "left-6" : "right-6"
+                            className={`absolute bottom-full mb-3  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200
+                            ${buttonPosition === "left" ? "left-0" : "right-0"
                             }`}>
                             <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
                                 greeting={greeting}

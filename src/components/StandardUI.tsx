@@ -15,7 +15,7 @@ type ChatMessage = {
   };
   isTyping?: boolean;
   uploaded_documents?: any;
-  
+
 };
 
 export function StandardUI({
@@ -594,11 +594,11 @@ export function StandardUI({
       setAskedForInfo(true);
       // const askMsg = "Before we continue, could you please share your name or email?";
       const askMsg = `👋 Hi! ${botName} here.`;
-      const askMsg2="Before we continue, could you share your name or email?"
+      const askMsg2 = "Before we continue, could you share your name or email?"
 
       //addBotMessage(askMsg);
       await saveBotMessage(askMsg, senderId, apiKey,);
-      
+
       await saveBotMessage(askMsg2, senderId, apiKey,);
 
       return; // Don't save user message yet
@@ -834,31 +834,31 @@ export function StandardUI({
   };
 
   function darkenColor(hex: string, amount = 20) {
-  if (!hex) return hex;
+    if (!hex) return hex;
 
-  hex = hex.replace("#", "");
-  const num = parseInt(hex, 16);
+    hex = hex.replace("#", "");
+    const num = parseInt(hex, 16);
 
-  let r = (num >> 16) - amount;
-  let g = ((num >> 8) & 0x00ff) - amount;
-  let b = (num & 0x0000ff) - amount;
+    let r = (num >> 16) - amount;
+    let g = ((num >> 8) & 0x00ff) - amount;
+    let b = (num & 0x0000ff) - amount;
 
-  r = Math.max(0, r);
-  g = Math.max(0, g);
-  b = Math.max(0, b);
+    r = Math.max(0, r);
+    g = Math.max(0, g);
+    b = Math.max(0, b);
 
-  return `#${(b | (g << 8) | (r << 16))
-    .toString(16)
-    .padStart(6, "0")}`;
-}
+    return `#${(b | (g << 8) | (r << 16))
+      .toString(16)
+      .padStart(6, "0")}`;
+  }
 
-const focusBorderColor = borderColor
-  ? darkenColor(borderColor, 20)
-  : "#d1cbd0";
+  const focusBorderColor = borderColor
+    ? darkenColor(borderColor, 20)
+    : "#d1cbd0";
 
-const darkFocusBorderColor = darkBorderColor
-  ? darkenColor(darkBorderColor, 20)
-  : "#3a3538";
+  const darkFocusBorderColor = darkBorderColor
+    ? darkenColor(darkBorderColor, 20)
+    : "#3a3538";
 
   if (!showChat) return null;
 
@@ -1026,7 +1026,7 @@ const darkFocusBorderColor = darkBorderColor
     }*/
       
 `}</style>
-<style>{`
+      <style>{`
   #hostie-chat-box input {
     background: ${backgroundColor};
     border: 1px solid ${borderColor || "#e9e4e6ff"};
@@ -1406,17 +1406,18 @@ const darkFocusBorderColor = darkBorderColor
                 }
               }}
             />
+            {allowFileUpload && (
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder"
+              >
+                {/* border border-zinc-200 dark:border-neutral-700 */}
+                {/* mr-2 */}
+                <Plus className="w-4 h-4" />
+              </button>
 
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder"
-            >
-              {/* border border-zinc-200 dark:border-neutral-700 */}
-              {/* mr-2 */}
-              <Plus className="w-4 h-4" />
-            </button>
-
-            <input 
+            )}
+            <input
               type="text"
               value={message}
               // onChange={(e) => setMessage(e.target.value)}
