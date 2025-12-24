@@ -178,7 +178,7 @@ useEffect(() => {
 
                     </span>
                 </button> */}
-                {chatTriggerType === "bubble" && (
+                {/* {chatTriggerType === "bubble" && ( */}
                     <button
                         id="hertzora-btn"
                         onClick={() => setIsOpen(!isOpen)}
@@ -194,7 +194,7 @@ useEffect(() => {
                         )}
                         <span className="font-semibold text-sm"> {botName}!</span>
                     </button>
-                )}
+                {/* )} */}
 
 
                 {isOpen && (
