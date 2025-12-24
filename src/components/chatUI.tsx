@@ -25,7 +25,7 @@ export function ChatUI({ apiKey,
     const [startButtonText, setStartButtonText] = useState<string>("Start Chat");
     const [backgroundColor, setBackgroundColor] = useState<string>("#ffffffff");
 
-    const [chatTriggerType, setChatTriggerType] = useState<"bubble" | "embed" | null>(null);
+   // const [chatTriggerType, setChatTriggerType] = useState<"bubble" | "embed" | null>(null);
 
 
 
@@ -66,7 +66,7 @@ export function ChatUI({ apiKey,
                     setStartButtonText(data.start_button_text || "Start Chat");
                     setBackgroundColor(data.backgroundColor || "#ffffff")
                     //  setChatTriggerType(data.chat_trigger || "bubble");
-                    setChatTriggerType("bubble");
+                   
 
                 }
             } catch {
@@ -130,9 +130,6 @@ export function ChatUI({ apiKey,
     const borderColor = botColors ? darkenColor(botColors[0], 20) : "#e9e4e6ff";
     const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
 
-useEffect(() => {
-  console.log("chatTriggerType:", chatTriggerType);
-}, [chatTriggerType]);
 
 
     return (
