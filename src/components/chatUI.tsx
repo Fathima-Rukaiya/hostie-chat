@@ -25,6 +25,9 @@ export function ChatUI({ apiKey,
     const [startButtonText, setStartButtonText] = useState<string>("Start Chat");
     const [backgroundColor, setBackgroundColor] = useState<string>("#ffffffff");
 
+    const [chatTriggerType, setChatTriggerType] = useState<"bubble" | "embed" | null>(null);
+
+
 
 
     const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
@@ -61,7 +64,10 @@ export function ChatUI({ apiKey,
                     setGreeting(data.greeting || "Hello 👋");
                     setIntroduction(data.introduction || "How can I help you today?");
                     setStartButtonText(data.start_button_text || "Start Chat");
-                    setBackgroundColor(data.backgroundColor||"#ffffff")
+                    setBackgroundColor(data.backgroundColor || "#ffffff")
+                    //  setChatTriggerType(data.chat_trigger || "bubble");
+                    setChatTriggerType("bubble");
+
                 }
             } catch {
                 setIsAllowed(false);
@@ -154,7 +160,7 @@ export function ChatUI({ apiKey,
    color: "#fff" !important;
    background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
 } */}
-                <button
+                {/* <button
                     id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
                     style={{ background: gradient }}
@@ -162,7 +168,6 @@ export function ChatUI({ apiKey,
                     onMouseEnter={(e) => (e.currentTarget.style.background = hoverGradient)}
                     onMouseLeave={(e) => (e.currentTarget.style.background = gradient)}
                 >
-                    {/* <Bot strokeWidth={1.75} size={22} /> */}
 
                     {botIcon ? (
                         <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
@@ -172,8 +177,25 @@ export function ChatUI({ apiKey,
                     <span className="font-semibold text-sm">Ask {botName}!
 
                     </span>
-                </button>
-                
+                </button> */}
+                {chatTriggerType === "bubble" && (
+                    <button
+                        id="hertzora-btn"
+                        onClick={() => setIsOpen(!isOpen)}
+                        style={{ background: gradient }}
+                        className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white"
+                        onMouseEnter={(e) => (e.currentTarget.style.background = hoverGradient)}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = gradient)}
+                    >
+                        {botIcon ? (
+                            <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
+                        ) : (
+                            <Bot strokeWidth={1.75} size={22} />
+                        )}
+                        <span className="font-semibold text-sm"> {botName}</span>
+                    </button>
+                )}
+
 
                 {isOpen && (
                     // {botName}
