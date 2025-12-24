@@ -132,7 +132,7 @@ export function ChatUI({ apiKey,
         //     defaultTheme="system"
         //     enableSystem
         // >
-        <div className="fixed bottom-6 left-6 z-[9999]">
+        <div className="fixed bottom-6 right-6 z-[9999]">
             {/* <div ref={popoverRef}> */}
             {/* , */}
             <div ref={popoverRef} className="relative">
@@ -173,13 +173,12 @@ export function ChatUI({ apiKey,
 
                     </span>
                 </button>
-
                 
 
                 {isOpen && (
                     // {botName}
                     <div
-                        className="absolute bottom-full mb-3 left-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
+                        className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
                         <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
                             greeting={greeting}
                             introduction={introduction}
