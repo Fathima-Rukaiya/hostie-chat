@@ -172,7 +172,10 @@ export function ChatUI({ apiKey,
      background: ${darkModeGradient} !important;
   }
 `}</style>
-  
+                {/*     .hertzora-color {
+   color: "#fff" !important;
+   background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
+} */}
                 <button
                     id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
@@ -187,7 +190,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}...
+                    <span className="font-semibold text-sm">{botName}
 
                     </span>
                 </button>
@@ -203,14 +206,12 @@ export function ChatUI({ apiKey,
     buttonPosition === "left" ? "left-6" : "right-6"
   }`}>
                     <div
-                        className="absolute bottom-full  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
+                        className="absolute bottom-full right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
                         <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
                             greeting={greeting}
                             introduction={introduction}
                             startButtonText={startButtonText}
                             backgroundColor={backgroundColor}
-                            allowFileUpload={allowFileUpload}
-  linkBehavior={linkBehavior}
                         />
                     </div>
                     </div>
