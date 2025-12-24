@@ -31,6 +31,7 @@ export function ChatUI({ apiKey,
     const [linkBehavior, setLinkBehavior] = useState<"newTab" | "sameTab">("newTab");
 
 
+    const [welcomeMsg, SetWelcomeMsg] = useState<string>("");
 
 
     const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
@@ -70,11 +71,10 @@ export function ChatUI({ apiKey,
                     setBackgroundColor(data.backgroundColor || "#ffffff")
                     //  setChatTriggerType(data.chat_trigger || "bubble");
 
-                    setButtonPosition(data.buttonPosition || "left");
-                    setAllowFileUpload(data.allowFileUpload ?? false);
+                    setButtonPosition(data.buttonPosition || "rigth");
+                    setAllowFileUpload(data.allowFileUpload ?? true);
                     setLinkBehavior(data.linkBehavior || "newTab");
-
-
+                    SetWelcomeMsg(data.welcomeMessage)
 
                 }
             } catch {
@@ -202,20 +202,21 @@ export function ChatUI({ apiKey,
                     // <div className=
                     //     {`fixed bottom-6 z-[50] ${buttonPosition === "left" ? "left-6" : "right-6"
                     //         }`}>
-                        <div
-                            className={`absolute bottom-full mb-3  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200
+                    <div
+                        className={`absolute bottom-full mb-3  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200
                             ${buttonPosition === "left" ? "left-0" : "right-0"
                             }`}>
-                            <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
-                                greeting={greeting}
-                                introduction={introduction}
-                                startButtonText={startButtonText}
-                                backgroundColor={backgroundColor}
-                                allowFileUpload={allowFileUpload}
-                                linkBehavior={linkBehavior}
-                                position={buttonPosition}
-                            />
-                        </div>
+                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
+                            greeting={greeting}
+                            introduction={introduction}
+                            startButtonText={startButtonText}
+                            backgroundColor={backgroundColor}
+                            allowFileUpload={allowFileUpload}
+                            linkBehavior={linkBehavior}
+                            position={buttonPosition}
+                            welcomeMsg={welcomeMsg}
+                        />
+                    </div>
                     // </div>
                 )}
 

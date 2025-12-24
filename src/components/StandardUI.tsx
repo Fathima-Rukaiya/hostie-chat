@@ -34,6 +34,7 @@ export function StandardUI({
   allowFileUpload,
   linkBehavior,
   position,
+  welcomeMsg,
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
@@ -49,7 +50,8 @@ export function StandardUI({
   backgroundColor: string;
   allowFileUpload?: boolean;
   linkBehavior?: "newTab" | "sameTab";
-  position?:"left" | "right"
+  position?:"left" | "right";
+    welcomeMsg?: string;
 }) {
 
 
@@ -595,7 +597,8 @@ export function StandardUI({
       addUserMessage(messageText);
       setAskedForInfo(true);
       // const askMsg = "Before we continue, could you please share your name or email?";
-      const askMsg = `👋 Hi! ${botName} here.`;
+     // const askMsg = `👋 Hi! ${botName} here.`;
+     const askMsg = welcomeMsg||`👋 Hi! ${botName} here.`;
       const askMsg2 = "Before we continue, could you share your name or email?"
 
       //addBotMessage(askMsg);
