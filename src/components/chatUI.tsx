@@ -157,7 +157,7 @@ export function ChatUI({ apiKey,
    color: "#fff" !important;
    background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
 } */}
-                {/* <button
+                <button
                     id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
                     style={{ background: gradient }}
@@ -171,16 +171,16 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">Ask {botName}!
+                    <span className="font-semibold text-sm">{botName}
 
                     </span>
-                </button> */}
+                </button>
                 {/* {chatTriggerType === "bubble" && ( */}
 
                 {/* )} */}
 
 
-                {/* {isOpen && (
+                {isOpen && (
                     // {botName}
                     <div
                         className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
@@ -192,7 +192,7 @@ export function ChatUI({ apiKey,
                         />
                     </div>
                 )} 
-                 </div>*/}
+                
 
 
 
@@ -202,7 +202,7 @@ export function ChatUI({ apiKey,
       {/* Chat UI */}
     {/* <div className="fixed bottom-6 right-6 z-[9999]"> */}
   {/* Floating button */}
-  <button
+  {/* <button
     onClick={() => setIsOpen((v) => !v)}
     style={{ background: gradient }}
     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white"
@@ -214,10 +214,10 @@ export function ChatUI({ apiKey,
     )}
     <span className="text-sm font-semibold">Ask {botName}</span>
   </button>
-
-  {/* Chat window */}
+*/}
+  {/* Chat window */}{/* 
   {isOpen && (
-    <div className="absolute bottom-full mb-3 right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
+    <div className="absolute bottom-full mb-3 right-6 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
       <StandardUI
         apiKey={apiKey}
         shadowContainer={shadowContainer}
@@ -233,7 +233,7 @@ export function ChatUI({ apiKey,
         backgroundColor={backgroundColor}
       />
     </div>
-  )}
+  )} */}
 </div>
 
     {/* </div> */}
