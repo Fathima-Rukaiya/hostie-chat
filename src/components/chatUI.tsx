@@ -212,7 +212,7 @@ export function ChatUI({ apiKey,
     ) : (
       <Bot size={22} />
     )}
-    <span className="text-sm font-semibold">Ask {botName}</span>
+    <span className="text-sm font-semibold">Ask {botName}!</span>
   </button>
 
   {/* Chat window */}
