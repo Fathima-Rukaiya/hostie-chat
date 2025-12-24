@@ -15,6 +15,7 @@ type ChatMessage = {
   };
   isTyping?: boolean;
   uploaded_documents?: any;
+  
 };
 
 export function StandardUI({
@@ -29,7 +30,9 @@ export function StandardUI({
   greeting,
   introduction,
   startButtonText,
-  backgroundColor
+  backgroundColor,
+  allowFileUpload,
+  linkBehavior,
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
@@ -43,6 +46,8 @@ export function StandardUI({
   introduction: string;
   startButtonText: string;
   backgroundColor: string;
+  allowFileUpload?: boolean;
+  linkBehavior?: "newTab" | "sameTab";
 }) {
 
 
