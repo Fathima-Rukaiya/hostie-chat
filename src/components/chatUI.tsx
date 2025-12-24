@@ -108,11 +108,10 @@ export function ChatUI({ apiKey,
     if (isAllowed === false)
 
         return (
-            <div className=  {`fixed bottom-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow ${
-    buttonPosition === "left" ? "left-6" : "right-6"
-  }`}
-          >
-            {/*    <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow"
+            <div className={`fixed bottom-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow ${buttonPosition === "left" ? "left-6" : "right-6"
+                }`}
+            >
+                {/*    <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow"
           > */}
                 <p className="text-gray-600 text-sm">This chat widget is not authorized for this domain.</p>
                 <p className="text-gray-400 text-xs mt-2">Please contact the admin.</p>
@@ -153,10 +152,9 @@ export function ChatUI({ apiKey,
         // >
         // <div className="fixed bottom-6 right-6 z-[9999]">
         <div
-  className={`fixed bottom-6 z-[9999] ${
-    buttonPosition === "left" ? "left-6" : "right-6"
-  }`}
->
+            className={`fixed bottom-6 z-[9999] ${buttonPosition === "left" ? "left-6" : "right-6"
+                }`}
+        >
 
             {/* <div ref={popoverRef}> */}
             {/* , */}
@@ -202,18 +200,19 @@ export function ChatUI({ apiKey,
                 {isOpen && (
                     // {botName}
                     <div className=
-                        {`fixed bottom-6 z-[50] ${
-    buttonPosition === "left" ? "left-6" : "right-6"
-  }`}>
-                    <div
-                        className="absolute bottom-full right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
-                        <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
-                            greeting={greeting}
-                            introduction={introduction}
-                            startButtonText={startButtonText}
-                            backgroundColor={backgroundColor}
-                        />
-                    </div>
+                        {`fixed bottom-6 z-[50] ${buttonPosition === "left" ? "left-6" : "right-6"
+                            }`}>
+                        <div
+                            className="absolute bottom-full right-0 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
+                            <StandardUI apiKey={apiKey} shadowContainer={shadowContainer} botIcon={botIcon || ""} botName={botName} gradient={gradient} darkGradient={darkModeGradient} borderColor={borderColor} darkBorderColor={darkBorderColor}
+                                greeting={greeting}
+                                introduction={introduction}
+                                startButtonText={startButtonText}
+                                backgroundColor={backgroundColor}
+                                allowFileUpload={allowFileUpload}
+                                linkBehavior={linkBehavior}
+                            />
+                        </div>
                     </div>
                 )}
 
