@@ -70,8 +70,8 @@ export function ChatUI({ apiKey,
                     setBackgroundColor(data.backgroundColor || "#ffffff")
                     //  setChatTriggerType(data.chat_trigger || "bubble");
 
-                    setButtonPosition(data.buttonPosition || "right");
-                    setAllowFileUpload(data.allowFileUpload ?? true);
+                    setButtonPosition(data.buttonPosition || "left");
+                    setAllowFileUpload(data.allowFileUpload ?? false);
                     setLinkBehavior(data.linkBehavior || "newTab");
 
 
