@@ -130,6 +130,9 @@ export function ChatUI({ apiKey,
     const borderColor = botColors ? darkenColor(botColors[0], 20) : "#e9e4e6ff";
     const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
 
+useEffect(() => {
+  console.log("chatTriggerType:", chatTriggerType);
+}, [chatTriggerType]);
 
 
     return (
@@ -142,15 +145,12 @@ export function ChatUI({ apiKey,
             {/* <div ref={popoverRef}> */}
             {/* , */}
             <div ref={popoverRef} className="relative">
-                <style>{`
- 
- 
-     .hertzora-color {
-   color: "#fff" !important;
- 
-}
-
+      <style>{`
+  .hertzora-color {
+    color: #fff !important;
+  }
 `}</style>
+
                 <style>{`
   .dark #hertzora-btn {
      background: ${darkModeGradient} !important;
@@ -192,7 +192,7 @@ export function ChatUI({ apiKey,
                         ) : (
                             <Bot strokeWidth={1.75} size={22} />
                         )}
-                        <span className="font-semibold text-sm"> {botName}</span>
+                        <span className="font-semibold text-sm"> {botName}!</span>
                     </button>
                 )}
 
