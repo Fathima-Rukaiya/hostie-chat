@@ -197,35 +197,45 @@ export function ChatUI({ apiKey,
 
 
                 
-           <button
-        onClick={() => setIsOpen((v) => !v)}
-        style={{ background: gradient }}
-        className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white"
-      >
-        {botIcon ? (
-          <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
-        ) : (
-          <Bot size={22} />
-        )}
-        <span className="text-sm font-semibold">Ask {botName}</span>
-      </button>
+  
 
       {/* Chat UI */}
-      {isOpen && (
-        <div className="absolute bottom-full mb-3 right-0 w-80 shadow-2xl rounded-xl">
-          <StandardUI
-            apiKey={apiKey}
-            shadowContainer={shadowContainer}
-            botIcon={botIcon || ""}
-            botName={botName}
-            gradient={gradient}
-            greeting={greeting}
-            introduction={introduction}
-            startButtonText={startButtonText}
-            backgroundColor={backgroundColor}
-          />
-        </div>
-      )}
+    <div className="fixed bottom-6 right-6 z-[9999]">
+  {/* Floating button */}
+  <button
+    onClick={() => setIsOpen((v) => !v)}
+    style={{ background: gradient }}
+    className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white"
+  >
+    {botIcon ? (
+      <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
+    ) : (
+      <Bot size={22} />
+    )}
+    <span className="text-sm font-semibold">Ask {botName}</span>
+  </button>
+
+  {/* Chat window */}
+  {isOpen && (
+    <div className="absolute bottom-full mb-3 right-0 w-80 shadow-2xl rounded-xl">
+      <StandardUI
+        apiKey={apiKey}
+        shadowContainer={shadowContainer}
+        botIcon={botIcon || ""}
+        botName={botName}
+        gradient={gradient}
+        darkGradient={darkModeGradient}
+        borderColor={borderColor}
+        darkBorderColor={darkBorderColor}
+        greeting={greeting}
+        introduction={introduction}
+        startButtonText={startButtonText}
+        backgroundColor={backgroundColor}
+      />
+    </div>
+  )}
+</div>
+
     </div>
 
 

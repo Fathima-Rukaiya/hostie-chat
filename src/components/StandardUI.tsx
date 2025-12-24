@@ -1071,7 +1071,7 @@ const darkFocusBorderColor = darkBorderColor
   // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
   
 }*/}
-      <div className="fixed bottom-6 right-6 z-50" >
+      <div  >
         {/* <div className="fixed bottom-6 right-6 z-50 " > */}
         <div
           id="hostie-chat-box"
