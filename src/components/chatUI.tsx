@@ -25,7 +25,10 @@ export function ChatUI({ apiKey,
     const [startButtonText, setStartButtonText] = useState<string>("Start Chat");
     const [backgroundColor, setBackgroundColor] = useState<string>("#ffffffff");
 
-    // const [chatTriggerType, setChatTriggerType] = useState<"bubble" | "embed" | null>(null);
+
+    const [buttonPosition, setButtonPosition] = useState<"left" | "right">("right");
+    const [allowFileUpload, setAllowFileUpload] = useState(true);
+    const [linkBehavior, setLinkBehavior] = useState<"newTab" | "sameTab">("newTab");
 
 
 
@@ -67,6 +70,11 @@ export function ChatUI({ apiKey,
                     setBackgroundColor(data.backgroundColor || "#ffffff")
                     //  setChatTriggerType(data.chat_trigger || "bubble");
 
+                    setButtonPosition(data.buttonPosition || "left");
+                    setAllowFileUpload(data.allowFileUpload ?? true);
+                    setLinkBehavior(data.linkBehavior || "newTab");
+
+
 
                 }
             } catch {
@@ -100,7 +108,12 @@ export function ChatUI({ apiKey,
     if (isAllowed === false)
 
         return (
-            <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow">
+            <div className=  {`fixed bottom-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow ${
+    buttonPosition === "left" ? "left-6" : "right-6"
+  }`}
+          >
+            {/*    <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow"
+          > */}
                 <p className="text-gray-600 text-sm">This chat widget is not authorized for this domain.</p>
                 <p className="text-gray-400 text-xs mt-2">Please contact the admin.</p>
             </div>
@@ -138,7 +151,13 @@ export function ChatUI({ apiKey,
         //     defaultTheme="system"
         //     enableSystem
         // >
-        <div className="fixed bottom-6 right-6 z-[9999]">
+        // <div className="fixed bottom-6 right-6 z-[9999]">
+        <div
+  className={`fixed bottom-6 z-[9999] ${
+    buttonPosition === "left" ? "left-6" : "right-6"
+  }`}
+>
+
             {/* <div ref={popoverRef}> */}
             {/* , */}
             <div ref={popoverRef} className="relative">
@@ -191,18 +210,18 @@ export function ChatUI({ apiKey,
                             backgroundColor={backgroundColor}
                         />
                     </div>
-                )} 
-                
+                )}
 
 
 
-                
-  
 
-      {/* Chat UI */}
-    {/* <div className="fixed bottom-6 right-6 z-[9999]"> */}
-  {/* Floating button */}
-  {/* <button
+
+
+
+                {/* Chat UI */}
+                {/* <div className="fixed bottom-6 right-6 z-[9999]"> */}
+                {/* Floating button */}
+                {/* <button
     onClick={() => setIsOpen((v) => !v)}
     style={{ background: gradient }}
     className="rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white"
@@ -215,7 +234,7 @@ export function ChatUI({ apiKey,
     <span className="text-sm font-semibold">Ask {botName}</span>
   </button>
 */}
-  {/* Chat window */}{/* 
+                {/* Chat window */}{/* 
   {isOpen && (
     <div className="absolute bottom-full mb-3 right-6 w-80 p-0 shadow-2xl rounded-xl transition-all duration-200">
       <StandardUI
@@ -234,9 +253,9 @@ export function ChatUI({ apiKey,
       />
     </div>
   )} */}
-</div>
+            </div>
 
-    {/* </div> */}
+            {/* </div> */}
 
 
             {/* </ThemeProvider> */}
