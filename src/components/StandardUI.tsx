@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import Markdown from "react-markdown";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -51,8 +53,8 @@ export function StandardUI({
   backgroundColor: string;
   allowFileUpload?: boolean;
   linkBehavior?: "newTab" | "sameTab";
-  position?:"left" | "right";
-    welcomeMsg?: string;
+  position?: "left" | "right";
+  welcomeMsg?: string;
 }) {
 
 
@@ -598,8 +600,8 @@ export function StandardUI({
       addUserMessage(messageText);
       setAskedForInfo(true);
       // const askMsg = "Before we continue, could you please share your name or email?";
-     // const askMsg = `👋 Hi! ${botName} here.`;
-     const askMsg = welcomeMsg||`👋 Hi! ${botName} here.`;
+      // const askMsg = `👋 Hi! ${botName} here.`;
+      const askMsg = welcomeMsg || `👋 Hi! ${botName} here.`;
       const askMsg2 = "Before we continue, could you share your name or email?"
 
       //addBotMessage(askMsg);
@@ -1082,8 +1084,8 @@ export function StandardUI({
   // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
   
 }*/}
-    <div className={`fixed bottom-6 z-50 ${position === "left" ? "left-6" : "right-6"
-                            }`}>
+      <div className={`fixed bottom-6 z-50 ${position === "left" ? "left-6" : "right-6"
+        }`}>
         {/* <div className="fixed bottom-6 right-6 z-50 " > */}
         <div
           id="hostie-chat-box"
@@ -1302,13 +1304,18 @@ export function StandardUI({
 
 
                       {/* {msg.text && <span>{msg.text}</span>} */}
-                       {msg.text && 
-                       <div className="prose prose-sm dark:prose-invert">
-  <ReactMarkdown>
-    {msg.text}
-  </ReactMarkdown>
-</div>
-}
+                      {/* {msg.text &&
+                        <div className="prose prose-sm dark:prose-invert">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {message}
+                          </ReactMarkdown>
+                        </div>
+                      } */}
+                      
+                      {msg.text &&
+                        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
+                          {msg.text}
+                        </Markdown>}
 
                       {msg.uploaded_documents && (
                         <div className="mt-2">
