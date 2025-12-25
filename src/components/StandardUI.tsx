@@ -869,7 +869,7 @@ export function StandardUI({
     : "#3a3538";
 
 
-    const markdown = `
+  const markdown = `
 Here are some useful links related to Hostie:
 
 1. [Hostie Training](https://app.hostingate.com/hostie/training)
@@ -1243,7 +1243,9 @@ Feel free to explore these links for more information!
                 </div>
               </div>
             )}
-
+            <ReactMarkdown>
+              {markdown}
+            </ReactMarkdown>
             {chatHistory.map((msg, i) => (
               <div
                 key={i}
@@ -1313,7 +1315,7 @@ Feel free to explore these links for more information!
                     <div>
 
 
-                      {/* {msg.text && <span>{msg.text}</span>} */}
+                      {msg.text && <span>{msg.text}</span>}
                       {/* {msg.text &&
                         <div className="prose prose-sm dark:prose-invert">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -1327,13 +1329,13 @@ Feel free to explore these links for more information!
                           <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
                             {msg.text}
                           </Markdown></div>} */}
-                          {msg.text && (
-  <div>
-    <ReactMarkdown>
-      {msg.text}
-    </ReactMarkdown>
-  </div>
-)}
+                      {/* {msg.text && (
+                        <div>
+                          <ReactMarkdown>
+                            {msg.text}
+                          </ReactMarkdown>
+                        </div>
+                      )} */}
 
 
                       {msg.uploaded_documents && (
