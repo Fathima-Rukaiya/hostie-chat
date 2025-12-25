@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import ReactMarkdown from "react-markdown";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -1298,7 +1299,16 @@ export function StandardUI({
                     </div>
                   ) : (
                     <div>
-                      {msg.text && <span>{msg.text}</span>}
+
+
+                      {/* {msg.text && <span>{msg.text}</span>} */}
+                       {msg.text && 
+                       <div className="prose prose-sm dark:prose-invert">
+  <ReactMarkdown>
+    {msg.text}
+  </ReactMarkdown>
+</div>
+}
 
                       {msg.uploaded_documents && (
                         <div className="mt-2">
