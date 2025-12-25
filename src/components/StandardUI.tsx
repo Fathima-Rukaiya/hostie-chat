@@ -868,6 +868,16 @@ export function StandardUI({
     ? darkenColor(darkBorderColor, 20)
     : "#3a3538";
 
+
+    const markdown = `
+Here are some useful links related to Hostie:
+
+1. [Hostie Training](https://app.hostingate.com/hostie/training)
+2. [Hostie Landing](https://app.hertzora)
+
+Feel free to explore these links for more information!
+
+`;
   if (!showChat) return null;
 
   return (
@@ -1318,10 +1328,10 @@ export function StandardUI({
                             {msg.text}
                           </Markdown></div>} */}
                           {msg.text && (
-  <div className="prose prose-sm dark:prose-invert">
-    <Markdown>
+  <div>
+    <ReactMarkdown>
       {msg.text}
-    </Markdown>
+    </ReactMarkdown>
   </div>
 )}
 
