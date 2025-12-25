@@ -1243,9 +1243,14 @@ Feel free to explore these links for more information!
                 </div>
               </div>
             )}
-            <ReactMarkdown>
-              {markdown}
-            </ReactMarkdown>
+          
+  <div className="prose prose-sm dark:prose-invert max-w-none">
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {markdown}
+    </ReactMarkdown>
+  </div>
+
+
             {chatHistory.map((msg, i) => (
               <div
                 key={i}
