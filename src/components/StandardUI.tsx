@@ -4,7 +4,6 @@ import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, Sen
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Markdown from "react-markdown";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -1244,11 +1243,7 @@ Feel free to explore these links for more information!
               </div>
             )}
           
-  <div className="prose prose-sm dark:prose-invert max-w-none">
-    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-      {markdown}
-    </ReactMarkdown>
-  </div>
+
 
 
             {chatHistory.map((msg, i) => (
