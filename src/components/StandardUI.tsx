@@ -1201,6 +1201,13 @@ Feel free to explore these links for more information!
 
           {/* Chat area */}
           <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
+            
+              <div className="prose prose-sm dark:prose-invert max-w-none">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {markdown}
+                </ReactMarkdown>
+              </div>
+            
             {chatHistory.length === 0 && (
               // <div className="mt-10 flex flex-col items-center justify-center text-center">
               //   <Bot strokeWidth={1.75}
@@ -1242,7 +1249,7 @@ Feel free to explore these links for more information!
                 </div>
               </div>
             )}
-          
+
 
 
 
