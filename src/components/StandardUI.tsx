@@ -1312,11 +1312,19 @@ export function StandardUI({
                         </div>
                       } */}
 
-                      {msg.text &&
+                      {/* {msg.text &&
                         <div className="prose prose-sm dark:prose-invert">
                           <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
                             {msg.text}
-                          </Markdown></div>}
+                          </Markdown></div>} */}
+                          {msg.text && (
+  <div className="prose prose-sm dark:prose-invert">
+    <Markdown>
+      {msg.text}
+    </Markdown>
+  </div>
+)}
+
 
                       {msg.uploaded_documents && (
                         <div className="mt-2">
