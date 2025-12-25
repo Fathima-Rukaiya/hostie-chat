@@ -1303,7 +1303,7 @@ export function StandardUI({
                     <div>
 
 
-                      {/* {msg.text && <span>{msg.text}</span>} */}
+                      {msg.text && <span>{msg.text}</span>}
                       {/* {msg.text &&
                         <div className="prose prose-sm dark:prose-invert">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -1311,11 +1311,11 @@ export function StandardUI({
                           </ReactMarkdown>
                         </div>
                       } */}
-                      
-                      {msg.text &&
+
+                      {/* {msg.text &&
                         <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
                           {msg.text}
-                        </Markdown>}
+                        </Markdown>} */}
 
                       {msg.uploaded_documents && (
                         <div className="mt-2">
