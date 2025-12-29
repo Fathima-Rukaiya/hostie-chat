@@ -888,6 +888,10 @@ export function StandardUI({
 
   
   const SuggestedQuestions = ({ questions, onSelect }: { questions: string[], onSelect: (q: string) => void }) => {
+    const isDark = document
+    .querySelector("#hostie-chat-root")
+    ?.classList.contains("dark");
+
     return (
       <div className="flex flex-wrap gap-2 mt-4">
         <style>
@@ -906,16 +910,33 @@ export function StandardUI({
     
   }`}
         </style>
-        {questions.map((q, i) => (
+        {/* {questions.map((q, i) => (
           <button
 
             key={i}
-            className="px-3 py-1.5 text-white rounded-full text-sm hostie-suggest-question"
+            className="px-3 py-1.5 rounded-full text-sm hostie-suggest-question"
             onClick={() => onSelect(q)}
           >
             {q}
           </button>
-        ))}
+        ))} */}
+ {questions.map((q, i) => (
+        <button
+          key={i}
+          onClick={() => onSelect(q)}
+          className="px-3 py-1.5 rounded-full text-sm border transition-colors"
+          style={{
+            backgroundColor: isDark
+              ? suggestQuestionsDark
+              : suggestQuestionsBg,
+            borderColor: suggestQuestionsBorder,
+            color: isDark ? "#ffffff" : "#1F2937",
+          }}
+        >
+          {q}
+        </button>
+      ))}
+
       </div>
     );
   };
