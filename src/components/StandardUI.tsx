@@ -40,6 +40,7 @@ export function StandardUI({
   linkBehavior,
   position,
   welcomeMsg,
+  suggestedQuestionList,
 }: {
   apiKey: string;
   shadowContainer?: React.RefObject<HTMLDivElement | null>;
@@ -57,6 +58,7 @@ export function StandardUI({
   linkBehavior?: "newTab" | "sameTab";
   position?: "left" | "right";
   welcomeMsg?: string;
+  suggestedQuestionList?: string[]; 
 }) {
 
 
@@ -1559,11 +1561,11 @@ export function StandardUI({
             ))}
           
             <div ref={chatEndRef} />
-              {message === "" && roomName && senderId && !isProcessing &&
+              {message === "" && roomName && senderId && !isProcessing &&  suggestedQuestionList && suggestedQuestionList?.length > 0 &&
               <div className="mt-6 flex flex-col items-center justify-center">
 
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
-                <SuggestedQuestions questions={defaultSuggestions} onSelect={handleSuggestionClick} />
+                <SuggestedQuestions questions={suggestedQuestionList} onSelect={handleSuggestionClick} />
               </div>
 
             }

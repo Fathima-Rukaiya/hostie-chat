@@ -33,6 +33,7 @@ export function ChatUI({ apiKey,
 
     const [welcomeMsg, SetWelcomeMsg] = useState<string>("");
 
+const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(null);
 
     // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     // const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
@@ -74,7 +75,8 @@ export function ChatUI({ apiKey,
                     setButtonPosition(data.buttonPosition || "rigth");
                     setAllowFileUpload(data.allowFileUpload ?? true);
                     setLinkBehavior(data.linkBehavior || "newTab");
-                    SetWelcomeMsg(data.welcomeMessage)
+                    SetWelcomeMsg(data.welcomeMessage);
+                    setSuggestedQuestions(data.suggestedQuestions || null);
 
                 }
             } catch {
@@ -213,6 +215,7 @@ export function ChatUI({ apiKey,
                             linkBehavior={linkBehavior}
                             position={buttonPosition}
                             welcomeMsg={welcomeMsg}
+                            suggestedQuestionList={suggestedQuestions|| undefined}
                         />
                     </div>
                     // </div>
