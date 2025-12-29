@@ -21,6 +21,8 @@ type ChatMessage = {
 
 };
 
+
+
 export function StandardUI({
   apiKey,
   shadowContainer,
@@ -868,8 +870,22 @@ export function StandardUI({
     ? darkenColor(darkBorderColor, 20)
     : "#3a3538";
 
+  const SuggestedQuestions = ({ questions }: { questions: string[] }) => {
+    return (
+      <div className="flex flex-wrap gap-2 mt-4">
+        {questions.map((q, i) => (
+          <button
+            key={i}
+            className="px-3 py-1.5 bg-pink-500 text-white rounded-full text-sm hover:bg-pink-600"
+            onClick={() => setMessage(q)} // optionally auto-send: sendMessage(q)
+          >
+            {q}
+          </button>
+        ))}
+      </div>
+    );
+  };
 
- 
   if (!showChat) return null;
 
   return (
@@ -1267,28 +1283,28 @@ export function StandardUI({
                 <style>
                   {`
          /* global.css or module.css */
-.chat-bubble p {
-  margin: 0.25rem 0;
-  line-height: 1.4;
-}
+          .chat-bubble p {
+            margin: 0.25rem 0;
+            line-height: 1.4;
+          }
 
-.chat-bubble a {
-  color: #ed3ab7ff; /* pink link */
-  text-decoration: underline;
-}
+          .chat-bubble a {
+            color: #ed3ab7ff; /* pink link */
+            text-decoration: underline;
+          }
 
-.chat-bubble ul {
-  padding-left: 1rem;
-  list-style-type: disc;
-}
+          .chat-bubble ul {
+            padding-left: 1rem;
+            list-style-type: disc;
+          }
 
-.chat-bubble strong {
-  font-weight: 600;
-}
+          .chat-bubble strong {
+            font-weight: 600;
+          }
 
-.chat-bubble em {
-  font-style: italic;
-}
+          .chat-bubble em {
+            font-style: italic;
+          }
 
         `}
                 </style>
@@ -1307,114 +1323,69 @@ export function StandardUI({
                     </div>
                   ) : (
                     // <div className="relative">
-                     <div className="markdown-body flex items-end gap-1">
+                    <div className="markdown-body flex items-end gap-1">
                       {msg.text &&
-                        // <span className="markdown-body">
-                        //   <Markdown
-                        //     options={{
-                        //       forceBlock: true,
-                        //       overrides: {
-                        //         h1: {
-                        //           component: "div",
-                        //           props: {
-                        //             className: "font-bold block mb-2",
-                        //           },
-                        //         },
-                        //         ol: {
-                        //           component: "ol",
-                        //           props: {
-                        //             className: "list-decimal pl-5 mb-2",
-                        //           },
-                        //         },
-                        //         ul: {
-                        //           component: "ul",
-                        //           props: {
-                        //             className: "list-disc pl-5 mb-2",
-                        //           },
-                        //         },
-                        //         li: {
-                        //           component: "li",
-                        //           props: {
-                        //             className: "mb-1",
-                        //           },
-                        //         },
-                        //         a: {
-                        //           component: "a",
-                        //           props: {
-                        //             className: "text-blue-600 underline",
-                        //             target: "_blank",
-                        //             rel: "noopener noreferrer",
-                        //           },
-                        //         },
-                        //       },
-                        //     }}
-                        //   >
-                        //     {msg.text}
-                        //   </Markdown>
-                        // </span>
+                        <div className="flex-1">
+                          <Markdown
+                            options={{
+                              overrides: {
+                                h1: {
+                                  component: "div",
+                                  props: {
+                                    className: "font-bold mb-1",
+                                  },
+                                },
+                                p: {
+                                  component: "p",
+                                  props: {
+                                    className: "inline", // 👈 important
+                                  },
+                                },
+                                ol: {
+                                  component: "ol",
+                                  props: {
+                                    className: "list-decimal pl-5 mb-1",
+                                  },
+                                },
+                                ul: {
+                                  component: "ul",
+                                  props: {
+                                    className: "list-disc pl-5 mb-1",
+                                  },
+                                },
+                                li: {
+                                  component: "li",
+                                  props: {
+                                    className: "mb-0",
+                                  },
+                                },
+                                // a: {
+                                //   component: "a",
+                                //   props: {
+                                //     className: "text-blue-600 underline",
+                                //     target: "_blank",
+                                //     rel: "noopener noreferrer",
+                                //   },
+                                // },
+                                a: {
+                                  component: ({ children, ...props }: any) => (
+                                    <a
+                                      {...props}
+                                      target={linkBehavior === "sameTab" ? "_self" : "_blank"}
+                                      rel={linkBehavior === "sameTab" ? undefined : "noopener noreferrer"}
+                                      className="text-blue-600 underline break-words"
+                                    >
+                                      {children}
+                                    </a>
+                                  ),
+                                },
 
-                       
-  <div className="flex-1">
-    <Markdown
-      options={{
-        overrides: {
-          h1: {
-            component: "div",
-            props: {
-              className: "font-bold mb-1",
-            },
-          },
-          p: {
-            component: "p",
-            props: {
-              className: "inline", // 👈 important
-            },
-          },
-          ol: {
-            component: "ol",
-            props: {
-              className: "list-decimal pl-5 mb-1",
-            },
-          },
-          ul: {
-            component: "ul",
-            props: {
-              className: "list-disc pl-5 mb-1",
-            },
-          },
-          li: {
-            component: "li",
-            props: {
-              className: "mb-0",
-            },
-          },
-          // a: {
-          //   component: "a",
-          //   props: {
-          //     className: "text-blue-600 underline",
-          //     target: "_blank",
-          //     rel: "noopener noreferrer",
-          //   },
-          // },
-          a: {
-        component: ({ children, ...props }: any) => (
-          <a
-            {...props}
-            target={linkBehavior === "sameTab" ? "_self" : "_blank"}
-            rel={linkBehavior === "sameTab" ? undefined : "noopener noreferrer"}
-            className="text-blue-600 underline break-words"
-          >
-            {children}
-          </a>
-        ),
-      },
-
-        },
-      }}
-    >
-      {msg.text}
-    </Markdown>
-  </div>
+                              },
+                            }}
+                          >
+                            {msg.text}
+                          </Markdown>
+                        </div>
                       }
                       {/* {msg.text && <span>{msg.text}</span>} */}
 
@@ -1514,8 +1485,14 @@ export function StandardUI({
                 )}
               </div>
             ))}
-
-            <div ref={chatEndRef} />
+            {message==="" &&
+<div className="mt-6 flex flex-col items-center justify-center">
+    ...
+    <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} />
+  </div>
+          
+            }
+  <div ref={chatEndRef} />
           </div>
 
           {/* Input */}
