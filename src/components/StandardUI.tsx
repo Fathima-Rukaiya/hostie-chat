@@ -907,14 +907,9 @@ export function StandardUI({
       <div className="flex flex-wrap gap-2 mt-4">
         {questions.map((q, i) => (
           <button
-            style={{
-              background: suggestQuestionsBg,
-              border: `1px solid transparent`,
-              borderImage: suggestQuestionsBorder,
-              borderImageSlice: 1,
-            }}
+           
             key={i}
-            className="px-3 py-1.5 text-white rounded-full text-sm "
+            className="px-3 py-1.5 text-white rounded-full text-sm hostie-suggest-question"
             onClick={() => onSelect(q)}
           >
             {q}
