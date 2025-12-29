@@ -1226,8 +1226,61 @@ Feel free to explore these links for more information!
                 options={{
                   forceInline: false,   // IMPORTANT
                   overrides: {
+                    h1: {
+                      component: 'h2', // Render <h1> as <h2>
+                      props: {
+                        className: 'main-title',
+                      },
+                    },
                     a: {
                       props: {
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      },
+                    },
+
+                  },
+                }}
+              >
+                {markdown}
+              </Markdown>
+            </div>
+
+            import Markdown from "markdown-to-jsx";
+
+            <div className="markdown-body">
+              <Markdown
+                options={{
+                  forceBlock: true,
+                  overrides: {
+                    h1: {
+                      component: "div",
+                      props: {
+                        className: "font-bold block mb-2",
+                      },
+                    },
+                    ol: {
+                      component: "ol",
+                      props: {
+                        className: "list-decimal pl-5 mb-2",
+                      },
+                    },
+                    ul: {
+                      component: "ul",
+                      props: {
+                        className: "list-disc pl-5 mb-2",
+                      },
+                    },
+                    li: {
+                      component: "li",
+                      props: {
+                        className: "mb-1",
+                      },
+                    },
+                    a: {
+                      component: "a",
+                      props: {
+                        className: "text-blue-600 underline",
                         target: "_blank",
                         rel: "noopener noreferrer",
                       },
@@ -1238,6 +1291,7 @@ Feel free to explore these links for more information!
                 {markdown}
               </Markdown>
             </div>
+
 
 
             {chatHistory.length === 0 && (
