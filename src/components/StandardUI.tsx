@@ -101,6 +101,17 @@ export function StandardUI({
   } | null>(null);
 
 
+  const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const defaultSuggestions = [
+    "How can I upgrade?",
+    "What are your plans?",
+    "Contact support",
+    "Pricing details",
+    "Talk to a human agent"
+  ];
+
+
   useEffect(() => {
     if (chatHistory.length > 0) { // Start AFTER first message
       resetInactivityTimer();
@@ -553,6 +564,8 @@ export function StandardUI({
 
       return newHistory;
     });
+    setSuggestedQuestions(defaultSuggestions);
+    setShowSuggestions(true);
     return res.json();
   };
 
@@ -870,14 +883,30 @@ export function StandardUI({
     ? darkenColor(darkBorderColor, 20)
     : "#3a3538";
 
-  const SuggestedQuestions = ({ questions }: { questions: string[] }) => {
+  // const SuggestedQuestions = ({ questions }: { questions: string[] }) => {
+  //   return (
+  //     <div className="flex flex-wrap gap-2 mt-4">
+  //       {questions.map((q, i) => (
+  //         <button
+  //           key={i}
+  //           className="px-3 py-1.5 bg-pink-500 text-white rounded-full text-sm hover:bg-purple-300"
+  //           onClick={() => setMessage(q)} // optionally auto-send: sendMessage(q)
+  //         >
+  //           {q}
+  //         </button>
+  //       ))}
+  //     </div>
+  //   );
+  // };
+
+  const SuggestedQuestions = ({ questions, onSelect }: { questions: string[], onSelect: (q: string) => void }) => {
     return (
       <div className="flex flex-wrap gap-2 mt-4">
         {questions.map((q, i) => (
           <button
             key={i}
             className="px-3 py-1.5 bg-pink-500 text-white rounded-full text-sm hover:bg-pink-600"
-            onClick={() => setMessage(q)} // optionally auto-send: sendMessage(q)
+            onClick={() => onSelect(q)}
           >
             {q}
           </button>
@@ -885,6 +914,12 @@ export function StandardUI({
       </div>
     );
   };
+  const handleSuggestionClick = async (question: string) => {
+    setShowSuggestions(false);
+    setMessage(question);
+    await sendMessage(); // trigger normal send logic
+  };
+
 
   if (!showChat) return null;
 
@@ -1485,14 +1520,15 @@ export function StandardUI({
                 )}
               </div>
             ))}
-            {message==="" &&
-<div className="mt-6 flex flex-col items-center justify-center">
-    ...
-    <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} />
-  </div>
-          
+            {message === "" &&
+              <div className="mt-6 flex flex-col items-center justify-center">
+
+                {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
+                <SuggestedQuestions questions={defaultSuggestions} onSelect={handleSuggestionClick} />
+              </div>
+
             }
-  <div ref={chatEndRef} />
+            <div ref={chatEndRef} />
           </div>
 
           {/* Input */}
