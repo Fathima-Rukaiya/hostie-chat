@@ -103,6 +103,8 @@ export function StandardUI({
 
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const defaultSuggestions = [
     "How can I upgrade?",
     "What are your plans?",
@@ -564,8 +566,7 @@ export function StandardUI({
 
       return newHistory;
     });
-    setSuggestedQuestions(defaultSuggestions);
-    setShowSuggestions(true);
+    
     return res.json();
   };
 
@@ -599,6 +600,7 @@ export function StandardUI({
 
   const sendMessage = async () => {
     if (!message.trim()) return;
+    setIsProcessing(true);
     resetInactivityTimer();
     const messageText = message.trim();
     setMessage("");
@@ -668,8 +670,6 @@ export function StandardUI({
     if (!aiPaused) {
       if (!roomName || !senderId) return;
 
-
-
       try {
         const aiResp = await saveUserMessage(messageText, false);
         //setAiTyping(true);
@@ -692,6 +692,9 @@ export function StandardUI({
 
       const aiResp = await saveUserMessage(messageText, true);
     }
+     setIsProcessing(false);
+     setSuggestedQuestions(defaultSuggestions);
+    setShowSuggestions(true);
   };
 
   useEffect(() => {
@@ -1520,7 +1523,7 @@ export function StandardUI({
                 )}
               </div>
             ))}
-            {message === "" && roomName !="" && senderId!=""  &&
+            {message === "" && roomName && senderId  && !isProcessing &&
               <div className="mt-6 flex flex-col items-center justify-center">
 
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
