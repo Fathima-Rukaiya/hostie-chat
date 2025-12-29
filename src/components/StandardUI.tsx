@@ -1389,18 +1389,13 @@ export function StandardUI({
             },
           },
           a: {
-           component: ({ children, ...props }: any) => (
-          <a
-            {...props}
-            target={linkBehavior === "newTab" ? "_blank" : "_self"}
-            rel={linkBehavior === "newTab" ? "noopener noreferrer" : undefined}
-            className="text-blue-600 underline break-words"
-          >
-            {children}
-          </a>
-        ),
-      },
-
+            component: "a",
+            props: {
+              className: "text-blue-600 underline",
+              target: "_blank",
+              rel: "noopener noreferrer",
+            },
+          },
         },
       }}
     >
