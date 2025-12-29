@@ -886,18 +886,18 @@ export function StandardUI({
     ? darkenColor(darkBorderColor, 20)
     : "#3a3538";
 
-  
+
   const SuggestedQuestions = ({ questions, onSelect }: { questions: string[], onSelect: (q: string) => void }) => {
     const isDark = document
-    .querySelector("#hostie-chat-root")
-    ?.classList.contains("dark");
+      .querySelector("#hostie-chat-root")
+      ?.classList.contains("dark");
 
     return (
-      <div>
-          <div className="flex flex-wrap gap-2 mt-4">
-        <p>You can ask me things like</p>
-        <style>
-          {`
+      <div className="border rounded-lg ">
+        <p className="text-center font-semibold text-sm font-medium text-black dark:text-white">You can ask me things like</p>
+        <div className="flex flex-wrap gap-2 mt-1 p-1">
+          <style>
+            {`
            .hostie-suggest-question{
      background: ${suggestQuestionsBg};
       border-color: ${suggestQuestionsBorder || "#50484cff"};
@@ -911,8 +911,8 @@ export function StandardUI({
     /* opacity: 1;*/
     
   }`}
-        </style>
-        {/* {questions.map((q, i) => (
+          </style>
+          {/* {questions.map((q, i) => (
           <button
 
             key={i}
@@ -922,26 +922,26 @@ export function StandardUI({
             {q}
           </button>
         ))} */}
- {questions.map((q, i) => (
-        <button
-          key={i}
-          onClick={() => onSelect(q)}
-          className="px-3 py-1.5 rounded-full text-sm border transition-colors"
-          style={{
-            backgroundColor: isDark
-              ? suggestQuestionsDark
-              : suggestQuestionsBg,
-            borderColor: suggestQuestionsBorder,
-            color: isDark ? "#ffffff" : "#1F2937",
-          }}
-        >
-          {q}
-        </button>
-      ))}
+          {questions.map((q, i) => (
+            <button
+              key={i}
+              onClick={() => onSelect(q)}
+              className="px-3 py-1.5 rounded-full text-sm border transition-colors"
+              style={{
+                backgroundColor: isDark
+                  ? suggestQuestionsDark
+                  : suggestQuestionsBg,
+                borderColor: suggestQuestionsBorder,
+                color: isDark ? "#ffffff" : "#1F2937",
+              }}
+            >
+              {q}
+            </button>
+          ))}
 
+        </div>
       </div>
-      </div>
-    
+
     );
   };
   const handleSuggestionClick = async (question: string) => {
@@ -951,8 +951,8 @@ export function StandardUI({
   };
 
   const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 40) : "#c7bec2ff";
-  const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 45) : "#a19c9eff";
-  const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 50) : "#a19c9eff";
+  const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 45) : "#747071ff";
+  const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 50) : "#7c797aff";
 
 
   if (!showChat) return null;
@@ -1071,7 +1071,7 @@ export function StandardUI({
    color: "#fff" !important;
    
 
-`}</style>
+      `}</style>
       <style>{`
   .hostie-background {
     background: ${gradient};
