@@ -186,7 +186,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}45.
+                    <span className="font-semibold text-sm">{botName}49.
 
                     </span>
                 </button>
