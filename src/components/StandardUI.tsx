@@ -1205,12 +1205,6 @@ Feel free to explore these links for more information!
           {/* Chat area */}
           <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
 
-            {/* <div className="prose prose-sm dark:prose-invert max-w-none">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {markdown}
-                </ReactMarkdown>
-              </div> */}
-
             {/* <div className="prose prose-sm dark:prose-invert">
               <Markdown
                 options={{
@@ -1221,7 +1215,7 @@ Feel free to explore these links for more information!
               </Markdown>
             </div> */}
 
-            <div className="prose prose-sm dark:prose-invert">
+            {/* <div className="prose prose-sm dark:prose-invert">
               <Markdown
                 options={{
                   forceInline: false,   // IMPORTANT
@@ -1244,10 +1238,10 @@ Feel free to explore these links for more information!
               >
                 {markdown}
               </Markdown>
-            </div>
+            </div> */}
 
-            import Markdown from "markdown-to-jsx";
-
+           
+{/* 
             <div className="markdown-body">
               <Markdown
                 options={{
@@ -1290,7 +1284,7 @@ Feel free to explore these links for more information!
               >
                 {markdown}
               </Markdown>
-            </div>
+            </div> */}
 
 
 
@@ -1407,8 +1401,52 @@ Feel free to explore these links for more information!
                   ) : (
                     <div>
 
-
-                      {msg.text && <span>{msg.text}</span>}
+{msg.text && 
+            <div className="markdown-body">
+              <Markdown
+                options={{
+                  forceBlock: true,
+                  overrides: {
+                    h1: {
+                      component: "div",
+                      props: {
+                        className: "font-bold block mb-2",
+                      },
+                    },
+                    ol: {
+                      component: "ol",
+                      props: {
+                        className: "list-decimal pl-5 mb-2",
+                      },
+                    },
+                    ul: {
+                      component: "ul",
+                      props: {
+                        className: "list-disc pl-5 mb-2",
+                      },
+                    },
+                    li: {
+                      component: "li",
+                      props: {
+                        className: "mb-1",
+                      },
+                    },
+                    a: {
+                      component: "a",
+                      props: {
+                        className: "text-blue-600 underline",
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      },
+                    },
+                  },
+                }}
+              >
+                {msg.text}
+              </Markdown>
+            </div>
+}
+                      {/* {msg.text && <span>{msg.text}</span>} */}
                       {/* {msg.text &&
                         <div className="prose prose-sm dark:prose-invert">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
