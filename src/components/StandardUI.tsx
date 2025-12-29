@@ -1557,7 +1557,9 @@ export function StandardUI({
                 )}
               </div>
             ))}
-            {message === "" && roomName && senderId && !isProcessing &&
+          
+            <div ref={chatEndRef} />
+              {message === "" && roomName && senderId && !isProcessing &&
               <div className="mt-6 flex flex-col items-center justify-center">
 
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
@@ -1565,7 +1567,6 @@ export function StandardUI({
               </div>
 
             }
-            <div ref={chatEndRef} />
           </div>
 
           {/* Input */}
