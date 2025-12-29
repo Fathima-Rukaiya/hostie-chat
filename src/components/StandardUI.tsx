@@ -869,17 +869,7 @@ export function StandardUI({
     : "#3a3538";
 
 
-  const markdown = `
-Here are some useful links related to Hostie:
-
-1. [Hostie Training](https://app.hostingate.com/hostie/training)
-2. [Hostie Landing](https://app.hertzora)
-
-Feel free to explore these links for more information!
-#heading
-
-* Lets you define your own components 
-`;
+ 
   if (!showChat) return null;
 
   return (
@@ -1205,89 +1195,6 @@ Feel free to explore these links for more information!
           {/* Chat area */}
           <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
 
-            {/* <div className="prose prose-sm dark:prose-invert">
-              <Markdown
-                options={{
-                  forceBlock: true,
-                }}
-              >
-                {markdown}
-              </Markdown>
-            </div> */}
-
-            {/* <div className="prose prose-sm dark:prose-invert">
-              <Markdown
-                options={{
-                  forceInline: false,   // IMPORTANT
-                  overrides: {
-                    h1: {
-                      component: 'h2', // Render <h1> as <h2>
-                      props: {
-                        className: 'main-title',
-                      },
-                    },
-                    a: {
-                      props: {
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                      },
-                    },
-
-                  },
-                }}
-              >
-                {markdown}
-              </Markdown>
-            </div> */}
-
-
-            {/* 
-            <div className="markdown-body">
-              <Markdown
-                options={{
-                  forceBlock: true,
-                  overrides: {
-                    h1: {
-                      component: "div",
-                      props: {
-                        className: "font-bold block mb-2",
-                      },
-                    },
-                    ol: {
-                      component: "ol",
-                      props: {
-                        className: "list-decimal pl-5 mb-2",
-                      },
-                    },
-                    ul: {
-                      component: "ul",
-                      props: {
-                        className: "list-disc pl-5 mb-2",
-                      },
-                    },
-                    li: {
-                      component: "li",
-                      props: {
-                        className: "mb-1",
-                      },
-                    },
-                    a: {
-                      component: "a",
-                      props: {
-                        className: "text-blue-600 underline",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                      },
-                    },
-                  },
-                }}
-              >
-                {markdown}
-              </Markdown>
-            </div> */}
-
-
-
             {chatHistory.length === 0 && (
               // <div className="mt-10 flex flex-col items-center justify-center text-center">
               //   <Bot strokeWidth={1.75}
@@ -1482,13 +1389,18 @@ Feel free to explore these links for more information!
             },
           },
           a: {
-            component: "a",
-            props: {
-              className: "text-blue-600 underline",
-              target: "_blank",
-              rel: "noopener noreferrer",
-            },
-          },
+           component: ({ children, ...props }: any) => (
+          <a
+            {...props}
+            target={linkBehavior === "newTab" ? "_blank" : "_self"}
+            rel={linkBehavior === "newTab" ? "noopener noreferrer" : undefined}
+            className="text-blue-600 underline break-words"
+          >
+            {children}
+          </a>
+        ),
+      },
+
         },
       }}
     >
