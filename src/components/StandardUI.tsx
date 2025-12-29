@@ -1211,7 +1211,7 @@ Feel free to explore these links for more information!
                 </ReactMarkdown>
               </div> */}
 
-            <div className="prose prose-sm dark:prose-invert">
+            {/* <div className="prose prose-sm dark:prose-invert">
               <Markdown
                 options={{
                   forceBlock: true,
@@ -1219,7 +1219,26 @@ Feel free to explore these links for more information!
               >
                 {markdown}
               </Markdown>
+            </div> */}
+
+            <div className="prose prose-sm dark:prose-invert">
+              <Markdown
+                options={{
+                  forceInline: false,   // IMPORTANT
+                  overrides: {
+                    a: {
+                      props: {
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      },
+                    },
+                  },
+                }}
+              >
+                {markdown}
+              </Markdown>
             </div>
+
 
             {chatHistory.length === 0 && (
               // <div className="mt-10 flex flex-col items-center justify-center text-center">
