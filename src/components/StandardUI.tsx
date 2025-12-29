@@ -1399,51 +1399,102 @@ Feel free to explore these links for more information!
                       <span className="w-1.5 h-1.5 bg-gray-600 dark:text-white rounded-full animate-bounce delay-400" />
                     </div>
                   ) : (
-                    <div className="relative">
+                    // <div className="relative">
+                     <div className="markdown-body flex items-end gap-1">
                       {msg.text &&
-                        <div className="markdown-body">
-                          <Markdown
-                            options={{
-                              forceBlock: true,
-                              overrides: {
-                                h1: {
-                                  component: "div",
-                                  props: {
-                                    className: "font-bold block mb-2",
-                                  },
-                                },
-                                ol: {
-                                  component: "ol",
-                                  props: {
-                                    className: "list-decimal pl-5 mb-2",
-                                  },
-                                },
-                                ul: {
-                                  component: "ul",
-                                  props: {
-                                    className: "list-disc pl-5 mb-2",
-                                  },
-                                },
-                                li: {
-                                  component: "li",
-                                  props: {
-                                    className: "mb-1",
-                                  },
-                                },
-                                a: {
-                                  component: "a",
-                                  props: {
-                                    className: "text-blue-600 underline",
-                                    target: "_blank",
-                                    rel: "noopener noreferrer",
-                                  },
-                                },
-                              },
-                            }}
-                          >
-                            {msg.text}
-                          </Markdown>
-                        </div>
+                        // <span className="markdown-body">
+                        //   <Markdown
+                        //     options={{
+                        //       forceBlock: true,
+                        //       overrides: {
+                        //         h1: {
+                        //           component: "div",
+                        //           props: {
+                        //             className: "font-bold block mb-2",
+                        //           },
+                        //         },
+                        //         ol: {
+                        //           component: "ol",
+                        //           props: {
+                        //             className: "list-decimal pl-5 mb-2",
+                        //           },
+                        //         },
+                        //         ul: {
+                        //           component: "ul",
+                        //           props: {
+                        //             className: "list-disc pl-5 mb-2",
+                        //           },
+                        //         },
+                        //         li: {
+                        //           component: "li",
+                        //           props: {
+                        //             className: "mb-1",
+                        //           },
+                        //         },
+                        //         a: {
+                        //           component: "a",
+                        //           props: {
+                        //             className: "text-blue-600 underline",
+                        //             target: "_blank",
+                        //             rel: "noopener noreferrer",
+                        //           },
+                        //         },
+                        //       },
+                        //     }}
+                        //   >
+                        //     {msg.text}
+                        //   </Markdown>
+                        // </span>
+
+                       
+  <div className="flex-1">
+    <Markdown
+      options={{
+        overrides: {
+          h1: {
+            component: "div",
+            props: {
+              className: "font-bold mb-1",
+            },
+          },
+          p: {
+            component: "p",
+            props: {
+              className: "inline", // 👈 important
+            },
+          },
+          ol: {
+            component: "ol",
+            props: {
+              className: "list-decimal pl-5 mb-1",
+            },
+          },
+          ul: {
+            component: "ul",
+            props: {
+              className: "list-disc pl-5 mb-1",
+            },
+          },
+          li: {
+            component: "li",
+            props: {
+              className: "mb-0",
+            },
+          },
+          a: {
+            component: "a",
+            props: {
+              className: "text-blue-600 underline",
+              target: "_blank",
+              rel: "noopener noreferrer",
+            },
+          },
+        },
+      }}
+    >
+      {msg.text}
+    </Markdown>
+  </div>
                       }
                       {/* {msg.text && <span>{msg.text}</span>} */}
 
@@ -1491,13 +1542,19 @@ Feel free to explore these links for more information!
 
                       {/* time stamp */}
                       {msg.sender === "user" && (
-                        <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                        // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                        //   {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
+                        // </span>
+                        <span className="text-[10px] opacity-70 whitespace-nowrap self-end">
                           {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
                         </span>
                       )}
                       {msg.sender === "bot" && msg.timestamps?.received && (
-                        <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                          {msg.timestamps.received}
+                        // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
+                        //   {msg.timestamps.received}
+                        // </span>
+                        <span className="text-[10px] opacity-70 whitespace-nowrap self-end">
+                          {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
                         </span>
                       )}
 
