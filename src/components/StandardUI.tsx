@@ -1399,10 +1399,10 @@ Feel free to explore these links for more information!
                       <span className="w-1.5 h-1.5 bg-gray-600 dark:text-white rounded-full animate-bounce delay-400" />
                     </div>
                   ) : (
-                    <div>
+                    <div className="markdown-body">
 
 {msg.text && 
-            <div className="markdown-body">
+           
               <Markdown
                 options={{
                   forceBlock: true,
@@ -1444,7 +1444,7 @@ Feel free to explore these links for more information!
               >
                 {msg.text}
               </Markdown>
-            </div>
+           
 }
                       {/* {msg.text && <span>{msg.text}</span>} */}
                       {/* {msg.text &&
