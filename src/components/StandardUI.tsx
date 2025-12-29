@@ -566,7 +566,7 @@ export function StandardUI({
 
       return newHistory;
     });
-    
+
     return res.json();
   };
 
@@ -653,7 +653,7 @@ export function StandardUI({
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
           // addBotMessage(thankMsg);
           await saveBotMessage(thankMsg, savedGuest.id, apiKey);
-
+          setIsProcessing(false);
 
         } catch (err) {
           console.error("Error saving guest info:", err);
@@ -692,8 +692,8 @@ export function StandardUI({
 
       const aiResp = await saveUserMessage(messageText, true);
     }
-     setIsProcessing(false);
-     setSuggestedQuestions(defaultSuggestions);
+    setIsProcessing(false);
+    setSuggestedQuestions(defaultSuggestions);
     setShowSuggestions(true);
   };
 
@@ -1523,7 +1523,7 @@ export function StandardUI({
                 )}
               </div>
             ))}
-            {message === "" && roomName && senderId  && !isProcessing &&
+            {message === "" && roomName && senderId && !isProcessing &&
               <div className="mt-6 flex flex-col items-center justify-center">
 
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
