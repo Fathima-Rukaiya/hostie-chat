@@ -1388,14 +1388,27 @@ export function StandardUI({
               className: "mb-0",
             },
           },
+          // a: {
+          //   component: "a",
+          //   props: {
+          //     className: "text-blue-600 underline",
+          //     target: "_blank",
+          //     rel: "noopener noreferrer",
+          //   },
+          // },
           a: {
-            component: "a",
-            props: {
-              className: "text-blue-600 underline",
-              target: "_blank",
-              rel: "noopener noreferrer",
-            },
-          },
+        component: ({ children, ...props }: any) => (
+          <a
+            {...props}
+            target={linkBehavior === "sameTab" ? "_self" : "_blank"}
+            rel={linkBehavior === "sameTab" ? undefined : "noopener noreferrer"}
+            className="text-blue-600 underline break-words"
+          >
+            {children}
+          </a>
+        ),
+      },
+
         },
       }}
     >
