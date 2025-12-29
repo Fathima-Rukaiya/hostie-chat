@@ -2,8 +2,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Bot, BotMessageSquare, FileText, Frown, Laugh, LockIcon, Meh, Plus, SendHorizontal, Sparkles, UserRound } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+// import ReactMarkdown from "react-markdown";
+// import remarkGfm from "remark-gfm";
+import Markdown from "markdown-to-jsx";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -875,7 +876,9 @@ Here are some useful links related to Hostie:
 2. [Hostie Landing](https://app.hertzora)
 
 Feel free to explore these links for more information!
+#heading
 
+* Lets you define your own components 
 `;
   if (!showChat) return null;
 
@@ -1201,13 +1204,23 @@ Feel free to explore these links for more information!
 
           {/* Chat area */}
           <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
-            
-              {/* <div className="prose prose-sm dark:prose-invert max-w-none">
+
+            {/* <div className="prose prose-sm dark:prose-invert max-w-none">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {markdown}
                 </ReactMarkdown>
               </div> */}
-            
+
+            <div className="prose prose-sm dark:prose-invert">
+              <Markdown
+                options={{
+                  forceBlock: true,
+                }}
+              >
+                {markdown}
+              </Markdown>
+            </div>
+
             {chatHistory.length === 0 && (
               // <div className="mt-10 flex flex-col items-center justify-center text-center">
               //   <Bot strokeWidth={1.75}
