@@ -907,8 +907,14 @@ export function StandardUI({
       <div className="flex flex-wrap gap-2 mt-4">
         {questions.map((q, i) => (
           <button
+            style={{
+              background: suggestQuestionsBg,
+              border: `1px solid transparent`,
+              borderImage: suggestQuestionsBorder,
+              borderImageSlice: 1,
+            }}
             key={i}
-            className="px-3 py-1.5 bg-pink-500 text-white rounded-full text-sm hover:bg-pink-600"
+            className="px-3 py-1.5 text-white rounded-full text-sm "
             onClick={() => onSelect(q)}
           >
             {q}
@@ -922,6 +928,10 @@ export function StandardUI({
     setMessage(question);
     await sendMessage(); // trigger normal send logic
   };
+
+  const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 20) : "#c7bec2ff";
+  const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 20) : "#a19c9eff";
+  const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 40) : "#a19c9eff";
 
 
   if (!showChat) return null;

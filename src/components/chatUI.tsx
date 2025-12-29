@@ -142,8 +142,6 @@ export function ChatUI({ apiKey,
     const borderColor = botColors ? darkenColor(botColors[0], 20) : "#e9e4e6ff";
     const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
 
-
-
     return (
         // <ThemeProvider
         //     attribute="class"
@@ -188,7 +186,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}36.
+                    <span className="font-semibold text-sm">{botName}37.
 
                     </span>
                 </button>
