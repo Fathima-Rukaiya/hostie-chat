@@ -1520,7 +1520,7 @@ export function StandardUI({
                 )}
               </div>
             ))}
-            {message === "" &&
+            {message === "" && roomName !="" && senderId!=""  &&
               <div className="mt-6 flex flex-col items-center justify-center">
 
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
