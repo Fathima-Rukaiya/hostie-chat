@@ -1240,8 +1240,8 @@ Feel free to explore these links for more information!
               </Markdown>
             </div> */}
 
-           
-{/* 
+
+            {/* 
             <div className="markdown-body">
               <Markdown
                 options={{
@@ -1399,75 +1399,53 @@ Feel free to explore these links for more information!
                       <span className="w-1.5 h-1.5 bg-gray-600 dark:text-white rounded-full animate-bounce delay-400" />
                     </div>
                   ) : (
-                    <div className="markdown-body">
-
-{msg.text && 
-           
-              <Markdown
-                options={{
-                  forceBlock: true,
-                  overrides: {
-                    h1: {
-                      component: "div",
-                      props: {
-                        className: "font-bold block mb-2",
-                      },
-                    },
-                    ol: {
-                      component: "ol",
-                      props: {
-                        className: "list-decimal pl-5 mb-2",
-                      },
-                    },
-                    ul: {
-                      component: "ul",
-                      props: {
-                        className: "list-disc pl-5 mb-2",
-                      },
-                    },
-                    li: {
-                      component: "li",
-                      props: {
-                        className: "mb-1",
-                      },
-                    },
-                    a: {
-                      component: "a",
-                      props: {
-                        className: "text-blue-600 underline",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                      },
-                    },
-                  },
-                }}
-              >
-                {msg.text}
-              </Markdown>
-           
-}
+                    <div className="relative">
+                      {msg.text &&
+                        <div className="markdown-body">
+                          <Markdown
+                            options={{
+                              forceBlock: true,
+                              overrides: {
+                                h1: {
+                                  component: "div",
+                                  props: {
+                                    className: "font-bold block mb-2",
+                                  },
+                                },
+                                ol: {
+                                  component: "ol",
+                                  props: {
+                                    className: "list-decimal pl-5 mb-2",
+                                  },
+                                },
+                                ul: {
+                                  component: "ul",
+                                  props: {
+                                    className: "list-disc pl-5 mb-2",
+                                  },
+                                },
+                                li: {
+                                  component: "li",
+                                  props: {
+                                    className: "mb-1",
+                                  },
+                                },
+                                a: {
+                                  component: "a",
+                                  props: {
+                                    className: "text-blue-600 underline",
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  },
+                                },
+                              },
+                            }}
+                          >
+                            {msg.text}
+                          </Markdown>
+                        </div>
+                      }
                       {/* {msg.text && <span>{msg.text}</span>} */}
-                      {/* {msg.text &&
-                        <div className="prose prose-sm dark:prose-invert">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {message}
-                          </ReactMarkdown>
-                        </div>
-                      } */}
-
-                      {/* {msg.text &&
-                        <div className="prose prose-sm dark:prose-invert">
-                          <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
-                            {msg.text}
-                          </Markdown></div>} */}
-                      {/* {msg.text && (
-                        <div>
-                          <ReactMarkdown>
-                            {msg.text}
-                          </ReactMarkdown>
-                        </div>
-                      )} */}
-
 
                       {msg.uploaded_documents && (
                         <div className="mt-2">
@@ -1510,8 +1488,8 @@ Feel free to explore these links for more information!
                             )}
                         </div>
                       )}
-                      {/* time stamp */}
 
+                      {/* time stamp */}
                       {msg.sender === "user" && (
                         <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
                           {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
@@ -1524,11 +1502,6 @@ Feel free to explore these links for more information!
                       )}
 
                     </div>
-
-
-
-
-
 
                   )}
 
