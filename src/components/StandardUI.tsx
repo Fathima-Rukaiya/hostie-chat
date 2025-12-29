@@ -929,9 +929,9 @@ export function StandardUI({
     await sendMessage(); // trigger normal send logic
   };
 
-  const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 20) : "#c7bec2ff";
-  const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 20) : "#a19c9eff";
-  const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 40) : "#a19c9eff";
+  const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 40) : "#c7bec2ff";
+  const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 45) : "#a19c9eff";
+  const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 50) : "#a19c9eff";
 
 
   if (!showChat) return null;
@@ -1079,6 +1079,21 @@ export function StandardUI({
       .dark #hostie-chat-box{
      background: #171717;
     }
+
+    .hostie-suggest-question{
+     background: ${suggestQuestionsBg};
+      border-color: ${suggestQuestionsBorder || "#50484cff"};
+      color: #1F2937;
+
+    }
+       .dark .hostie-suggest-question{
+    color: #FFFFFF;
+     background: ${suggestQuestionsDark};
+      border-color: ${suggestQuestionsBorder || "#50484cff"};
+
+    opacity: 1;
+    
+  }
      /*
      #hostie-chat-box input{
      background: ${backgroundColor};
