@@ -34,10 +34,10 @@ export function ChatUI({ apiKey,
     const [welcomeMsg, SetWelcomeMsg] = useState<string>("");
 
 
-    const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+    // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     // const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
     //https://app.hertzora.ai/hostie/overview
-    // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+    const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
     useEffect(() => {
         const verifyDomain = async () => {
             try {
@@ -188,7 +188,7 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm"> {botName}
+                    <span className="font-semibold text-sm"> {botName}!
 
                     </span>
                 </button>
