@@ -893,7 +893,9 @@ export function StandardUI({
     ?.classList.contains("dark");
 
     return (
-      <div className="flex flex-wrap gap-2 mt-4">
+      <div>
+          <div className="flex flex-wrap gap-2 mt-4">
+        <p>You can ask me things like</p>
         <style>
           {`
            .hostie-suggest-question{
@@ -938,6 +940,8 @@ export function StandardUI({
       ))}
 
       </div>
+      </div>
+    
     );
   };
   const handleSuggestionClick = async (question: string) => {
@@ -1097,19 +1101,8 @@ export function StandardUI({
      background: #171717;
     }
 
-    .hostie-suggest-question{
-     background: ${suggestQuestionsBg};
-      border-color: ${suggestQuestionsBorder || "#50484cff"};
-      color: #1F2937;
-
-    }
-       .dark .hostie-suggest-question{
-    color: #FFFFFF;
-     background: ${suggestQuestionsDark};
-      border-color: ${suggestQuestionsBorder || "#50484cff"};
-    /* opacity: 1;*/
     
-  }
+      
      /*
      #hostie-chat-box input{
      background: ${backgroundColor};
