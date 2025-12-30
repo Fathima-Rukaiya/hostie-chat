@@ -188,7 +188,7 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}51.
+                    <span className="font-semibold text-sm">{botName}
 
                     </span>
                 </button>
