@@ -30,7 +30,6 @@ export function ChatUI({ apiKey,
     const [allowFileUpload, setAllowFileUpload] = useState(true);
     const [linkBehavior, setLinkBehavior] = useState<"newTab" | "sameTab">("newTab");
 
-
     const [welcomeMsg, SetWelcomeMsg] = useState<string>("");
 
 const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(null);

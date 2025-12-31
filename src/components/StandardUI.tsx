@@ -58,7 +58,7 @@ export function StandardUI({
   linkBehavior?: "newTab" | "sameTab";
   position?: "left" | "right";
   welcomeMsg?: string;
-  suggestedQuestionList?: string[]; 
+  suggestedQuestionList?: string[];
 }) {
 
 
@@ -1164,18 +1164,6 @@ export function StandardUI({
   }
 `}</style>
 
-
-      {/* 
-.hostie-color {
-   color: "#fff" !important;
-   background: linear-gradient(to right, #db2777, #db2777, #7e22ce) !important;
-}
-
- .hostie-color {
-   color: "#fff" !important;
-  // backgroundImage: "linear-gradient(to right, #db2777, #6b21a8, #6b21a8)" !important;
-  
-}*/}
       <div className={`fixed bottom-6 z-50 ${position === "left" ? "left-6" : "right-6"
         }`}>
         {/* <div className="fixed bottom-6 right-6 z-50 " > */}
@@ -1559,11 +1547,11 @@ export function StandardUI({
                 )}
               </div>
             ))}
-          
-            <div ref={chatEndRef} />
-              {message === "" && roomName && senderId && !isProcessing &&  suggestedQuestionList && suggestedQuestionList?.length > 0 &&
-              <div className="mt-6 flex flex-col items-center justify-center">
 
+            <div ref={chatEndRef} />
+            {message === "" && roomName && senderId && !isProcessing && suggestedQuestionList && suggestedQuestionList?.length > 0 &&
+              <div className="mt-6 flex flex-col items-end justify-end">
+{/* items-center justify-center */}
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
                 <SuggestedQuestions questions={suggestedQuestionList} onSelect={handleSuggestionClick} />
               </div>
