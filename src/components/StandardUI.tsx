@@ -1002,7 +1002,7 @@ export function StandardUI({
 
   const handleSuggestionClick = async (question: string) => {
     setShowSuggestions(false);
-    setMessage(question);
+   // setMessage(question);
 
     // trigger normal send logic
     if (!aiPaused) {
