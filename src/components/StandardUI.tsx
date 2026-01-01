@@ -1003,7 +1003,7 @@ export function StandardUI({
   const handleSuggestionClick = async (question: string) => {
     // setShowSuggestions(false);
     
- setShowSuggestions(false);
+ 
   if (!aiPaused) {
       if (!roomName || !senderId) return;
 
@@ -1029,6 +1029,10 @@ export function StandardUI({
 
       const aiResp = await saveUserMessage(question, true);
     }
+    
+    setShowSuggestions(false);
+     setSuggestedQuestions(defaultSuggestions);
+         
   // setMessage(question);   // put suggestion into input state
   // await sendMessage(); 
     // setMessage(question);
