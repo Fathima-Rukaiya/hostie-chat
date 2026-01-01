@@ -604,7 +604,7 @@ export function StandardUI({
     const messageText = message.trim();
     
     if (!messageText.trim()) return;
-   
+    setIsProcessing(true);
     resetInactivityTimer();
     
     setMessage("");
@@ -635,7 +635,6 @@ export function StandardUI({
 
     // Guest just gave info → save contact & thank
     if (askedForInfo && !userInfo) {
-       setIsProcessing(true);
       if (roomName) {
         const guestData = message.includes("@")
           ? { email: message, room_id: roomName, country: country, }
@@ -1002,42 +1001,29 @@ export function StandardUI({
   };
 
   const handleSuggestionClick = async (question: string) => {
-    // setShowSuggestions(false);
-    
- setShowSuggestions(false);
-  if (!aiPaused) {
+    setShowSuggestions(false);
+    setMessage(question);
+
+    // trigger normal send logic
+    if (!aiPaused) {
       if (!roomName || !senderId) return;
 
       try {
         const aiResp = await saveUserMessage(question, false);
-        //setAiTyping(true);
-        // const reply = aiResp.reply || "Sorry, I couldn't generate a reply.";
-
         const generated = await generateAIResponse(
           roomName,
           question,
           senderId,
         );
-
-
       } catch (err) {
         console.error("AI call failed:", err);
         setChatHistory(prev => prev.filter(msg => !msg.isTyping));
-
       }
     } else {
       console.log("AI response paused due to live agent assignment.");
+
       const aiResp = await saveUserMessage(question, true);
     }
-
-    setShowSuggestions(false);
-   
-         
-  // setMessage(question);   // put suggestion into input state
-  // await sendMessage(); 
-    // setMessage(question);
-    // await sendMessage(); // trigger normal send logic
-    
   };
 
   const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 40) : "#c7bec2ff";
