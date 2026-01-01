@@ -34,6 +34,8 @@ export function ChatUI({ apiKey,
 
     const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(null);
     const [errorMessage, setErrorMessage] = useState("");
+    const [customWidgetIcon, setCustomWidgetIcon] = useState<string | null>(null);
+    const [buttonSize, setButtonSize] = useState<string | null>(null);
 
     // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     // const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
@@ -84,6 +86,8 @@ export function ChatUI({ apiKey,
                     setLinkBehavior(data.linkBehavior || "newTab");
                     SetWelcomeMsg(data.welcomeMessage);
                     setSuggestedQuestions(data.suggestedQuestions || null);
+                    setCustomWidgetIcon(data.customWidgetIcon || null);
+                    setButtonSize(data.buttonSize || null);
 
                 } else {
 
@@ -168,6 +172,38 @@ export function ChatUI({ apiKey,
                     }
                 `}</style>
 
+{customWidgetIcon ? (
+      // Custom Widget Button
+      <button
+        id="custom-widget-btn"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          backgroundColor: backgroundColor || "#ffffff",
+          width: buttonSize || "60px",
+          height: buttonSize || "60px",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.25)",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transition: "all 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.05)";
+          e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.35)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow = "0 4px 15px rgba(0,0,0,0.25)";
+        }}
+      >
+        <img
+          src={customWidgetIcon}
+          alt="Chat Widget"
+          className="w-2/3 h-2/3 object-contain"
+        />
+      </button>
+    ) : (
                 <button
                     id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
@@ -182,12 +218,12 @@ export function ChatUI({ apiKey,
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}45
+                    <span className="font-semibold text-sm">{botName}47
 
                     </span>
                 </button>
 
-
+                )}
 
                 {isOpen && (
                     <div
