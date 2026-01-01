@@ -651,7 +651,7 @@ export function StandardUI({
           sessionStorage.setItem("guestContactId", savedGuest.id)
 
           //  await saveUserMessage(message, true);
-          await saveUserMessageWithSender(message, true, savedGuest.id);
+          await saveUserMessageWithSender(messageText, true, savedGuest.id);
 
 
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
@@ -1001,9 +1001,14 @@ export function StandardUI({
   };
 
   const handleSuggestionClick = async (question: string) => {
-    setShowSuggestions(false);
-    setMessage(question);
-    await sendMessage(); // trigger normal send logic
+    // setShowSuggestions(false);
+    
+ setShowSuggestions(false);
+  setMessage(question);   // put suggestion into input state
+  await sendMessage(); 
+    // setMessage(question);
+    // await sendMessage(); // trigger normal send logic
+    
   };
 
   const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 40) : "#c7bec2ff";
