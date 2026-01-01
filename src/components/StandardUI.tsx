@@ -601,10 +601,12 @@ export function StandardUI({
   };
 
   const sendMessage = async () => {
-    if (!message.trim()) return;
+    const messageText = message.trim();
+    
+    if (!messageText.trim()) return;
     setIsProcessing(true);
     resetInactivityTimer();
-    const messageText = message.trim();
+    
     setMessage("");
 
     // Add user's message immediately to UI
