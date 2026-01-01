@@ -604,7 +604,7 @@ export function StandardUI({
     const messageText = message.trim();
     
     if (!messageText.trim()) return;
-    setIsProcessing(true);
+   
     resetInactivityTimer();
     
     setMessage("");
@@ -635,6 +635,7 @@ export function StandardUI({
 
     // Guest just gave info → save contact & thank
     if (askedForInfo && !userInfo) {
+       setIsProcessing(true);
       if (roomName) {
         const guestData = message.includes("@")
           ? { email: message, room_id: roomName, country: country, }
@@ -1003,7 +1004,7 @@ export function StandardUI({
   const handleSuggestionClick = async (question: string) => {
     // setShowSuggestions(false);
     
- 
+ setShowSuggestions(false);
   if (!aiPaused) {
       if (!roomName || !senderId) return;
 
@@ -1026,12 +1027,11 @@ export function StandardUI({
       }
     } else {
       console.log("AI response paused due to live agent assignment.");
-
       const aiResp = await saveUserMessage(question, true);
     }
-    
+
     setShowSuggestions(false);
-     setSuggestedQuestions(defaultSuggestions);
+   
          
   // setMessage(question);   // put suggestion into input state
   // await sendMessage(); 
