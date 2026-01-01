@@ -32,12 +32,13 @@ export function ChatUI({ apiKey,
 
     const [welcomeMsg, SetWelcomeMsg] = useState<string>("");
 
-const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(null);
+    const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(null);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+    // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
     // const API_BASE_URL = "https://app.hertzora.ai/api/clientCustomerChatBox";
     //https://app.hertzora.ai/hostie/overview
-    // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+    const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
     useEffect(() => {
         const verifyDomain = async () => {
             try {
@@ -50,13 +51,20 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
                     body: JSON.stringify({ api_key: apiKey }),
                 });
 
-                if (!res.ok) return setIsAllowed(false);
+                // if (!res.ok) return setIsAllowed(false);
+
 
                 const data = await res.json();
+
+                if (!res.ok || !data.allowed) {
+                    setIsAllowed(false);
+                    setErrorMessage(data.reason || "This chat widget is not authorized.");
+                    return;
+                }
                 setIsAllowed(data.allowed ?? false);
 
                 if (data.allowed) {
-
+                    setIsAllowed(true);
                     const name = data.bot_name || "ChatBot";
                     const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
                     setBotName(capitalizedName);
@@ -76,6 +84,8 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
                     setLinkBehavior(data.linkBehavior || "newTab");
                     SetWelcomeMsg(data.welcomeMessage);
                     setSuggestedQuestions(data.suggestedQuestions || null);
+
+                } else {
 
                 }
             } catch {
@@ -112,9 +122,7 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
             <div className={`fixed bottom-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow ${buttonPosition === "left" ? "left-6" : "right-6"
                 }`}
             >
-                {/*    <div className="fixed bottom-6 right-6 z-[9999] text-sm text-red-600 bg-white p-3 rounded-xl shadow"
-          > */}
-                <p className="text-gray-600 text-sm">This chat widget is not authorized for this domain.</p>
+                <p className="text-gray-600 text-sm">{errorMessage}</p>
                 <p className="text-gray-400 text-xs mt-2">Please contact the admin.</p>
             </div>
         );
@@ -144,35 +152,22 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
     const darkBorderColor = botColors ? darkenColor(botColors[2], 20) : "#50484cff";
 
     return (
-        // <ThemeProvider
-        //     attribute="class"
-        //     defaultTheme="system"
-        //     enableSystem
-        // >
-        // <div className="fixed bottom-6 right-6 z-[9999]">
-        <div
-            className={`fixed bottom-6 z-[9999] ${buttonPosition === "left" ? "left-6" : "right-6"
-                }`}
-        >
 
-            {/* <div ref={popoverRef}> */}
-            {/* , */}
+        <div
+            className={`fixed bottom-6 z-[9999] ${buttonPosition === "left" ? "left-6" : "right-6"}`}>
             <div ref={popoverRef} className="relative">
                 <style>{`
-  .hertzora-color {
-    color: #fff !important;
-  }
-`}</style>
+                    .hertzora-color {
+                        color: #fff !important;
+                    }
+                `}</style>
 
                 <style>{`
-  .dark #hertzora-btn {
-     background: ${darkModeGradient} !important;
-  }
-`}</style>
-                {/*     .hertzora-color {
-   color: "#fff" !important;
-   background: linear-gradient(to right, #db2777, #A724A8, #7e22ce) !important;
-} */}
+                    .dark #hertzora-btn {
+                        background: ${darkModeGradient} !important;
+                    }
+                `}</style>
+
                 <button
                     id="hertzora-btn"
                     onClick={() => setIsOpen(!isOpen)}
@@ -187,20 +182,14 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
                     ) : (
                         <Bot strokeWidth={1.75} size={22} />
                     )}
-                    <span className="font-semibold text-sm">{botName}42
+                    <span className="font-semibold text-sm">{botName}45
 
                     </span>
                 </button>
-                {/* {chatTriggerType === "bubble" && ( */}
 
-                {/* )} */}
 
 
                 {isOpen && (
-                    // {botName}
-                    // <div className=
-                    //     {`fixed bottom-6 z-[50] ${buttonPosition === "left" ? "left-6" : "right-6"
-                    //         }`}>
                     <div
                         className={`absolute bottom-full mb-3  w-80 p-0 shadow-2xl rounded-xl transition-all duration-200
                             ${buttonPosition === "left" ? "left-0" : "right-0"
@@ -214,10 +203,9 @@ const [suggestedQuestions, setSuggestedQuestions] = useState<string[] | null>(nu
                             linkBehavior={linkBehavior}
                             position={buttonPosition}
                             welcomeMsg={welcomeMsg}
-                            suggestedQuestionList={suggestedQuestions|| undefined}
+                            suggestedQuestionList={suggestedQuestions || undefined}
                         />
                     </div>
-                    // </div>
                 )}
 
 
