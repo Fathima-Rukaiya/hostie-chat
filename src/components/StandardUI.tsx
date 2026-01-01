@@ -898,7 +898,7 @@ export function StandardUI({
       <div className=" w-fit ml-auto" >
         {/* border rounded-lg border-t border-zinc-200 dark:border-neutral-700  */}
         {/* <p className="text-center font-semibold text-sm font-medium text-black dark:text-white mt-1">You can ask me things like</p> */}
-        
+
         <div className="flex flex-wrap gap-2 mt-1 p-1">
           <style>
             {`
@@ -926,11 +926,12 @@ export function StandardUI({
             {q}
           </button>
         ))} */}
+        {/* px-3 py-1.5 rounded-full text-sm border transition-colors */}
           {questions.map((q, i) => (
             <button
               key={i}
               onClick={() => onSelect(q)}
-              className="px-3 py-1.5 rounded-full text-sm border transition-colors"
+              className="p-2 rounded-3xl text-sm max-w-[80%] break-words"
               style={{
                 backgroundColor: isDark
                   ? suggestQuestionsDark
@@ -1552,8 +1553,9 @@ export function StandardUI({
 
             <div ref={chatEndRef} />
             {message === "" && roomName && senderId && !isProcessing && suggestedQuestionList && suggestedQuestionList?.length > 0 &&
-              <div className="mt-6 flex flex-col items-end justify-end">
+              <div className=" flex-col-reverse gap-2 mt-4 items-end">
 {/* items-center justify-center */}
+{/* mt-6 flex flex-col items-end justify-end */}
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
                 <SuggestedQuestions questions={suggestedQuestionList} onSelect={handleSuggestionClick} />
               </div>
