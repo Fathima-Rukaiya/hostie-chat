@@ -889,66 +889,114 @@ export function StandardUI({
     : "#3a3538";
 
 
-  const SuggestedQuestions = ({ questions, onSelect }: { questions: string[], onSelect: (q: string) => void }) => {
-    const isDark = document
-      .querySelector("#hostie-chat-root")
-      ?.classList.contains("dark");
+  // const SuggestedQuestions = ({ questions, onSelect }: { questions: string[], onSelect: (q: string) => void }) => {
+  //   const isDark = document
+  //     .querySelector("#hostie-chat-root")
+  //     ?.classList.contains("dark");
 
-    return (
-      <div className=" " >
-        {/* border rounded-lg border-t border-zinc-200 dark:border-neutral-700  */}
-        {/* <p className="text-center font-semibold text-sm font-medium text-black dark:text-white mt-1">You can ask me things like</p> */}
+  //   return (
+  //     <div className=" " >
+  //       {/* border rounded-lg border-t border-zinc-200 dark:border-neutral-700  */}
+  //       {/* <p className="text-center font-semibold text-sm font-medium text-black dark:text-white mt-1">You can ask me things like</p> */}
 
-        <div className="flex flex-col-reverse gap-2 mt-4 items-end">
-          <style>
-            {`
-           .hostie-suggest-question{
-     background: ${suggestQuestionsBg};
-      border-color: ${suggestQuestionsBorder || "#50484cff"};
-      color: #1F2937;
+  //       <div className="flex flex-col-reverse gap-2 mt-4 items-end">
+  //         <style>
+  //           {`
+  //          .hostie-suggest-question{
+  //    background: ${suggestQuestionsBg};
+  //     border-color: ${suggestQuestionsBorder || "#50484cff"};
+  //     color: #1F2937;
 
-    }
-       .dark .hostie-suggest-question{
-    color: #FFFFFF;
-     background: ${suggestQuestionsDark};
-      border-color: ${suggestQuestionsBorder || "#50484cff"};
-    /* opacity: 1;*/
+  //   }
+  //      .dark .hostie-suggest-question{
+  //   color: #FFFFFF;
+  //    background: ${suggestQuestionsDark};
+  //     border-color: ${suggestQuestionsBorder || "#50484cff"};
+  //   /* opacity: 1;*/
     
-  }`}
-          </style>
-          {/* {questions.map((q, i) => (
-          <button
+  // }
+  // .hover .hostie-suggest-question{
+  // }`}
+  //         </style>
+  //         {/* {questions.map((q, i) => (
+  //         <button
 
-            key={i}
-            className="px-3 py-1.5 rounded-full text-sm hostie-suggest-question"
-            onClick={() => onSelect(q)}
-          >
-            {q}
-          </button>
-        ))} */}
-        {/* px-3 py-1.5 rounded-full text-sm border transition-colors */}
-          {questions.map((q, i) => (
+  //           key={i}
+  //           className="px-3 py-1.5 rounded-full text-sm hostie-suggest-question"
+  //           onClick={() => onSelect(q)}
+  //         >
+  //           {q}
+  //         </button>
+  //       ))} */}
+  //       {/* px-3 py-1.5 rounded-full text-sm border transition-colors */}
+  //         {questions.map((q, i) => (
+  //           <button
+  //             key={i}
+  //             onClick={() => onSelect(q)}
+  //             className="p-2 rounded-3xl text-sm max-w-[80%] break-words"
+  //             style={{
+  //               backgroundColor: isDark
+  //                 ? suggestQuestionsDark
+  //                 : suggestQuestionsBg,
+  //               borderColor: suggestQuestionsBorder,
+  //               color: isDark ? "#ffffff" : "#1F2937",
+  //             }}
+  //           >
+  //             {q}
+  //           </button>
+  //         ))}
+
+  //       </div>
+  //     </div>
+
+  //   );
+  // };
+  const SuggestedQuestions = ({
+  questions,
+  onSelect,
+}: {
+  questions: string[];
+  onSelect: (q: string) => void;
+}) => {
+  const isDark = document
+    .querySelector("#hostie-chat-root")
+    ?.classList.contains("dark");
+
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  return (
+    <div>
+      <div className="flex flex-col-reverse gap-2 mt-4 items-end">
+        {questions.map((q, i) => {
+          const isHovered = hoveredIndex === i;
+
+          return (
             <button
               key={i}
               onClick={() => onSelect(q)}
-              className="p-2 rounded-3xl text-sm max-w-[80%] break-words"
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="p-2 rounded-3xl text-sm max-w-[80%] break-words transition-all duration-200 border"
               style={{
-                backgroundColor: isDark
-                  ? suggestQuestionsDark
-                  : suggestQuestionsBg,
-                borderColor: suggestQuestionsBorder,
+                backgroundColor: isHovered
+                  ? isDark
+                    ? suggestQuestionsDark
+                    : suggestQuestionsBg
+                  : "transparent",
+
+                borderColor: suggestQuestionsBorder || "#50484cff",
                 color: isDark ? "#ffffff" : "#1F2937",
               }}
             >
               {q}
             </button>
-          ))}
-
-        </div>
+          );
+        })}
       </div>
+    </div>
+  );
+};
 
-    );
-  };
   const handleSuggestionClick = async (question: string) => {
     setShowSuggestions(false);
     setMessage(question);
