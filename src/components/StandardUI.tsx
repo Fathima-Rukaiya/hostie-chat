@@ -655,7 +655,10 @@ export function StandardUI({
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
           // addBotMessage(thankMsg);
           await saveBotMessage(thankMsg, savedGuest.id, apiKey);
+
           setIsProcessing(false);
+          setSuggestedQuestions(defaultSuggestions);
+          setShowSuggestions(true);
 
         } catch (err) {
           console.error("Error saving guest info:", err);
@@ -694,9 +697,7 @@ export function StandardUI({
 
       const aiResp = await saveUserMessage(messageText, true);
     }
-    setIsProcessing(false);
-    setSuggestedQuestions(defaultSuggestions);
-    setShowSuggestions(true);
+
   };
 
   useEffect(() => {
@@ -913,7 +914,7 @@ export function StandardUI({
   //    background: ${suggestQuestionsDark};
   //     border-color: ${suggestQuestionsBorder || "#50484cff"};
   //   /* opacity: 1;*/
-    
+
   // }
   // .hover .hostie-suggest-question{
   // }`}
@@ -952,50 +953,50 @@ export function StandardUI({
   //   );
   // };
   const SuggestedQuestions = ({
-  questions,
-  onSelect,
-}: {
-  questions: string[];
-  onSelect: (q: string) => void;
-}) => {
-  const isDark = document
-    .querySelector("#hostie-chat-root")
-    ?.classList.contains("dark");
+    questions,
+    onSelect,
+  }: {
+    questions: string[];
+    onSelect: (q: string) => void;
+  }) => {
+    const isDark = document
+      .querySelector("#hostie-chat-root")
+      ?.classList.contains("dark");
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  return (
-    <div>
-      <div className="flex flex-col-reverse gap-2 mt-4 items-end">
-        {questions.map((q, i) => {
-          const isHovered = hoveredIndex === i;
+    return (
+      <div>
+        <div className="flex flex-col-reverse gap-2 mt-4 items-end">
+          {questions.map((q, i) => {
+            const isHovered = hoveredIndex === i;
 
-          return (
-            <button
-              key={i}
-              onClick={() => onSelect(q)}
-              onMouseEnter={() => setHoveredIndex(i)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="p-2 rounded-3xl text-sm max-w-[80%] break-words transition-all duration-200 border"
-              style={{
-                backgroundColor: isHovered
-                  ? isDark
-                    ? suggestQuestionsDark
-                    : suggestQuestionsBg
-                  : "transparent",
+            return (
+              <button
+                key={i}
+                onClick={() => onSelect(q)}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className="p-2 rounded-3xl text-sm max-w-[80%] break-words transition-all duration-200 border"
+                style={{
+                  backgroundColor: isHovered
+                    ? isDark
+                      ? suggestQuestionsDark
+                      : suggestQuestionsBg
+                    : "transparent",
 
-                borderColor: suggestQuestionsBorder || "#50484cff",
-                color: isDark ? "#ffffff" : "#1F2937",
-              }}
-            >
-              {q}
-            </button>
-          );
-        })}
+                  borderColor: suggestQuestionsBorder || "#50484cff",
+                  color: isDark ? "#ffffff" : "#1F2937",
+                }}
+              >
+                {q}
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
   const handleSuggestionClick = async (question: string) => {
     setShowSuggestions(false);
@@ -1602,8 +1603,8 @@ export function StandardUI({
             <div ref={chatEndRef} />
             {message === "" && roomName && senderId && !isProcessing && suggestedQuestionList && suggestedQuestionList?.length > 0 &&
               <div className="">
-{/* items-center justify-center */}
-{/* mt-6 flex flex-col items-end justify-end */}
+                {/* items-center justify-center */}
+                {/* mt-6 flex flex-col items-end justify-end */}
                 {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
                 <SuggestedQuestions questions={suggestedQuestionList} onSelect={handleSuggestionClick} />
               </div>
