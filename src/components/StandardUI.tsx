@@ -895,8 +895,10 @@ export function StandardUI({
       ?.classList.contains("dark");
 
     return (
-      <div className="border rounded-lg border-t border-zinc-200 dark:border-neutral-700" >
-        <p className="text-center font-semibold text-sm font-medium text-black dark:text-white mt-1">You can ask me things like</p>
+      <div className=" w-fit ml-auto" >
+        {/* border rounded-lg border-t border-zinc-200 dark:border-neutral-700  */}
+        {/* <p className="text-center font-semibold text-sm font-medium text-black dark:text-white mt-1">You can ask me things like</p> */}
+        
         <div className="flex flex-wrap gap-2 mt-1 p-1">
           <style>
             {`
