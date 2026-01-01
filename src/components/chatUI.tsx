@@ -172,56 +172,62 @@ export function ChatUI({ apiKey,
                     }
                 `}</style>
 
-{customWidgetIcon ? (
-      // Custom Widget Button
-      <button
-        id="custom-widget-btn"
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          backgroundColor: backgroundColor || "#ffffff",
-          width: buttonSize || "60px",
-          height: buttonSize || "60px",
-          boxShadow: "0 4px 15px rgba(0,0,0,0.25)",
-          borderRadius: "50%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          transition: "all 0.3s ease",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "scale(1.05)";
-          e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.35)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 15px rgba(0,0,0,0.25)";
-        }}
-      >
-        <img
-          src={customWidgetIcon}
-          alt="Chat Widget"
-          className="w-2/3 h-2/3 object-contain"
-        />
-      </button>
-    ) : (
-                <button
-                    id="hertzora-btn"
-                    onClick={() => setIsOpen(!isOpen)}
-                    style={{ background: gradient }}
-                    className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white "
-                    onMouseEnter={(e) => (e.currentTarget.style.background = hoverGradient)}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = gradient)}
-                >
+                {customWidgetIcon ? (
+                    // Custom Widget Button
+                    <button
+                        id="custom-widget-btn"
+                        onClick={() => setIsOpen(!isOpen)}
+                        style={{
+                            backgroundColor: backgroundColor || "#ffffff",
+                            width: buttonSize || "60px",
+                            height: buttonSize || "60px",
+                            boxShadow: "0 4px 15px rgba(0,0,0,0.25)",
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            transition: "all 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = "scale(1.05)";
+                            e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.35)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "scale(1)";
+                            e.currentTarget.style.boxShadow = "0 4px 15px rgba(0,0,0,0.25)";
+                        }}
+                    >
+                        <img
+                            src={customWidgetIcon}
+                            alt="Chat Widget"
+                            style={{
+                                width: "80%", // adjust size inside button
+                                height: "80%",
+                                objectFit: "cover",
+                                borderRadius: "50%", // THIS makes the image circular
+                            }}
 
-                    {botIcon ? (
-                        <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
-                    ) : (
-                        <Bot strokeWidth={1.75} size={22} />
-                    )}
-                    <span className="font-semibold text-sm">{botName}47
+                        />
+                    </button>
+                ) : (
+                    <button
+                        id="hertzora-btn"
+                        onClick={() => setIsOpen(!isOpen)}
+                        style={{ background: gradient }}
+                        className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white "
+                        onMouseEnter={(e) => (e.currentTarget.style.background = hoverGradient)}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = gradient)}
+                    >
 
-                    </span>
-                </button>
+                        {botIcon ? (
+                            <img src={botIcon} alt={botName} className="w-6 h-6 rounded-full" />
+                        ) : (
+                            <Bot strokeWidth={1.75} size={22} />
+                        )}
+                        <span className="font-semibold text-sm">{botName}47
+
+                        </span>
+                    </button>
 
                 )}
 
