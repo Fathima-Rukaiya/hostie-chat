@@ -1004,8 +1004,33 @@ export function StandardUI({
     // setShowSuggestions(false);
     
  setShowSuggestions(false);
-  setMessage(question);   // put suggestion into input state
-  await sendMessage(); 
+  if (!aiPaused) {
+      if (!roomName || !senderId) return;
+
+      try {
+        const aiResp = await saveUserMessage(question, false);
+        //setAiTyping(true);
+        // const reply = aiResp.reply || "Sorry, I couldn't generate a reply.";
+
+        const generated = await generateAIResponse(
+          roomName,
+          question,
+          senderId,
+        );
+
+
+      } catch (err) {
+        console.error("AI call failed:", err);
+        setChatHistory(prev => prev.filter(msg => !msg.isTyping));
+
+      }
+    } else {
+      console.log("AI response paused due to live agent assignment.");
+
+      const aiResp = await saveUserMessage(question, true);
+    }
+  // setMessage(question);   // put suggestion into input state
+  // await sendMessage(); 
     // setMessage(question);
     // await sendMessage(); // trigger normal send logic
     
