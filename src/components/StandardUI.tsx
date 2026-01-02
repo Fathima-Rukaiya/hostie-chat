@@ -347,14 +347,12 @@ export function StandardUI({
           setRoomName(newRoomId);
           setIsGuest(true);
           setSenderId(null); // unknown guest until info provided
-          sessionStorage.removeItem("guestContactId");
        
-
           
           setChatHistory([]);
        
           setSenderId(null);
-          setRoomName(null);
+        
         
           setUserInfo(null);
           setAskedForInfo(false);
