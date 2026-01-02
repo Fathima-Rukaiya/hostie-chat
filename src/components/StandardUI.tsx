@@ -105,6 +105,9 @@ export function StandardUI({
 
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+   const [showSuggestedOnce, setShowSuggestedOnce] = useState(false);
+
+
   const [isProcessing, setIsProcessing] = useState(false);
 
   const defaultSuggestions = suggestedQuestionList
@@ -632,12 +635,9 @@ export function StandardUI({
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
           // addBotMessage(thankMsg);
           await saveBotMessage(thankMsg, savedGuest.id, apiKey);
-          setIsProcessing(false);
-          if (defaultSuggestions) {
-
-
+           if (!showSuggestedOnce && defaultSuggestions?.length) {
             setSuggestedQuestions(defaultSuggestions);
-            setShowSuggestions(true);
+            setShowSuggestedOnce(true);
           }
 
         } catch (err) {
@@ -978,8 +978,10 @@ export function StandardUI({
     );
   };
 
+ 
   const handleSuggestionClick = async (question: string) => {
     setShowSuggestions(false);
+    setShowSuggestedOnce(false);
     // setMessage(question);
 
     // trigger normal send logic
@@ -1599,15 +1601,14 @@ export function StandardUI({
             ))}
 
             <div ref={chatEndRef} />
-            {message === "" && roomName && senderId && !isProcessing && suggestedQuestionList && suggestedQuestionList?.length > 0 &&
-              <div className="">
-                {/* items-center justify-center */}
-                {/* mt-6 flex flex-col items-end justify-end */}
-                {/* <SuggestedQuestions questions={["How do I upgrade?", "What are your plans?", "Contact support"]} /> */}
-                <SuggestedQuestions questions={suggestedQuestionList} onSelect={handleSuggestionClick} />
-              </div>
-
-            }
+             {showSuggestedOnce &&
+              suggestedQuestionList &&
+              suggestedQuestionList.length > 0 && (
+                <SuggestedQuestions
+                  questions={suggestedQuestionList}
+                  onSelect={handleSuggestionClick}
+                />
+              )}
           </div>
 
           {/* Input */}
