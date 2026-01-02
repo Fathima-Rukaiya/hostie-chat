@@ -107,13 +107,7 @@ export function StandardUI({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const defaultSuggestions = [
-    "How can I upgrade?",
-    "What are your plans?",
-    "Contact support",
-    "Pricing details",
-    "Talk to a human agent"
-  ];
+  const defaultSuggestions = suggestedQuestionList
 
 
   useEffect(() => {
@@ -602,11 +596,11 @@ export function StandardUI({
 
   const sendMessage = async () => {
     const messageText = message.trim();
-    
+
     if (!messageText.trim()) return;
     setIsProcessing(true);
     resetInactivityTimer();
-    
+
     setMessage("");
 
     // Add user's message immediately to UI
@@ -657,10 +651,13 @@ export function StandardUI({
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
           // addBotMessage(thankMsg);
           await saveBotMessage(thankMsg, savedGuest.id, apiKey);
-
           setIsProcessing(false);
-          setSuggestedQuestions(defaultSuggestions);
-          setShowSuggestions(true);
+          if (defaultSuggestions) {
+
+
+            setSuggestedQuestions(defaultSuggestions);
+            setShowSuggestions(true);
+          }
 
         } catch (err) {
           console.error("Error saving guest info:", err);
@@ -1002,7 +999,7 @@ export function StandardUI({
 
   const handleSuggestionClick = async (question: string) => {
     setShowSuggestions(false);
-   // setMessage(question);
+    // setMessage(question);
 
     // trigger normal send logic
     if (!aiPaused) {
