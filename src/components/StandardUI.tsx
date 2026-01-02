@@ -188,6 +188,8 @@ export function StandardUI({
     sessionStorage.setItem("room", newRoom);
 
     setIsGuest(true);
+    setShowQuickReview(false)
+
 let endStatement = endReason||"Your previous chat has ended due to inactivity. How can I assist you now?";
     addBotMessage(endStatement);
     console.log("roomName", roomName, "senderid", senderId)
