@@ -662,6 +662,9 @@ export function StandardUI({
   };
 
   const sendMessage = async () => {
+    if (showSuggestedOnce) {
+    setShowSuggestedOnce(false);
+  }
     setShowQuickReview(false);
     const messageText = message.trim();
 
@@ -1684,7 +1687,7 @@ export function StandardUI({
                     body: JSON.stringify({
                       contact_id: guestId,
                       sentiment: "positive",
-                      review: "Quick positive feedback",
+                      review: "😊 Thank you, that helped",
                     }),
                   });
 
