@@ -190,7 +190,7 @@ export function StandardUI({
     setIsGuest(true);
     setShowQuickReview(false)
 
-let endStatement = endReason||"Your previous chat has ended due to inactivity. How can I assist you now?";
+    let endStatement = endReason || "Your previous chat has ended due to inactivity. How can I assist you now?";
     addBotMessage(endStatement);
     console.log("roomName", roomName, "senderid", senderId)
 
@@ -1679,6 +1679,9 @@ let endStatement = endReason||"Your previous chat has ended due to inactivity. H
               // onChange={(e) => setMessage(e.target.value)}
               onChange={(e) => {
                 setMessage(e.target.value);
+                if (showQuickReview) {
+                  setShowQuickReview(false);
+                }
                 setLastActivity(Date.now());
                 resetInactivityTimer();
               }}
