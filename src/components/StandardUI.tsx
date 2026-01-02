@@ -198,6 +198,46 @@ export function StandardUI({
 
 
 
+    const endChatSessionByQuickReview = async (endReason?: string) => {
+    clearTimeout(inactivityTimer.current);
+    clearTimeout(popupTimer.current);
+
+    inactivityTimer.current = null;
+    popupTimer.current = null;
+    // setShowReviewPopup(true);
+    // remove session
+    sessionStorage.removeItem("guestContactId");
+    sessionStorage.removeItem("room");
+
+    setShowEndPopup(false);
+    setChatHistory([]);
+    setGuestId("");
+    setSenderId(null);
+    setRoomName(null);
+    setIsGuest(true);
+    setUserInfo(null);
+    setAskedForInfo(false);
+    // reset AI pause state
+    setAiPaused(false);
+    sessionStorage.removeItem("aiPaused");
+
+
+    // create new room id
+    const newRoom = crypto.randomUUID();
+    setRoomName(newRoom);
+
+    sessionStorage.setItem("room", newRoom);
+
+    setIsGuest(true);
+    setShowQuickReview(false)
+
+    let endStatement = endReason || "Your previous chat has ended due to inactivity. How can I assist you now?";
+    addBotMessage(endStatement);
+    console.log("roomName", roomName, "senderid", senderId)
+
+  };
+
+
   useEffect(() => {
     sessionStorage.setItem("aiPaused", aiPaused.toString());
   }, [aiPaused]);
@@ -1631,7 +1671,7 @@ export function StandardUI({
                     }),
                   });
 
-                  endChatSession("Thankyou for your review... Do you like to start a new chat?");
+                  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
                 }}
                 onNegative={() => {
                   setShowQuickReview(false); // continue chat normally
