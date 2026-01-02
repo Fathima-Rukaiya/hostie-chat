@@ -1629,6 +1629,9 @@ export function StandardUI({
               </div>
             ))}
 
+
+            <div ref={chatEndRef} />
+            
             {showQuickReview && (
               <QuickReview
                 onPositive={async () => {
@@ -1656,8 +1659,6 @@ export function StandardUI({
               />
             )}
 
-
-            <div ref={chatEndRef} />
             {showSuggestedOnce &&
               suggestedQuestionList &&
               suggestedQuestionList.length > 0 && (
