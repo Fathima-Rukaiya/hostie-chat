@@ -198,7 +198,7 @@ export function StandardUI({
 
 
 
-    const endChatSessionByQuickReview = async (endReason?: string) => {
+  const endChatSessionByQuickReview = async (endReason?: string) => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
 
@@ -231,8 +231,10 @@ export function StandardUI({
     setIsGuest(true);
     setShowQuickReview(false)
 
-    let endStatement = endReason || "Your previous chat has ended due to inactivity. How can I assist you now?";
-    addBotMessage(endStatement);
+    let endStatement = endReason || "";
+    if (endStatement)
+      addBotMessage(endStatement);
+
     console.log("roomName", roomName, "senderid", senderId)
 
   };
@@ -345,6 +347,23 @@ export function StandardUI({
           setRoomName(newRoomId);
           setIsGuest(true);
           setSenderId(null); // unknown guest until info provided
+          sessionStorage.removeItem("guestContactId");
+          sessionStorage.removeItem("room");
+
+          setShowEndPopup(false);
+          setChatHistory([]);
+          setGuestId("");
+          setSenderId(null);
+          setRoomName(null);
+        
+          setUserInfo(null);
+          setAskedForInfo(false);
+          // reset AI pause state
+          setAiPaused(false);
+          sessionStorage.removeItem("aiPaused");
+
+
+
         }
         console.log("roomName", roomName, "senderid", senderId)
       } catch (err) {
