@@ -105,10 +105,11 @@ export function StandardUI({
 
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-   const [showSuggestedOnce, setShowSuggestedOnce] = useState(false);
+  const [showSuggestedOnce, setShowSuggestedOnce] = useState(false);
 
 
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [showQuickReview, setShowQuickReview] = useState(false);
+
 
   const defaultSuggestions = suggestedQuestionList
 
@@ -578,11 +579,35 @@ export function StandardUI({
     ]);
   };
 
+  const QuickReview = ({ onPositive, onNegative }: {
+    onPositive: () => void;
+    onNegative: () => void;
+  }) => {
+    return (
+      <div className="flex flex-col items-end gap-2 mt-3">
+        <button
+          onClick={onPositive}
+          className="p-2 rounded-3xl text-sm border max-w-[80%]"
+        >
+          😊 Thank you, that helped
+        </button>
+
+        <button
+          onClick={onNegative}
+          className="p-2 rounded-3xl text-sm border max-w-[80%]"
+        >
+          No I have more question
+        </button>
+      </div>
+    );
+  };
+
   const sendMessage = async () => {
+    setShowQuickReview(false);
     const messageText = message.trim();
 
     if (!messageText.trim()) return;
-    setIsProcessing(true);
+
     resetInactivityTimer();
 
     setMessage("");
@@ -635,7 +660,7 @@ export function StandardUI({
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
           // addBotMessage(thankMsg);
           await saveBotMessage(thankMsg, savedGuest.id, apiKey);
-           if (!showSuggestedOnce && defaultSuggestions?.length) {
+          if (!showSuggestedOnce && defaultSuggestions?.length) {
             setSuggestedQuestions(defaultSuggestions);
             setShowSuggestedOnce(true);
           }
@@ -665,6 +690,10 @@ export function StandardUI({
           messageText,
           senderId,
         );
+
+        setTimeout(() => {
+          setShowQuickReview(true);
+        }, 300);
 
 
       } catch (err) {
@@ -978,7 +1007,7 @@ export function StandardUI({
     );
   };
 
- 
+
   const handleSuggestionClick = async (question: string) => {
     setShowSuggestions(false);
     setShowSuggestedOnce(false);
@@ -1600,8 +1629,36 @@ export function StandardUI({
               </div>
             ))}
 
+            {showQuickReview && (
+              <QuickReview
+                onPositive={async () => {
+                  setShowQuickReview(false);
+
+                  // save positive review
+                  await fetch(`${API_BASE_URL}/saveReview`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "x-api-key": apiKey,
+                    },
+                    body: JSON.stringify({
+                      contact_id: guestId,
+                      sentiment: "positive",
+                      review: "Quick positive feedback",
+                    }),
+                  });
+
+                  endChatSession();
+                }}
+                onNegative={() => {
+                  setShowQuickReview(false); // continue chat normally
+                }}
+              />
+            )}
+
+
             <div ref={chatEndRef} />
-             {showSuggestedOnce &&
+            {showSuggestedOnce &&
               suggestedQuestionList &&
               suggestedQuestionList.length > 0 && (
                 <SuggestedQuestions
