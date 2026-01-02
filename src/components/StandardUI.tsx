@@ -137,7 +137,7 @@ export function StandardUI({
     }, 4 * 60 * 1000); // 4 minutes
   };
 
-  const endChatSession = async () => {
+  const endChatSession = async (endReason?: string) => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
 
@@ -188,8 +188,8 @@ export function StandardUI({
     sessionStorage.setItem("room", newRoom);
 
     setIsGuest(true);
-
-    addBotMessage("Your previous chat has ended due to inactivity. How can I assist you now?");
+let endStatement = endReason||"Your previous chat has ended due to inactivity. How can I assist you now?";
+    addBotMessage(endStatement);
     console.log("roomName", roomName, "senderid", senderId)
 
   };
@@ -596,7 +596,7 @@ export function StandardUI({
           onClick={onNegative}
           className="p-2 rounded-3xl text-sm border max-w-[80%]"
         >
-          No I have more question
+          ❓No I have more question
         </button>
       </div>
     );
@@ -1333,21 +1333,12 @@ export function StandardUI({
               )}
               <div className="hostie-background hostie-color flex items-center px-2 py-0.5 rounded-md gap-1 ">
                 <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
-                {/* <img
-                  src={botIcon}
-                  alt="Bot"
-                  className="w-4 h-4 rounded-full object-cover text-zinc-600 dark:text-zinc-200"
-                />  {" "} */}
                 AI
               </div>
               <div className="flex items-center px-2 py-0.5 rounded-md">
 
-                <span className=" text-xs font-medium"><button
-                  onClick={() => setShowChat(false)}
-                  className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"
-                >
-                  ✕
-                </button>
+                <span className=" text-xs font-medium">
+                  <button onClick={() => setShowChat(false)} className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-300 dark:hover:text-white"> ✕ </button>
                 </span>
               </div>
             </div>
@@ -1357,19 +1348,6 @@ export function StandardUI({
           <div className="flex-1 overflow-y-auto p-3 space-y-2 ">
 
             {chatHistory.length === 0 && (
-              // <div className="mt-10 flex flex-col items-center justify-center text-center">
-              //   <Bot strokeWidth={1.75}
-              //     size={60}
-              //     className="text-pink-600 dark:text-pink-600 mb-2"
-
-              //   />
-              //   <div className="text-lg font-bold text-pink-600">
-              //     Hello, there...! 👋
-              //   </div>
-              //   <div className="mt-1 font-semibold text-gray-500 dark:text-gray-400 text-sm">
-              //     How can I help you today?
-              //   </div>
-              // </div>
               <div className="mt-6 flex flex-col items-center justify-center">
 
                 {/* <Bot strokeWidth={1.75}
@@ -1631,7 +1609,7 @@ export function StandardUI({
 
 
             <div ref={chatEndRef} />
-            
+
             {showQuickReview && (
               <QuickReview
                 onPositive={async () => {
@@ -1651,7 +1629,7 @@ export function StandardUI({
                     }),
                   });
 
-                  endChatSession();
+                  endChatSession("Thankyou for your review... Do you like to start a new chat?");
                 }}
                 onNegative={() => {
                   setShowQuickReview(false); // continue chat normally
