@@ -161,13 +161,13 @@ export function ChatUI({ apiKey,
             className={`fixed bottom-6 z-[9999] ${buttonPosition === "left" ? "left-6" : "right-6"}`}>
             <div ref={popoverRef} className="relative">
                 <style>{`
-                    .hertzora-color {
+                    .hostie-color {
                         color: #fff !important;
                     }
                 `}</style>
 
                 <style>{`
-                    .dark #hertzora-btn {
+                    .dark #hostie-btn {
                         background: ${darkModeGradient} !important;
                     }
                 `}</style>
@@ -211,10 +211,10 @@ export function ChatUI({ apiKey,
                     </button>
                 ) : (
                     <button
-                        id="hertzora-btn"
+                        id="hostie-btn"
                         onClick={() => setIsOpen(!isOpen)}
                         style={{ background: gradient }}
-                        className="hertzora-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white "
+                        className="hostie-color rounded-full shadow-xl flex items-center gap-2 px-4 py-2 text-white "
                         onMouseEnter={(e) => (e.currentTarget.style.background = hoverGradient)}
                         onMouseLeave={(e) => (e.currentTarget.style.background = gradient)}
                     >
