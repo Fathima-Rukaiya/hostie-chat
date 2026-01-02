@@ -133,20 +133,6 @@ export function StandardUI({
     }, 4 * 60 * 1000); // 4 minutes
   };
 
-  // const resetInactivityTimer = () => {
-  //   clearTimeout(inactivityTimer.current);
-  //   inactivityTimer.current = null;
-  //   inactivityTimer.current = setTimeout(() => {
-  //     setShowEndPopup(true);
-
-  //     // Auto-end after 30s
-  //     popupTimer.current = setTimeout(() => {
-  //       setShowReviewPopup(false);
-  //       endChatSession();
-  //     }, 10 * 1000);
-
-  //   }, 30 * 1000); // 4 minutes
-  // };
   const endChatSession = async () => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
@@ -279,10 +265,10 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in https://app.hostingate.com/dashboard/profile
-  // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+  const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
   //const API_BASE_URL = "https://app.hostie.ai/api/clientCustomerChatBox";
 
-  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -438,11 +424,6 @@ export function StandardUI({
       }
     };
 
-
-    // eventSource.onerror = (err) => {
-    //   console.error("SSE connection error:", err);
-    //   eventSource.close();
-    // };
     eventSource.onerror = (err) => {
 
       // optionally reconnect after delay
@@ -1521,7 +1502,6 @@ export function StandardUI({
                         </div>
                       }
                       {/* {msg.text && <span>{msg.text}</span>} */}
-
                       {msg.uploaded_documents && (
                         <div className="mt-2">
                           {/\.(jpg|jpeg|png|gif)$/i.test(msg.uploaded_documents) ? (
@@ -1563,7 +1543,6 @@ export function StandardUI({
                             )}
                         </div>
                       )}
-
                       {/* time stamp */}
                       {msg.sender === "user" && (
                         // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
@@ -1705,7 +1684,7 @@ export function StandardUI({
     height: 16px;
   }
 `}</style>
-            {/* #db2777 */}
+            {/* #7e23a8ff */}
             <button onClick={sendMessage} className="send-button hostie-background">
               <SendHorizontal />
             </button>
