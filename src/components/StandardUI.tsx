@@ -883,7 +883,8 @@ export function StandardUI({
     console.log("guestId:", contactId);
     console.log("click 12333");
     if (!contactId) {
-      endChatSession();
+    //  endChatSession();
+       endChatSessionByQuickReview("now ok")
       return;
     }
     console.log("click clichh")
