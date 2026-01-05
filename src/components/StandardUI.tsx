@@ -347,13 +347,13 @@ export function StandardUI({
           setRoomName(newRoomId);
           setIsGuest(true);
           setSenderId(null); // unknown guest until info provided
-       
-          
+
+
           setChatHistory([]);
-       
+
           setSenderId(null);
-        
-        
+
+
           setUserInfo(null);
           setAskedForInfo(false);
           // reset AI pause state
@@ -460,6 +460,15 @@ export function StandardUI({
           setAiPaused(false);
           addBotMessage(msgText);
           setAssignedAgent(null);
+
+          setShowQuickReview(true);
+
+          // Auto-end after 3s if no action
+          setTimeout(() => {
+            setShowQuickReview(false);
+            endChatSession("Thanks for chatting! 😊");
+          }, 5000);
+
           return;
         }
 
@@ -663,8 +672,8 @@ export function StandardUI({
 
   const sendMessage = async () => {
     if (showSuggestedOnce) {
-    setShowSuggestedOnce(false);
-  }
+      setShowSuggestedOnce(false);
+    }
     setShowQuickReview(false);
     const messageText = message.trim();
 
@@ -1100,6 +1109,45 @@ export function StandardUI({
   const suggestQuestionsBg = backgroundColor ? darkenColor(backgroundColor, 40) : "#c7bec2ff";
   const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 45) : "#747071ff";
   const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 50) : "#7c797aff";
+
+
+  const QuickEmojiReview = ({
+    onSelect,
+  }: {
+    onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
+  }) => {
+    return (
+      <div className="flex gap-3 mt-3 items-center justify-start">
+        <button
+          onClick={() => onSelect("positive")}
+          className="p-2 rounded-full hover:scale-110 transition"
+          title="Happy"
+        >
+          <Laugh size={26} color="#22c55e" />
+        </button>
+
+        <button
+          onClick={() => onSelect("neutral")}
+          className="p-2 rounded-full hover:scale-110 transition"
+          title="Neutral"
+        >
+          <Meh size={26} color="#6b7280" />
+        </button>
+
+        <button
+          onClick={() => onSelect("negative")}
+          className="p-2 rounded-full hover:scale-110 transition"
+          title="Sad"
+        >
+          <Frown size={26} color="#ef4444" />
+        </button>
+
+        <span className="text-xs opacity-60 ml-2">
+          Rate this chat
+        </span>
+      </div>
+    );
+  };
 
 
   if (!showChat) return null;
@@ -1635,11 +1683,7 @@ export function StandardUI({
                     </div>
 
                   )}
-
-
-
                 </div>
-
                 {msg.sender === "user" && (
                   // <div className="flex-shrink-0 relative">
                   //   <img
@@ -1669,12 +1713,36 @@ export function StandardUI({
               </div>
             ))}
 
-   {showQuickReview && (
-              <QuickReview
-                onPositive={async () => {
+            {showQuickReview && (
+              // <QuickReview
+              //   onPositive={async () => {
+              //     setShowQuickReview(false);
+
+              //     // save positive review
+              //     await fetch(`${API_BASE_URL}/saveReview`, {
+              //       method: "POST",
+              //       headers: {
+              //         "Content-Type": "application/json",
+              //         "x-api-key": apiKey,
+              //       },
+              //       body: JSON.stringify({
+              //         contact_id: guestId,
+              //         sentiment: "positive",
+              //         review: "😊 Thank you, that helped",
+              //       }),
+              //     });
+
+              //     endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
+              //   }}
+              //   onNegative={() => {
+              //     setShowQuickReview(false); // continue chat normally
+              //   }}
+              // />
+
+              <QuickEmojiReview
+                onSelect={async (sentiment) => {
                   setShowQuickReview(false);
 
-                  // save positive review
                   await fetch(`${API_BASE_URL}/saveReview`, {
                     method: "POST",
                     headers: {
@@ -1683,19 +1751,18 @@ export function StandardUI({
                     },
                     body: JSON.stringify({
                       contact_id: guestId,
-                      sentiment: "positive",
-                      review: "😊 Thank you, that helped",
+                      sentiment,
+                      review: null,
                     }),
                   });
 
-                  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
-                }}
-                onNegative={() => {
-                  setShowQuickReview(false); // continue chat normally
+                  endChatSession("Thanks for your feedback! 😊");
                 }}
               />
+
+
             )}
-             {showSuggestedOnce &&
+            {showSuggestedOnce &&
               suggestedQuestionList &&
               suggestedQuestionList.length > 0 && (
                 <SuggestedQuestions
@@ -1705,11 +1772,12 @@ export function StandardUI({
               )}
           </div>
 
-            <div ref={chatEndRef} />
 
-         
+          <div ref={chatEndRef} />
 
-           
+
+
+
 
           {/* Input */}
           <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
