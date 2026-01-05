@@ -467,7 +467,7 @@ export function StandardUI({
           // Auto-end after 3s if no action
           setTimeout(() => {
             setShowQuickAssigneeReview(false);
-            endChatSession("Thanks for chatting! 😊");
+            endChatSession("Thanks for chatting!! 😊");
           }, 10000);
 
           return;
@@ -870,20 +870,6 @@ export function StandardUI({
   const shadowRoot = document.querySelector("#hostie-chat-root")?.shadowRoot;
 
   const handleReviewSubmit = async () => {
-
-    // if (!guestId) {
-    //   endChatSession();
-    //   return;
-    // }
-    // const contactId = sessionStorage.getItem("guestContactId");
-    // const room = sessionStorage.getItem("room");
-
-    // if (!contactId || !room) {
-    //   // fallback, end chat if missing
-    //   endChatSession();
-    //   return;
-    // }
-
     const contactId = sessionStorage.getItem("guestContactId");
     const room = sessionStorage.getItem("room");
 
@@ -921,7 +907,7 @@ export function StandardUI({
     }
 
     setShowReviewPopup(false);
-    endChatSession();
+    endChatSessionByQuickReview("xxx xxx")
   };
 
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
