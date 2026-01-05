@@ -109,7 +109,7 @@ export function StandardUI({
 
 
   const [showQuickReview, setShowQuickReview] = useState(false);
-
+  const [showQuickAssigneeReview, setShowQuickAssigneeReview] = useState(false);
 
   const defaultSuggestions = suggestedQuestionList
 
@@ -461,11 +461,11 @@ export function StandardUI({
           addBotMessage(msgText);
           setAssignedAgent(null);
 
-          setShowQuickReview(true);
+          setShowQuickAssigneeReview(true);
 
           // Auto-end after 3s if no action
           setTimeout(() => {
-            setShowQuickReview(false);
+            setShowQuickAssigneeReview(false);
             endChatSession("Thanks for chatting! 😊");
           }, 5000);
 
@@ -1714,31 +1714,33 @@ export function StandardUI({
             ))}
 
             {showQuickReview && (
-              // <QuickReview
-              //   onPositive={async () => {
-              //     setShowQuickReview(false);
+              <QuickReview
+                onPositive={async () => {
+                  setShowQuickReview(false);
 
-              //     // save positive review
-              //     await fetch(`${API_BASE_URL}/saveReview`, {
-              //       method: "POST",
-              //       headers: {
-              //         "Content-Type": "application/json",
-              //         "x-api-key": apiKey,
-              //       },
-              //       body: JSON.stringify({
-              //         contact_id: guestId,
-              //         sentiment: "positive",
-              //         review: "😊 Thank you, that helped",
-              //       }),
-              //     });
+                  // save positive review
+                  await fetch(`${API_BASE_URL}/saveReview`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "x-api-key": apiKey,
+                    },
+                    body: JSON.stringify({
+                      contact_id: guestId,
+                      sentiment: "positive",
+                      review: "😊 Thank you, that helped",
+                    }),
+                  });
 
-              //     endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
-              //   }}
-              //   onNegative={() => {
-              //     setShowQuickReview(false); // continue chat normally
-              //   }}
-              // />
+                  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
+                }}
+                onNegative={() => {
+                  setShowQuickReview(false); // continue chat normally
+                }}
+              />
+            )}
 
+            {showQuickAssigneeReview && (
               <QuickEmojiReview
                 onSelect={async (sentiment) => {
                   setShowQuickReview(false);
@@ -1759,8 +1761,6 @@ export function StandardUI({
                   endChatSession("Thanks for your feedback! 😊");
                 }}
               />
-
-
             )}
             {showSuggestedOnce &&
               suggestedQuestionList &&
