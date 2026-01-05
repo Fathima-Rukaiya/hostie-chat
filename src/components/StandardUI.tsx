@@ -460,7 +460,7 @@ export function StandardUI({
           setAiPaused(false);
           addBotMessage(msgText);
           setAssignedAgent(null);
-
+          setShowQuickReview(false);
           setShowQuickAssigneeReview(true);
 
           // Auto-end after 3s if no action
@@ -504,7 +504,7 @@ export function StandardUI({
           const newEventSource = new EventSource(`${API_BASE_URL}/stream?room=${roomName}&api_key=${apiKey}`);
           // reassign handlers
         }
-      }, 3000);
+      }, 10000);
     };
 
     return () => eventSource.close();
