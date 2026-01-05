@@ -1159,66 +1159,131 @@ export function StandardUI({
   negative: "Not what I was looking for.",
 };
 
-  const QuickEmojiReview = ({
-    onSelect,
-  }: {
-    onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
-  }) => {
-    if (!guestId) return;
+//   const QuickEmojiReview = ({
+//     onSelect,
+//   }: {
+//     onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
+//   }) => {
+//     if (!guestId) return;
+//  const isDark = document
+//       .querySelector("#hostie-chat-root")
+//       ?.classList.contains("dark");
 
-    return (
-      <>
+//     return (
+//       <>
 
-        <div className="flex gap-3 mt-3 items-center justify-start">
-          <button
-            onClick={() => onSelect("positive")}
-            className="p-2 rounded-full hover:scale-110 transition"
-            title="Happy"
-          >
-            <Laugh size={26} color="#22c55e" />
-          </button>
+//         {/* <div className="flex gap-3 mt-3 items-center justify-start">
+//           <button
+//             onClick={() => onSelect("positive")}
+//             className="p-2 rounded-full hover:scale-110 transition"
+//             title="Happy"
+//           >
+//             <Laugh size={26} color="#22c55e" />
+//           </button>
 
-          <button
-            onClick={() => onSelect("neutral")}
-            className="p-2 rounded-full hover:scale-110 transition"
-            title="Neutral"
-          >
-            <Meh size={26} color="#6b7280" />
-          </button>
+//           <button
+//             onClick={() => onSelect("neutral")}
+//             className="p-2 rounded-full hover:scale-110 transition"
+//             title="Neutral"
+//           >
+//             <Meh size={26} color="#6b7280" />
+//           </button>
 
-          <button
-            onClick={() => onSelect("negative")}
-            className="p-2 rounded-full hover:scale-110 transition"
-            title="Sad"
-          >
-            <Frown size={26} color="#ef4444" />
-          </button>
+//           <button
+//             onClick={() => onSelect("negative")}
+//             className="p-2 rounded-full hover:scale-110 transition"
+//             title="Sad"
+//           >
+//             <Frown size={26} color="#ef4444" />
+//           </button>
 
-          <span className="text-xs opacity-60 ml-2">
-            Rate this chat
-          </span>
-        </div>
-        <button
-          onClick={() => onSelect("positive")}
-          className="p-2 rounded-3xl text-sm border max-w-[80%]"
-        >
-           <Laugh size={26} color="#22c55e" /> That was helpful, thank you!
-        </button>
-        <button
-          onClick={() => onSelect("neutral")}
-          className="p-2 rounded-3xl text-sm border max-w-[80%]"
-        >
-         <Meh size={26} color="#6b7280" /> Somewhat helpful.
-        </button>
-        <button
-          onClick={() => onSelect("negative")}
-          className="p-2 rounded-3xl text-sm border max-w-[80%]"
-        >
-           <Frown size={26} color="#ef4444" /> Not what I was looking for.
-        </button>
-      </>
-    );
+//           <span className="text-xs opacity-60 ml-2">
+//             Rate this chat
+//           </span>
+//         </div> */}
+
+//         <button
+//           onClick={() => onSelect("positive")}
+//           className="p-2 rounded-3xl text-sm border max-w-[80%]"
+//            style={{
+//                   backgroundColor: isHovered
+//                     ? isDark
+//                       ? suggestQuestionsDark
+//                       : suggestQuestionsBg
+//                     : "transparent",
+
+//                   borderColor: suggestQuestionsBorder || "#50484cff",
+//                   color: isDark ? "#ffffff" : "#1F2937",
+//                 }}
+//         >
+//            <Laugh size={26} color="#22c55e" /> That was helpful, thank you!
+//         </button>
+//         <button
+//           onClick={() => onSelect("neutral")}
+//           className="p-2 rounded-3xl text-sm border max-w-[80%]"
+//         >
+//          <Meh size={26} color="#6b7280" /> Somewhat helpful.
+//         </button>
+//         <button
+//           onClick={() => onSelect("negative")}
+//           className="p-2 rounded-3xl text-sm border max-w-[80%]"
+//         >
+//            <Frown size={26} color="#ef4444" /> Not what I was looking for.
+//         </button>
+//       </>
+//     );
+//   };
+const QuickEmojiReview = ({
+  onSelect,
+}: {
+  onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
+}) => {
+  if (!guestId) return null;
+  
+  const isDark = document
+    .querySelector("#hostie-chat-root")
+    ?.classList.contains("dark");
+
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  const emojiData = {
+    positive: { icon: <Laugh size={24} />, text: "That was helpful, thank you!", color: "#22c55e" },
+    neutral: { icon: <Meh size={24} />, text: "Somewhat helpful.", color: "#6b7280" },
+    negative: { icon: <Frown size={24} />, text: "Not what I was looking for.", color: "#ef4444" },
   };
+
+  return (
+    <div className="flex flex-col gap-2 mt-3">
+      {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
+        const isHovered = hovered === sentiment;
+
+        return (
+          <button
+            key={sentiment}
+            onClick={() => onSelect(sentiment)}
+            onMouseEnter={() => setHovered(sentiment)}
+            onMouseLeave={() => setHovered(null)}
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border transition-all duration-200 shadow-sm"
+            style={{
+              backgroundColor: isHovered
+                ? isDark
+                  ? darkenColor(suggestQuestionsDark, 10)
+                  : darkenColor(suggestQuestionsBg, 10)
+                : isDark
+                ? suggestQuestionsDark
+                : suggestQuestionsBg,
+              borderColor: suggestQuestionsBorder || "#50484cff",
+              color: emojiData[sentiment].color,
+            }}
+          >
+            <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
+            <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 const saveQuickAssigneeReview = async (
   sentiment: "positive" | "neutral" | "negative"
