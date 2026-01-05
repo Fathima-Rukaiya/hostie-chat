@@ -441,6 +441,7 @@ export function StandardUI({
         if (msgText === "You are now connected to a live agent. AI responses are paused.") {
           setAiPaused(true);
           addBotMessage(msgText);
+          setShowQuickReview(false);
 
           getAssignee()
             .then((agent) => {
@@ -467,7 +468,7 @@ export function StandardUI({
           setTimeout(() => {
             setShowQuickAssigneeReview(false);
             endChatSession("Thanks for chatting! 😊");
-          }, 5000);
+          }, 10000);
 
           return;
         }
@@ -504,7 +505,7 @@ export function StandardUI({
           const newEventSource = new EventSource(`${API_BASE_URL}/stream?room=${roomName}&api_key=${apiKey}`);
           // reassign handlers
         }
-      }, 10000);
+      }, 3000);
     };
 
     return () => eventSource.close();
