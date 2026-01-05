@@ -765,7 +765,7 @@ export function StandardUI({
 
         setTimeout(() => {
           setShowQuickReview(true);
-        }, 300);
+        }, 3000);
 
 
       } catch (err) {
@@ -1112,43 +1112,138 @@ export function StandardUI({
   const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 50) : "#7c797aff";
 
 
+  // const QuickEmojiReview = ({
+  //   onSelect,
+  // }: {
+  //   onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
+  // }) => {
+  //   return (
+  //     <div className="flex gap-3 mt-3 items-center justify-start">
+  //       <button
+  //         onClick={() => onSelect("positive")}
+  //         className="p-2 rounded-full hover:scale-110 transition"
+  //         title="Happy"
+  //       >
+  //         <Laugh size={26} color="#22c55e" />
+  //       </button>
+
+  //       <button
+  //         onClick={() => onSelect("neutral")}
+  //         className="p-2 rounded-full hover:scale-110 transition"
+  //         title="Neutral"
+  //       >
+  //         <Meh size={26} color="#6b7280" />
+  //       </button>
+
+  //       <button
+  //         onClick={() => onSelect("negative")}
+  //         className="p-2 rounded-full hover:scale-110 transition"
+  //         title="Sad"
+  //       >
+  //         <Frown size={26} color="#ef4444" />
+  //       </button>
+
+  //       <span className="text-xs opacity-60 ml-2">
+  //         Rate this chat
+  //       </span>
+  //     </div>
+  //   );
+  // };
+
+  const DEFAULT_REVIEWS: Record<
+  "positive" | "neutral" | "negative",
+  string
+> = {
+  positive: "That was helpful, thank you!",
+  neutral: "Somewhat helpful.",
+  negative: "Not what I was looking for.",
+};
+
   const QuickEmojiReview = ({
     onSelect,
   }: {
     onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
   }) => {
+    if (!guestId) return;
+
     return (
-      <div className="flex gap-3 mt-3 items-center justify-start">
+      <>
+
+        <div className="flex gap-3 mt-3 items-center justify-start">
+          <button
+            onClick={() => onSelect("positive")}
+            className="p-2 rounded-full hover:scale-110 transition"
+            title="Happy"
+          >
+            <Laugh size={26} color="#22c55e" />
+          </button>
+
+          <button
+            onClick={() => onSelect("neutral")}
+            className="p-2 rounded-full hover:scale-110 transition"
+            title="Neutral"
+          >
+            <Meh size={26} color="#6b7280" />
+          </button>
+
+          <button
+            onClick={() => onSelect("negative")}
+            className="p-2 rounded-full hover:scale-110 transition"
+            title="Sad"
+          >
+            <Frown size={26} color="#ef4444" />
+          </button>
+
+          <span className="text-xs opacity-60 ml-2">
+            Rate this chat
+          </span>
+        </div>
         <button
           onClick={() => onSelect("positive")}
-          className="p-2 rounded-full hover:scale-110 transition"
-          title="Happy"
+          className="p-2 rounded-3xl text-sm border max-w-[80%]"
         >
-          <Laugh size={26} color="#22c55e" />
+           <Laugh size={26} color="#22c55e" /> That was helpful, thank you!
         </button>
-
         <button
           onClick={() => onSelect("neutral")}
-          className="p-2 rounded-full hover:scale-110 transition"
-          title="Neutral"
+          className="p-2 rounded-3xl text-sm border max-w-[80%]"
         >
-          <Meh size={26} color="#6b7280" />
+         <Meh size={26} color="#6b7280" /> Somewhat helpful.
         </button>
-
         <button
           onClick={() => onSelect("negative")}
-          className="p-2 rounded-full hover:scale-110 transition"
-          title="Sad"
+          className="p-2 rounded-3xl text-sm border max-w-[80%]"
         >
-          <Frown size={26} color="#ef4444" />
+           <Frown size={26} color="#ef4444" /> Not what I was looking for.
         </button>
-
-        <span className="text-xs opacity-60 ml-2">
-          Rate this chat
-        </span>
-      </div>
+      </>
     );
   };
+
+const saveQuickAssigneeReview = async (
+  sentiment: "positive" | "neutral" | "negative"
+) => {
+  if (!guestId) return;
+
+  const payload = {
+    contact_id: guestId,
+    sentiment,
+    review: DEFAULT_REVIEWS[sentiment],
+  };
+
+  try {
+    await fetch(`${API_BASE_URL}/saveReview`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    console.error("Quick assignee review failed:", err);
+  }
+};
 
 
   if (!showChat) return null;
@@ -1741,7 +1836,19 @@ export function StandardUI({
               />
             )}
 
-            {showQuickAssigneeReview && (
+{showQuickAssigneeReview && (
+  <QuickEmojiReview
+    onSelect={async (sentiment) => {
+      setShowQuickAssigneeReview(false);
+
+      await saveQuickAssigneeReview(sentiment);
+
+      endChatSessionByQuickReview("Thanks for chatting! 😊");
+    }}
+  />
+)}
+
+            {/* {showQuickAssigneeReview && (
               <QuickEmojiReview
                 onSelect={async (sentiment) => {
                   setShowQuickReview(false);
@@ -1762,7 +1869,7 @@ export function StandardUI({
                   endChatSession("Thanks for your feedback! 😊");
                 }}
               />
-            )}
+            )} */}
             {showSuggestedOnce &&
               suggestedQuestionList &&
               suggestedQuestionList.length > 0 && (
