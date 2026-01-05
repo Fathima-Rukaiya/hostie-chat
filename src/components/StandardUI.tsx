@@ -522,7 +522,7 @@ export function StandardUI({
       },
       body: JSON.stringify({
         room_id: roomName,
-        
+
       }),
     });
     return res.json(); // { reply: "AI response" }
@@ -875,7 +875,8 @@ export function StandardUI({
 
     if (!contactId || !room) {
       setShowReviewPopup(false);
-      endChatSession();
+      //endChatSession();
+      endChatSessionByQuickReview("now ok")
       return;
     }
     console.log("savedRoom:", room);
@@ -1137,164 +1138,164 @@ export function StandardUI({
   // };
 
   const DEFAULT_REVIEWS: Record<
-  "positive" | "neutral" | "negative",
-  string
-> = {
-  positive: "That was helpful, thank you!",
-  neutral: "Somewhat helpful.",
-  negative: "Not what I was looking for.",
-};
-
-//   const QuickEmojiReview = ({
-//     onSelect,
-//   }: {
-//     onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
-//   }) => {
-//     if (!guestId) return;
-//  const isDark = document
-//       .querySelector("#hostie-chat-root")
-//       ?.classList.contains("dark");
-
-//     return (
-//       <>
-
-//         {/* <div className="flex gap-3 mt-3 items-center justify-start">
-//           <button
-//             onClick={() => onSelect("positive")}
-//             className="p-2 rounded-full hover:scale-110 transition"
-//             title="Happy"
-//           >
-//             <Laugh size={26} color="#22c55e" />
-//           </button>
-
-//           <button
-//             onClick={() => onSelect("neutral")}
-//             className="p-2 rounded-full hover:scale-110 transition"
-//             title="Neutral"
-//           >
-//             <Meh size={26} color="#6b7280" />
-//           </button>
-
-//           <button
-//             onClick={() => onSelect("negative")}
-//             className="p-2 rounded-full hover:scale-110 transition"
-//             title="Sad"
-//           >
-//             <Frown size={26} color="#ef4444" />
-//           </button>
-
-//           <span className="text-xs opacity-60 ml-2">
-//             Rate this chat
-//           </span>
-//         </div> */}
-
-//         <button
-//           onClick={() => onSelect("positive")}
-//           className="p-2 rounded-3xl text-sm border max-w-[80%]"
-//            style={{
-//                   backgroundColor: isHovered
-//                     ? isDark
-//                       ? suggestQuestionsDark
-//                       : suggestQuestionsBg
-//                     : "transparent",
-
-//                   borderColor: suggestQuestionsBorder || "#50484cff",
-//                   color: isDark ? "#ffffff" : "#1F2937",
-//                 }}
-//         >
-//            <Laugh size={26} color="#22c55e" /> That was helpful, thank you!
-//         </button>
-//         <button
-//           onClick={() => onSelect("neutral")}
-//           className="p-2 rounded-3xl text-sm border max-w-[80%]"
-//         >
-//          <Meh size={26} color="#6b7280" /> Somewhat helpful.
-//         </button>
-//         <button
-//           onClick={() => onSelect("negative")}
-//           className="p-2 rounded-3xl text-sm border max-w-[80%]"
-//         >
-//            <Frown size={26} color="#ef4444" /> Not what I was looking for.
-//         </button>
-//       </>
-//     );
-//   };
-const QuickEmojiReview = ({
-  onSelect,
-}: {
-  onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
-}) => {
-  if (!guestId) return null;
-  
-  const isDark = document
-    .querySelector("#hostie-chat-root")
-    ?.classList.contains("dark");
-
-  const [hovered, setHovered] = useState<string | null>(null);
-
-  const emojiData = {
-    positive: { icon: <Laugh size={24} />, text: "That was helpful, thank you!", color: "#22c55e" },
-    neutral: { icon: <Meh size={24} />, text: "Somewhat helpful.", color: "#6b7280" },
-    negative: { icon: <Frown size={24} />, text: "Not what I was looking for.", color: "#ef4444" },
+    "positive" | "neutral" | "negative",
+    string
+  > = {
+    positive: "That was helpful, thank you!",
+    neutral: "Somewhat helpful.",
+    negative: "Not what I was looking for.",
   };
 
-  return (
-    <div className="flex flex-col gap-2 mt-3">
-      {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
-        const isHovered = hovered === sentiment;
+  //   const QuickEmojiReview = ({
+  //     onSelect,
+  //   }: {
+  //     onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
+  //   }) => {
+  //     if (!guestId) return;
+  //  const isDark = document
+  //       .querySelector("#hostie-chat-root")
+  //       ?.classList.contains("dark");
 
-        return (
-          <button
-            key={sentiment}
-            onClick={() => onSelect(sentiment)}
-            onMouseEnter={() => setHovered(sentiment)}
-            onMouseLeave={() => setHovered(null)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border transition-all duration-200 shadow-sm"
-            style={{
-              backgroundColor: isHovered
-                ? isDark
-                  ? darkenColor(suggestQuestionsDark, 10)
-                  : darkenColor(suggestQuestionsBg, 10)
-                : isDark
-                ? suggestQuestionsDark
-                : suggestQuestionsBg,
-              borderColor: suggestQuestionsBorder || "#50484cff",
-              color: emojiData[sentiment].color,
-            }}
-          >
-            <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
-            <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+  //     return (
+  //       <>
 
-const saveQuickAssigneeReview = async (
-  sentiment: "positive" | "neutral" | "negative"
-) => {
-  if (!guestId) return;
+  //         {/* <div className="flex gap-3 mt-3 items-center justify-start">
+  //           <button
+  //             onClick={() => onSelect("positive")}
+  //             className="p-2 rounded-full hover:scale-110 transition"
+  //             title="Happy"
+  //           >
+  //             <Laugh size={26} color="#22c55e" />
+  //           </button>
 
-  const payload = {
-    contact_id: guestId,
-    sentiment,
-    review: DEFAULT_REVIEWS[sentiment],
+  //           <button
+  //             onClick={() => onSelect("neutral")}
+  //             className="p-2 rounded-full hover:scale-110 transition"
+  //             title="Neutral"
+  //           >
+  //             <Meh size={26} color="#6b7280" />
+  //           </button>
+
+  //           <button
+  //             onClick={() => onSelect("negative")}
+  //             className="p-2 rounded-full hover:scale-110 transition"
+  //             title="Sad"
+  //           >
+  //             <Frown size={26} color="#ef4444" />
+  //           </button>
+
+  //           <span className="text-xs opacity-60 ml-2">
+  //             Rate this chat
+  //           </span>
+  //         </div> */}
+
+  //         <button
+  //           onClick={() => onSelect("positive")}
+  //           className="p-2 rounded-3xl text-sm border max-w-[80%]"
+  //            style={{
+  //                   backgroundColor: isHovered
+  //                     ? isDark
+  //                       ? suggestQuestionsDark
+  //                       : suggestQuestionsBg
+  //                     : "transparent",
+
+  //                   borderColor: suggestQuestionsBorder || "#50484cff",
+  //                   color: isDark ? "#ffffff" : "#1F2937",
+  //                 }}
+  //         >
+  //            <Laugh size={26} color="#22c55e" /> That was helpful, thank you!
+  //         </button>
+  //         <button
+  //           onClick={() => onSelect("neutral")}
+  //           className="p-2 rounded-3xl text-sm border max-w-[80%]"
+  //         >
+  //          <Meh size={26} color="#6b7280" /> Somewhat helpful.
+  //         </button>
+  //         <button
+  //           onClick={() => onSelect("negative")}
+  //           className="p-2 rounded-3xl text-sm border max-w-[80%]"
+  //         >
+  //            <Frown size={26} color="#ef4444" /> Not what I was looking for.
+  //         </button>
+  //       </>
+  //     );
+  //   };
+  const QuickEmojiReview = ({
+    onSelect,
+  }: {
+    onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
+  }) => {
+    if (!guestId) return null;
+
+    const isDark = document
+      .querySelector("#hostie-chat-root")
+      ?.classList.contains("dark");
+
+    const [hovered, setHovered] = useState<string | null>(null);
+
+    const emojiData = {
+      positive: { icon: <Laugh size={24} />, text: "That was helpful, thank you!", color: "#22c55e" },
+      neutral: { icon: <Meh size={24} />, text: "Somewhat helpful.", color: "#6b7280" },
+      negative: { icon: <Frown size={24} />, text: "Not what I was looking for.", color: "#ef4444" },
+    };
+
+    return (
+      <div className="flex flex-col gap-2 mt-3">
+        {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
+          const isHovered = hovered === sentiment;
+
+          return (
+            <button
+              key={sentiment}
+              onClick={() => onSelect(sentiment)}
+              onMouseEnter={() => setHovered(sentiment)}
+              onMouseLeave={() => setHovered(null)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border transition-all duration-200 shadow-sm"
+              style={{
+                backgroundColor: isHovered
+                  ? isDark
+                    ? darkenColor(suggestQuestionsDark, 10)
+                    : darkenColor(suggestQuestionsBg, 10)
+                  : isDark
+                    ? suggestQuestionsDark
+                    : suggestQuestionsBg,
+                borderColor: suggestQuestionsBorder || "#50484cff",
+                color: emojiData[sentiment].color,
+              }}
+            >
+              <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
+              <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
+            </button>
+          );
+        })}
+      </div>
+    );
   };
 
-  try {
-    await fetch(`${API_BASE_URL}/saveReview`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-      },
-      body: JSON.stringify(payload),
-    });
-  } catch (err) {
-    console.error("Quick assignee review failed:", err);
-  }
-};
+  const saveQuickAssigneeReview = async (
+    sentiment: "positive" | "neutral" | "negative"
+  ) => {
+    if (!guestId) return;
+
+    const payload = {
+      contact_id: guestId,
+      sentiment,
+      review: DEFAULT_REVIEWS[sentiment],
+    };
+
+    try {
+      await fetch(`${API_BASE_URL}/saveReview`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.error("Quick assignee review failed:", err);
+    }
+  };
 
 
   if (!showChat) return null;
@@ -1511,21 +1512,16 @@ const saveQuickAssigneeReview = async (
           id="hostie-chat-box"
           className="flex flex-col w-[340px] h-[85vh] rounded-2xl shadow-xl border border-zinc-100 dark:border-neutral-800  overflow-hidden  transition-colors duration-300 "
         >
-          {/* Header bg-white dark:bg-neutral-900*/}
-
 
           <div className="flex items-center justify-between p-3 text-sm font-semibold">
             <div className="flex items-center gap-1">
               {/* <BotMessageSquare className="mr-1.5" />*/}
 
-
               {assignedAgent ? (
-                <div className="h-6 w-6 rounded-full hostie-background hostie-color text-white flex items-center justify-center text-xs font-semibold">
+                <div className="h-6 w-6 rounded-full hostie-background hostie-color text-white flex items-center justify-center text-xs font-semibold p-3">
                   {getInitials(assignedAgent.name)}
                 </div>
               ) :
-
-
                 botIcon ? (
                   <div
                     className="hostie-background hostie-color text-white p-[3px] w-6 h-6 rounded-full flex items-center justify-center">
@@ -1543,26 +1539,11 @@ const saveQuickAssigneeReview = async (
 
               <span
                 className="ml-2 h-2 w-2 rounded-full bg-green-500"
-                title="Online"
-              />
+                title="Online" />
               <span className="mr-2 text-xs text-green-500">Online</span>
 
             </div>
             <div className="flex gap-1 z-[99999]">
-              {/* <Popover >
-                <PopoverTrigger>
-                  <div  className="flex items-center px-2 py-0.5 rounded-md gap-1 bg-pink-50 dark:bg-pink-800">
-                    <LockIcon
-                      size="12"
-                      className="text-zinc-600 dark:text-zinc-200"
-                    />{" "}
-                    Premium
-                  </div>
-                </PopoverTrigger>
-                <PopoverContent className="text-xs z-[999999]">
-                  Upgrade to premium to customize your chat page logo and colors.
-                </PopoverContent>
-              </Popover> */}
               {botName !== "Hostie" && (
                 <div className="relative">
                   <button
@@ -1576,21 +1557,15 @@ const saveQuickAssigneeReview = async (
                   </button>
 
                   {showPremiumPopup && (
-                    // <div className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50">
 
-                    //   Upgrade to premium to customize your chat page logo and colors.
-                    // </div>
                     <div
-                      className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50 whitespace-normal break-words"
-                    >
+                      className="absolute top-full mt-2 left-0 bg-white dark:bg-neutral-800 text-xs p-2 rounded shadow-lg w-64 z-50 whitespace-normal break-words">
                       Upgrade to premium <br />to customize your <br />chat page logo and colors.
                     </div>
-
                   )}</div>
               )}
               <div className="hostie-background hostie-color flex items-center px-2 py-0.5 rounded-md gap-1 ">
-                <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" />
-                AI
+                <Sparkles size="12" className="text-zinc-600 dark:text-zinc-200" /> AI
               </div>
               <div className="flex items-center px-2 py-0.5 rounded-md">
 
@@ -1606,24 +1581,15 @@ const saveQuickAssigneeReview = async (
 
             {chatHistory.length === 0 && (
               <div className="mt-6 flex flex-col items-center justify-center">
-
-                {/* <Bot strokeWidth={1.75}
-                size={60}
-                className="text-pink-600 dark:text-pink-600 mb-2"
-
-              /> */}
                 <img
                   src={botIcon}
                   alt="Bot Icon"
                   className="hostie-color hostie-background w-14 h-14 rounded-full object-cover mb-2 p-3 text-white"
                 />
                 <div className="flex items-center text-lg justify-center font-bold hostie-hello-text">
-                  {/* Hello,&nbsp;<div>there..!</div> */}
                   {greeting}
-                  {/* <div className="ml-1 text-[22px]">👋</div> */}
                 </div>
                 <div className="mt-2 font-semibold text-gray-500 dark:text-gray-400 text-lg">
-                  {/* How can I help you today? */}
                   {introduction}
                 </div>
                 <div className="text-center text-gray-400 text-sm mt-10">
@@ -1633,9 +1599,6 @@ const saveQuickAssigneeReview = async (
               </div>
             )}
 
-
-
-
             {chatHistory.map((msg, i) => (
               <div
                 key={i}
@@ -1643,50 +1606,42 @@ const saveQuickAssigneeReview = async (
                   }`}
               >
                 {msg.sender === "bot" && (
-                  // <div className="flex items-end relative">
-                  //   <Bot strokeWidth={1.75}
-                  //     className="h-[31px] w-[31px] text-pink-600 dark:text-pink-600 border border-pink-600 rounded-full p-1"
-
-                  //   />
-                  // </div>
                   <div className="flex items-end relative" >
-                    {/* <Bot className="h-[31px] w-[31px] rounded-full text-pink-600 dark:text-pink-600 p-1 border border-pink-600 dark:border-neutral-500" /> */}
+
                     <img
                       src={botIcon}
                       alt="Bot"
-
-                      className="hostie-color hostie-background h-[31px] w-[31px] rounded-full object-cover p-1 text-white"
-                    />
+                      className="hostie-color hostie-background h-[31px] w-[31px] rounded-full object-cover p-1 text-white" />
                     <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 border border-white dark:border-neutral-800" />
                   </div>
                 )}
                 <style>
                   {`
-         /* global.css or module.css */
-          .chat-bubble p {
-            margin: 0.25rem 0;
-            line-height: 1.4;
-          }
+                   /* global.css or module.css */
+                      .chat-bubble p {
+                        margin: 0.25rem 0;
+                        line-height: 1.4;
+                      }
 
-          .chat-bubble a {
-            color: #ed3ab7ff; /* pink link */
-            text-decoration: underline;
-          }
+                      .chat-bubble a {
+                        color: #ed3ab7ff; /* pink link */
+                        text-decoration: underline;
+                      }
 
-          .chat-bubble ul {
-            padding-left: 1rem;
-            list-style-type: disc;
-          }
+                      .chat-bubble ul {
+                        padding-left: 1rem;
+                        list-style-type: disc;
+                      }
 
-          .chat-bubble strong {
-            font-weight: 600;
-          }
+                      .chat-bubble strong {
+                        font-weight: 600;
+                      }
 
-          .chat-bubble em {
-            font-style: italic;
-          }
+                      .chat-bubble em {
+                        font-style: italic;
+                      }
 
-        `}
+                 `}
                 </style>
                 <div
                   className={` chat-bubble px-2 py-1.5 rounded-xl max-w-[75%] text-sm shadow-sm break-words  ${msg.sender === "user"
@@ -1811,17 +1766,12 @@ const saveQuickAssigneeReview = async (
                       )}
                       {/* time stamp */}
                       {msg.sender === "user" && (
-                        // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                        //   {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
-                        // </span>
+
                         <span className="text-[10px] opacity-70 whitespace-nowrap self-end">
                           {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
                         </span>
                       )}
                       {msg.sender === "bot" && msg.timestamps?.received && (
-                        // <span className="ml-1 text-[10px] opacity-70 bottom-1 right-2 whitespace-nowrap">
-                        //   {msg.timestamps.received}
-                        // </span>
                         <span className="text-[10px] opacity-70 whitespace-nowrap self-end">
                           {msg.timestamps?.sent || msg.timestamps?.received || "Just now"}
                         </span>
@@ -1832,25 +1782,7 @@ const saveQuickAssigneeReview = async (
                   )}
                 </div>
                 {msg.sender === "user" && (
-                  // <div className="flex-shrink-0 relative">
-                  //   <img
-                  //     src="../chat.jpg"
-                  //     alt="user"
-                  //     className="h-[30px] w-[30px] rounded-full object-cover"
-                  //   />
-                  // </div>
-
-                  // <div className="flex-shrink-0 relative flex items-center justify-center bg-pink-600  rounded-full h-[30px] w-[30px]">
-                  //   <UserRound size="18" className="text-gray-200" />
-                  // </div>
                   <div className="flex-shrink-0 relative">
-                    {/* <img
-                        src="/chat.png"
-                        alt="user"
-                        height={30}
-                        width={30}
-                        className="rounded-full object-cover h-[30px] w-[30px]"
-                      /> */}
                     <div className="hostie-color hostie-background  relative flex items-center justify-center rounded-full h-[30px] w-[30px]">
                       <UserRound size="18" className="uIcon text-gray-200" />
                     </div>
@@ -1887,40 +1819,18 @@ const saveQuickAssigneeReview = async (
               />
             )}
 
-{showQuickAssigneeReview && (
-  <QuickEmojiReview
-    onSelect={async (sentiment) => {
-      setShowQuickAssigneeReview(false);
-
-      await saveQuickAssigneeReview(sentiment);
-
-      endChatSessionByQuickReview("Thanks for chatting! 😊");
-    }}
-  />
-)}
-
-            {/* {showQuickAssigneeReview && (
+            {showQuickAssigneeReview && (
               <QuickEmojiReview
                 onSelect={async (sentiment) => {
-                  setShowQuickReview(false);
+                  setShowQuickAssigneeReview(false);
 
-                  await fetch(`${API_BASE_URL}/saveReview`, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "x-api-key": apiKey,
-                    },
-                    body: JSON.stringify({
-                      contact_id: guestId,
-                      sentiment,
-                      review: null,
-                    }),
-                  });
+                  await saveQuickAssigneeReview(sentiment);
 
-                  endChatSession("Thanks for your feedback! 😊");
+                  endChatSessionByQuickReview("Thanks for chatting! 😊");
                 }}
               />
-            )} */}
+            )}
+
             {showSuggestedOnce &&
               suggestedQuestionList &&
               suggestedQuestionList.length > 0 && (
@@ -1931,20 +1841,13 @@ const saveQuickAssigneeReview = async (
               )}
           </div>
 
-
           <div ref={chatEndRef} />
-
-
-
-
 
           {/* Input */}
           <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
 
             <input
-              type="file"
-              ref={fileInputRef}
-              className="hidden"
+              type="file" ref={fileInputRef} className="hidden"
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
                   handleFileUpload(e.target.files[0]);
@@ -1953,11 +1856,7 @@ const saveQuickAssigneeReview = async (
             />
             {allowFileUpload && (
               <button
-                onClick={() => fileInputRef.current?.click()}
-                className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder"
-              >
-                {/* border border-zinc-200 dark:border-neutral-700 */}
-                {/* mr-2 */}
+                onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder">
                 <Plus className="w-4 h-4" />
               </button>
 
@@ -1988,33 +1887,25 @@ const saveQuickAssigneeReview = async (
                 e.currentTarget.style.borderColor = ""; // reset to Tailwind default
               }}
             />
-            {/* border border-zinc-200 dark:border-neutral-700  dark:bg-neutral-900 */}
-            {/* <button
-              onClick={sendMessage}
-              className="flex items-center justify-center h-9 w-9 rounded-full bg-gradient-to-r from-pink-600 to-pink-700 text-white ml-2"
-            >
-              <SendHorizonal className="w-4 h-4" />
-            </button> 
-             background: "linear-gradient(to right, #7c3aed, #ec4899, #3b82f6)",*/}
-
+        
             <style>{`
-  .send-button {
-   
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px; /* fully rounded */
-    width: 36px;
-    height: 36px;
-    color: white;
-    cursor: pointer;
-  }
+                .send-button {
+                
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 9999px; /* fully rounded */
+                  width: 36px;
+                  height: 36px;
+                  color: white;
+                  cursor: pointer;
+                }
 
-  .send-button svg {
-    width: 16px;
-    height: 16px;
-  }
-`}</style>
+                .send-button svg {
+                  width: 16px;
+                  height: 16px;
+                }
+              `}</style>
             {/* #7e23a8ff */}
             <button onClick={sendMessage} className="send-button hostie-background">
               <SendHorizontal />
@@ -2028,17 +1919,10 @@ const saveQuickAssigneeReview = async (
           <div className="flex items-center pt-2 justify-center font-medium text-center pb-3 text-sm text-zinc-400 dark:text-zinc-400">
             Powered by{" "}
 
-            {/* <BecomepartnerCard/ > */}
-
             <div className="relative group inline-block">
 
               {/* Trigger */}
               <div className="flex items-center gap-1 hover:text-black dark:hover:text-white cursor-pointer">
-                {/* <div className="text-sm font-bold bg-gradient-to-r from-pink-600 via-pink-400 to-blue-600 bg-clip-text text-transparent">
-                  &nbsp;Hostie
-                </div> */}
-
-                {/* Inline CSS for this page only */}
                 <style>
                   {`
           .gradient-text {
