@@ -313,10 +313,10 @@ export function StandardUI({
 
   //
   //https://hostingate-client.vercel.app/sign-in https://app.hostingate.com/dashboard/profile
-  const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
+  // const API_BASE_URL = "https://app.hostingate.com/api/clientCustomerChatBox";
   //const API_BASE_URL = "https://app.hostie.ai/api/clientCustomerChatBox";
 
-  // const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
+  const API_BASE_URL = "http://localhost:3000/api/clientCustomerChatBox";
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -907,7 +907,7 @@ export function StandardUI({
     }
 
     setShowReviewPopup(false);
-    endChatSessionByQuickReview("xxx xxx")
+    endChatSessionByQuickReview("Thanks for chatting!! 😊")
   };
 
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
