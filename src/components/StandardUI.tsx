@@ -1669,10 +1669,7 @@ export function StandardUI({
               </div>
             ))}
 
-
-            <div ref={chatEndRef} />
-
-            {showQuickReview && (
+   {showQuickReview && (
               <QuickReview
                 onPositive={async () => {
                   setShowQuickReview(false);
@@ -1698,8 +1695,7 @@ export function StandardUI({
                 }}
               />
             )}
-
-            {showSuggestedOnce &&
+             {showSuggestedOnce &&
               suggestedQuestionList &&
               suggestedQuestionList.length > 0 && (
                 <SuggestedQuestions
@@ -1708,6 +1704,12 @@ export function StandardUI({
                 />
               )}
           </div>
+
+            <div ref={chatEndRef} />
+
+         
+
+           
 
           {/* Input */}
           <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
