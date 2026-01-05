@@ -522,7 +522,7 @@ export function StandardUI({
       },
       body: JSON.stringify({
         room_id: roomName,
-        sender_id: senderId,
+        
       }),
     });
     return res.json(); // { reply: "AI response" }
