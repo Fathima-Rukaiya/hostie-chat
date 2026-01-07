@@ -1239,7 +1239,7 @@ export function StandardUI({
       neutral: { icon: <Meh size={24} />, text: "Somewhat helpful.", color: "#6b7280" },
       negative: { icon: <Frown size={24} />, text: "Not what I was looking for.", color: "#ef4444" },
     };
- const baseBg = isDark ? suggestQuestionsDark : suggestQuestionsBg;
+ const baseBg = isDark ? suggestQuestionsDark : backgroundColor;
   const hoverBg = darkenColor(baseBg, 12);
     return (
       <div className="flex flex-col gap-2 mt-3">
