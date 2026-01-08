@@ -5,6 +5,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 // import ReactMarkdown from "react-markdown";
 // import remarkGfm from "remark-gfm";
 import Markdown from "markdown-to-jsx";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -60,8 +62,6 @@ export function StandardUI({
   welcomeMsg?: string;
   suggestedQuestionList?: string[];
 }) {
-
-
 
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -137,6 +137,46 @@ export function StandardUI({
     }, 4 * 60 * 1000); // 4 minutes
   };
 
+  const downloadChatPDF = () => {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(16);
+    doc.text("Chat Transcript", 14, 20);
+
+    // Prepare table data
+    const tableBody = chatHistory.map((msg, index) => [
+      index + 1,
+      msg.sender === "user" ? "User" : "Assistant",
+      msg.text || "",
+      msg.timestamps?.sent || msg.timestamps?.received || "-"
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [["#", "Sender", "Message", "Time"]],
+      body: tableBody,
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+        valign: "top",
+      },
+      headStyles: {
+        fillColor: [37, 99, 235], // blue
+        textColor: 255,
+      },
+      columnStyles: {
+        0: { cellWidth: 10 },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 100 },
+        3: { cellWidth: 30 },
+      },
+    });
+
+    doc.save("chat-transcript.pdf");
+  };
+
+
   const endChatSession = async (endReason?: string) => {
     clearTimeout(inactivityTimer.current);
     clearTimeout(popupTimer.current);
@@ -204,6 +244,20 @@ export function StandardUI({
 
     inactivityTimer.current = null;
     popupTimer.current = null;
+
+    <button
+      onClick={() => {
+        downloadChatPDF();
+
+        setTimeout(() => {
+          endChatSession("Thanks for chatting!! 😊");
+        }, 500);
+      }}
+      className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+    >
+      📄 Download Chat PDF & End
+    </button>
+
     // setShowReviewPopup(true);
     // remove session
     sessionStorage.removeItem("guestContactId");
@@ -432,7 +486,7 @@ export function StandardUI({
           setTimeout(() => {
             setShowQuickAssigneeReview(false);
             endChatSessionByQuickReview("Thanks for chatting!! 😊");
-          }, 30*1000);
+          }, 10 * 1000);
 
           return;
         }
@@ -840,7 +894,7 @@ export function StandardUI({
     if (!contactId || !room) {
       setShowReviewPopup(false);
       //endChatSession();
-      endChatSessionByQuickReview("now ok")
+      endChatSessionByQuickReview("Thanks for chatting!! 😊") //now ok
       return;
     }
     console.log("savedRoom:", room);
@@ -848,7 +902,7 @@ export function StandardUI({
     console.log("click 12333");
     if (!contactId) {
       //  endChatSession();
-      endChatSessionByQuickReview("now ok")
+      endChatSession("Thanks for chatting!! 😊") //now ok  endChatSessionByQuickReview("Thanks for chatting!! 😊")
       return;
     }
     console.log("click clichh")
@@ -1172,40 +1226,40 @@ export function StandardUI({
           How was your experience?
         </p>
         {/* Emoji Buttons */}
-    
-          {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
-            const isHovered = hovered === sentiment;
 
-            return (
-              <button
-                key={sentiment}
-                onClick={() => onSelect(sentiment)}
-                onMouseEnter={() => setHovered(sentiment)}
-                onMouseLeave={() => setHovered(null)}
-                className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  max-w-[95%] mb-1"
-                style={{
-                  backgroundColor: isHovered ? hoverBg : baseBg,
-                  borderColor: suggestQuestionsBorder,
-                  color: emojiData[sentiment].color,
-                }}
-              // className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border transition-all duration-200 shadow-sm"
-              // style={{
-              //   backgroundColor: isHovered
-              //     ? isDark
-              //       ? darkenColor(suggestQuestionsDark, 10)
-              //       : darkenColor(suggestQuestionsBg, 10)
-              //     : isDark
-              //       ? suggestQuestionsDark
-              //       : suggestQuestionsBg,
-              //   borderColor: suggestQuestionsBorder || "#50484cff",
-              //   color: emojiData[sentiment].color,
-              // }}
-              >
-                <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
-                <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
-              </button>
-            );
-          })}
+        {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
+          const isHovered = hovered === sentiment;
+
+          return (
+            <button
+              key={sentiment}
+              onClick={() => onSelect(sentiment)}
+              onMouseEnter={() => setHovered(sentiment)}
+              onMouseLeave={() => setHovered(null)}
+              className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  max-w-[95%] mb-1"
+              style={{
+                backgroundColor: isHovered ? hoverBg : baseBg,
+                borderColor: suggestQuestionsBorder,
+                color: emojiData[sentiment].color,
+              }}
+            // className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border transition-all duration-200 shadow-sm"
+            // style={{
+            //   backgroundColor: isHovered
+            //     ? isDark
+            //       ? darkenColor(suggestQuestionsDark, 10)
+            //       : darkenColor(suggestQuestionsBg, 10)
+            //     : isDark
+            //       ? suggestQuestionsDark
+            //       : suggestQuestionsBg,
+            //   borderColor: suggestQuestionsBorder || "#50484cff",
+            //   color: emojiData[sentiment].color,
+            // }}
+            >
+              <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
+              <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
+            </button>
+          );
+        })}
       </div>
     );
   };
