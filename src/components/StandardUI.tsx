@@ -282,7 +282,7 @@ function markdownToPlainText(md: string) {
       },
       columnStyles: {
         2: { cellWidth: 120, overflow: 'linebreak' },
-        3: { cellWidth: 30 ,overflow: 'ellipsize', halign: 'center'} // column 3 = "Time" → set fixed width
+        3: { cellWidth: 30} // column 3 = "Time" → set fixed width
       }
     });
 
