@@ -1166,7 +1166,7 @@ export function StandardUI({
     const baseBg = isDark ? suggestQuestionsDark : backgroundColor;
     const hoverBg = darkenColor(baseBg, 12);
     return (
-      <div className="flex flex-col items-center mt-4 text-center">
+      <div className="flex flex-col  mt-4 text-center">
         {/* Professional Heading */}
         <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-3">
           How was your experience?
@@ -1182,7 +1182,7 @@ export function StandardUI({
                 onClick={() => onSelect(sentiment)}
                 onMouseEnter={() => setHovered(sentiment)}
                 onMouseLeave={() => setHovered(null)}
-                className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  max-w-[95%]"
+                className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  max-w-[95%] mb-1"
                 style={{
                   backgroundColor: isHovered ? hoverBg : baseBg,
                   borderColor: suggestQuestionsBorder,
