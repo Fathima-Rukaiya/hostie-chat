@@ -236,11 +236,7 @@ export function StandardUI({
     doc.setTextColor(120); // subtle gray
     doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 48, { align: "center" });
 
-
-
-
-
-    const headingBottomY = 70;
+    const headingBottomY = 54;
     // autoTable(doc, {
     //   startY: headingBottomY,
     //   head: [["#", "Sender", "Message", "Time"]],
