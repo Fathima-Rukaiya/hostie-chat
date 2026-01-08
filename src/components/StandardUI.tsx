@@ -245,18 +245,6 @@ export function StandardUI({
     inactivityTimer.current = null;
     popupTimer.current = null;
 
-    <button
-      onClick={() => {
-        downloadChatPDF();
-
-        setTimeout(() => {
-          endChatSession("Thanks for chatting!! 😊");
-        }, 500);
-      }}
-      className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
-    >
-      📄 Download Chat PDF & End
-    </button>
 
     // setShowReviewPopup(true);
     // remove session
@@ -1802,6 +1790,18 @@ export function StandardUI({
                       review: "😊 Thank you, that helped",
                     }),
                   });
+                  <button
+                    onClick={() => {
+                      downloadChatPDF();
+
+                      setTimeout(() => {
+                        endChatSessionByQuickReview("Thanks for chatting!! 😊");
+                      }, 500);
+                    }}
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                  >
+                    📄 Download Chat PDF & End
+                  </button>
 
                   endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
                 }}
