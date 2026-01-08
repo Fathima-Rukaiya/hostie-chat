@@ -432,7 +432,7 @@ export function StandardUI({
           setTimeout(() => {
             setShowQuickAssigneeReview(false);
             endChatSession("Thanks for chatting!! 😊");
-          }, 10000);
+          }, 30*1000);
 
           return;
         }
