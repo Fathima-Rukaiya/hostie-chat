@@ -178,32 +178,67 @@ function hexToRgb(hex: string) {
     doc.circle(20, 25, 6, "F"); // y = 25
 
     // Bot initials
-    doc.setTextColor(255, 255, 255);
-    doc.setFont("Inter", "bold");
-    doc.setFontSize(10);
-    doc.text(`${botIcon}`, 17.5, 28);
+    // doc.setTextColor(255, 255, 255);
+    // doc.setFont("Inter", "bold");
+    // doc.setFontSize(10);
+    // doc.text(`${botIcon}`, 17.5, 28);
 
+// --- 1️⃣ Fetch bot icon as base64 ---
+  async function getImageBase64(url: string): Promise<string> {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+   const botIconUrl =
+    "https://mmdwdsyitgqnblolbfcy.supabase.co/storage/v1/object/public/chat_icon/bot_icons/1765350990681_test_icon.png"; // your URL
+  const botName = "StudyBot"; // your bot name
+  const imgData = await getImageBase64(botIconUrl);
+
+  // --- 2️⃣ Draw bot icon with optional background ---
+  const circleX = 20;
+  const circleY = 25;
+  const radius = 8;
+
+  // Optional colored background
+  doc.setFillColor(177, 30, 133); // purple
+  doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
+
+  // Add the image
+  const size = 12;
+  doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
+
+  // --- 3️⃣ Draw bot name next to icon ---
+  doc.setFont("Inter", "bold");
+  doc.setFontSize(14);
+  doc.setTextColor(30, 30, 30);
+  doc.text(botName, circleX + radius + 5, circleY + 4); // slight vertical adjustment
 
     ///////////////////////////////////////
 
-    // Circle background for bot initials
-const circleX = 20;   // x-position
-const circleY = 25;   // y-position
-const radius = 8;     // radius of circle
+//     // Circle background for bot initials
+// const circleX = 20;   // x-position
+// const circleY = 25;   // y-position
+// const radius = 8;     // radius of circle
 
-// Set fill color (background)
-doc.setFillColor(177, 30, 133); // RGB purple, or use your gradient color safely
+// // Set fill color (background)
+// doc.setFillColor(177, 30, 133); // RGB purple, or use your gradient color safely
 
-// Draw filled circle
-doc.circle(circleX, circleY, radius, "F"); // "F" = fill
+// // Draw filled circle
+// doc.circle(circleX, circleY, radius, "F"); // "F" = fill
 
-// Bot initials on top
-doc.setTextColor(255, 255, 255);   // white text
-doc.setFont("Inter", "bold");
-doc.setFontSize(10);
+// // Bot initials on top
+// doc.setTextColor(255, 255, 255);   // white text
+// doc.setFont("Inter", "bold");
+// doc.setFontSize(10);
 
-// Center text in circle (y offset slightly to align visually)
-doc.text(botIcon || "B", circleX, circleY + 3, { align: "center" });
+// // Center text in circle (y offset slightly to align visually)
+// doc.text(botIcon || "B", circleX, circleY + 3, { align: "center" });
 
     /////////////////////////////////////
 
