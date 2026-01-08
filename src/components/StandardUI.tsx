@@ -184,7 +184,7 @@ export function StandardUI({
 
     // --- 2️⃣ Draw bot icon with optional background ---
     const circleX = 20;
-    const circleY = 12;
+    const circleY = 14;
     const radius = 8;
 
     // Optional colored background
@@ -206,10 +206,10 @@ export function StandardUI({
     // Bot name
     doc.setFont("Inter", "bold");
     doc.setTextColor(30, 30, 30);
-    doc.setFontSize(14);
+    doc.setFontSize(18);
    // doc.text(`${botNamex}`, 30, 27);
    
-doc.text(botNamex, pageCenter, circleY + radius + 8, { align: "center" });
+doc.text(botNamex, pageCenter, circleY + radius + 5, { align: "center" });
 
     // Heading centered
     doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
