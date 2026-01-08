@@ -188,7 +188,7 @@ export function StandardUI({
     const radius = 8;
 
     // Optional colored background
-    doc.setFillColor(177, 30, 133); // purple
+    doc.setFillColor(58,43,155); // purple
     // doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
     doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
@@ -216,13 +216,13 @@ export function StandardUI({
     doc.setFont("Inter", "bold");
     doc.setFontSize(12); // smaller than before
     doc.setTextColor(30, 30, 30);
-    doc.text(botNamex, pageCenter, circleY + radius + 2, { align: "center" });
+    doc.text(botNamex, pageCenter, circleY + radius + 3, { align: "center" });
 
     // Main heading bigger
     doc.setFont("Inter", "bold");
     doc.setFontSize(26); // bigger
     doc.setTextColor(50, 50, 50);
-    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 22, { align: "center" });
+    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 35, { align: "center" });
 
 
     // Optional underline for style
