@@ -163,8 +163,8 @@ export function StandardUI({
     doc.setFontSize(24); // bigger and bolder
     doc.setTextColor(50, 50, 50); // dark gray for professionalism
 
-    const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
-    doc.circle(20, 25, 6, "F"); // y = 25
+    // const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
+    // doc.circle(20, 25, 6, "F"); // y = 25
 
     // --- 1️⃣ Fetch bot icon as base64 ---
     async function getImageBase64(url: string): Promise<string> {
