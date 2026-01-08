@@ -252,16 +252,6 @@ export function StandardUI({
     }
   }, [shadowContainer?.current]);
 
-  // const getUserCountry = async () => {
-  //   try {
-  //     const res = await fetch("https://ipapi.co/json/");
-  //     const data = await res.json();
-  //     return data.country_name || data.country || "Unknown";
-  //   } catch (err) {
-  //     console.error("Failed to get country:", err);
-  //     return "Unknown";
-  //   }
-  // };
 
   const getUserCountry = async () => {
     try {
@@ -277,32 +267,6 @@ export function StandardUI({
       return "un"; // unknown
     }
   };
-
-
-  //   const getUserCountry = async () => {
-  //   try {
-  //     const controller = new AbortController();
-
-  //     // Timeout (optional but safe)
-  //     const timeout = setTimeout(() => controller.abort(), 3000);
-
-  //     const res = await fetch("https://ipapi.co/json/", {
-  //       signal: controller.signal,
-  //     });
-
-  //     clearTimeout(timeout);
-
-  //     if (!res.ok) return "Unknown";
-
-  //     const data = await res.json();
-
-  //     return data?.country_name || data?.country || "Unknown";
-  //   } catch (err) {
-  //     console.warn("Country fetch failed (safe):", err.message);
-  //     return "Unknown"; // <--- Fallback always
-  //   }
-  // };
-
 
 
   const [country, setCountry] = useState("Unknown");
@@ -883,8 +847,8 @@ export function StandardUI({
     console.log("guestId:", contactId);
     console.log("click 12333");
     if (!contactId) {
-    //  endChatSession();
-       endChatSessionByQuickReview("now ok")
+      //  endChatSession();
+      endChatSessionByQuickReview("now ok")
       return;
     }
     console.log("click clichh")
@@ -959,7 +923,6 @@ export function StandardUI({
     : "#3a3538";
 
 
-  // const SuggestedQuestions = ({ questions, onSelect }: { questions: string[], onSelect: (q: string) => void }) => {
   //   const isDark = document
   //     .querySelector("#hostie-chat-root")
   //     ?.classList.contains("dark");
@@ -1099,45 +1062,6 @@ export function StandardUI({
   const suggestQuestionsBorder = backgroundColor ? darkenColor(backgroundColor, 45) : "#747071ff";
   const suggestQuestionsDark = backgroundColor ? darkenColor(backgroundColor, 50) : "#7c797aff";
 
-
-  // const QuickEmojiReview = ({
-  //   onSelect,
-  // }: {
-  //   onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
-  // }) => {
-  //   return (
-  //     <div className="flex gap-3 mt-3 items-center justify-start">
-  //       <button
-  //         onClick={() => onSelect("positive")}
-  //         className="p-2 rounded-full hover:scale-110 transition"
-  //         title="Happy"
-  //       >
-  //         <Laugh size={26} color="#22c55e" />
-  //       </button>
-
-  //       <button
-  //         onClick={() => onSelect("neutral")}
-  //         className="p-2 rounded-full hover:scale-110 transition"
-  //         title="Neutral"
-  //       >
-  //         <Meh size={26} color="#6b7280" />
-  //       </button>
-
-  //       <button
-  //         onClick={() => onSelect("negative")}
-  //         className="p-2 rounded-full hover:scale-110 transition"
-  //         title="Sad"
-  //       >
-  //         <Frown size={26} color="#ef4444" />
-  //       </button>
-
-  //       <span className="text-xs opacity-60 ml-2">
-  //         Rate this chat
-  //       </span>
-  //     </div>
-  //   );
-  // };
-
   const DEFAULT_REVIEWS: Record<
     "positive" | "neutral" | "negative",
     string
@@ -1239,25 +1163,31 @@ export function StandardUI({
       neutral: { icon: <Meh size={24} />, text: "Somewhat helpful.", color: "#6b7280" },
       negative: { icon: <Frown size={24} />, text: "Not what I was looking for.", color: "#ef4444" },
     };
- const baseBg = isDark ? suggestQuestionsDark : backgroundColor;
-  const hoverBg = darkenColor(baseBg, 12);
+    const baseBg = isDark ? suggestQuestionsDark : backgroundColor;
+    const hoverBg = darkenColor(baseBg, 12);
     return (
-      <div className="flex flex-col gap-2 mt-3">
-        {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
-          const isHovered = hovered === sentiment;
+      <div className="flex flex-col items-center mt-4 text-center">
+        {/* Professional Heading */}
+        <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-3">
+          How was your experience?
+        </p>
+        {/* Emoji Buttons */}
+        <div className="flex flex-col gap-2 items-center">
+          {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
+            const isHovered = hovered === sentiment;
 
-          return (
-            <button
-              key={sentiment}
-              onClick={() => onSelect(sentiment)}
-              onMouseEnter={() => setHovered(sentiment)}
-              onMouseLeave={() => setHovered(null)}
-               className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200 max-w-[85%]"
-            style={{
-              backgroundColor: isHovered ? hoverBg : baseBg,
-              borderColor: suggestQuestionsBorder,
-              color: emojiData[sentiment].color,
-            }}
+            return (
+              <button
+                key={sentiment}
+                onClick={() => onSelect(sentiment)}
+                onMouseEnter={() => setHovered(sentiment)}
+                onMouseLeave={() => setHovered(null)}
+                className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  w-fit  max-w-[90%]"
+                style={{
+                  backgroundColor: isHovered ? hoverBg : baseBg,
+                  borderColor: suggestQuestionsBorder,
+                  color: emojiData[sentiment].color,
+                }}
               // className="flex items-center gap-2 px-4 py-2 rounded-full text-sm border transition-all duration-200 shadow-sm"
               // style={{
               //   backgroundColor: isHovered
@@ -1270,12 +1200,12 @@ export function StandardUI({
               //   borderColor: suggestQuestionsBorder || "#50484cff",
               //   color: emojiData[sentiment].color,
               // }}
-            >
-              <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
-              <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
-            </button>
-          );
-        })}
+              >
+                <span className="flex-shrink-0">{emojiData[sentiment].icon}</span>
+                <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
+              </button>
+            );
+          })}</div>
       </div>
     );
   };
@@ -1892,10 +1822,10 @@ export function StandardUI({
                 }
               }}
               onBlur={(e) => {
-                e.currentTarget.style.borderColor = ""; // reset to Tailwind default
+                e.currentTarget.style.borderColor = "";
               }}
             />
-        
+
             <style>{`
                 .send-button {
                 
