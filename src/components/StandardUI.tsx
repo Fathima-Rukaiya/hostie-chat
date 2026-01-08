@@ -196,17 +196,18 @@ function hexToRgb(hex: string) {
   doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
 
   // --- 3️⃣ Draw bot name next to icon ---
-  doc.setFont("Inter", "bold");
-  doc.setFontSize(14);
-  doc.setTextColor(30, 30, 30);
-  doc.text(botNamex, circleX + radius + 5, circleY + 4); // slight vertical adjustment
+  // doc.setFont("Inter", "bold");
+  // doc.setFontSize(14);
+  // doc.setTextColor(30, 30, 30);
+  // doc.text(botNamex, circleX + radius + 5, circleY + 4); // slight vertical adjustment
 
     ///////////////////////////////////////
 
     // Bot name
-    // doc.setTextColor(30, 30, 30);
-    // doc.setFontSize(14);
-    // doc.text(`${botName}`, 30, 27);
+     doc.setFont("Inter", "bold");
+    doc.setTextColor(30, 30, 30);
+    doc.setFontSize(14);
+    doc.text(`${botNamex}`, 30, 27);
 
     // Heading centered
     doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
