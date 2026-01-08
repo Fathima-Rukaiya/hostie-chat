@@ -166,15 +166,13 @@ export function StandardUI({
     // const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
     // doc.circle(20, 25, 6, "F"); // y = 25
 function markdownToPlainText(md: string) {
-  // Simple way: remove markdown syntax and keep readable text
   return md
+    .replace(/!\[.*?\]\(.*?\)/g, '') // remove images
+    .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '$1 ($2)') // show links as text (URL in parentheses)
     .replace(/(\*\*|__)(.*?)\1/g, '$2') // bold
     .replace(/(\*|_)(.*?)\1/g, '$2')   // italic
-    .replace(/!\[.*?\]\(.*?\)/g, '')   // images
-    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // links
-    .replace(/^\s*\d+\.\s+/gm, '')     // numbered list prefix
-    .replace(/^\s*[-*]\s+/gm, '')      // bullet list prefix
-    .replace(/\n+/g, ' ')              // convert newlines to space
+    .replace(/^\s*\d+\.\s+/gm, '• ')     // numbered list → bullets
+    .replace(/^\s*[-*]\s+/gm, '• ')      // bullet list
     .trim();
 }
 
