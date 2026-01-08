@@ -428,10 +428,10 @@ export function StandardUI({
           setShowQuickReview(false);
           setShowQuickAssigneeReview(true);
 
-          // Auto-end after 3s if no action
+          // Auto-end after 30s if no action
           setTimeout(() => {
             setShowQuickAssigneeReview(false);
-            endChatSession("Thanks for chatting!! 😊");
+            endChatSessionByQuickReview("Thanks for chatting!! 😊");
           }, 30*1000);
 
           return;
