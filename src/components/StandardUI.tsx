@@ -7,8 +7,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Markdown from "markdown-to-jsx";
 // import jsPDF from "jspdf";
 // import autoTable from "jspdf-autotable";
+// import { jsPDF } from "jspdf";
+// import "jspdf-autotable";
 import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 
 
 type ChatMessage = {
@@ -141,44 +143,31 @@ export function StandardUI({
     }, 4 * 60 * 1000); // 4 minutes
   };
 
-  const downloadChatPDF = () => {
-    const doc = new jsPDF();
+const downloadChatPDF = () => {
+  const doc = new jsPDF();
 
-    // Title
-    doc.setFontSize(16);
-    doc.text("Chat Transcript", 14, 20);
+  doc.setFontSize(16);
+  doc.text("Chat Transcript", 14, 20);
 
-    // Prepare table data
-    const tableBody = chatHistory.map((msg, index) => [
+  autoTable(doc, {
+    startY: 30,
+    head: [["#", "Sender", "Message", "Time"]],
+    body: chatHistory.map((msg, index) => [
       index + 1,
       msg.sender === "user" ? "User" : "Assistant",
       msg.text || "",
       msg.timestamps?.sent || msg.timestamps?.received || "-"
-    ]);
+    ]),
+    styles: {
+      fontSize: 10,
+      cellPadding: 3,
+      valign: "top",
+    },
+  });
 
+  doc.save("chat-transcript.pdf");
+};
 
-
-    (doc as any).autoTable({
-      startY: 30,
-      head: [["#", "Sender", "Message", "Time"]],
-      body: chatHistory.map((msg, index) => [
-        index + 1,
-        msg.sender === "user" ? "User" : "Assistant",
-        msg.text || "",
-        msg.timestamps?.sent || msg.timestamps?.received || "-"
-      ]),
-      styles: {
-        fontSize: 10,
-        cellPadding: 3,
-        valign: "top",
-      },
-    });
-
-    doc.save("chat-transcript.pdf");
-
-
-    doc.save("chat-transcript.pdf");
-  };
 
 
   const endChatSession = async (endReason?: string) => {
@@ -1795,18 +1784,7 @@ export function StandardUI({
                       review: "😊 Thank you, that helped",
                     }),
                   });
-                  // <button
-                  //   onClick={() => {
-                  //     downloadChatPDF();
-
-                  //     setTimeout(() => {
-                  //       endChatSessionByQuickReview("Thanks for chatting!! 😊");
-                  //     }, 500);
-                  //   }}
-                  //   className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
-                  // >
-                  //   📄 Download Chat PDF & End
-                  // </button>
+               
 
                   //  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
                 }}
