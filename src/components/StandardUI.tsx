@@ -1172,7 +1172,7 @@ export function StandardUI({
           How was your experience?
         </p>
         {/* Emoji Buttons */}
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-2 ">
           {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
             const isHovered = hovered === sentiment;
 
@@ -1182,7 +1182,7 @@ export function StandardUI({
                 onClick={() => onSelect(sentiment)}
                 onMouseEnter={() => setHovered(sentiment)}
                 onMouseLeave={() => setHovered(null)}
-                className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  w-fit  max-w-[90%]"
+                className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm border transition-colors duration-200  max-w-[95%]"
                 style={{
                   backgroundColor: isHovered ? hoverBg : baseBg,
                   borderColor: suggestQuestionsBorder,
