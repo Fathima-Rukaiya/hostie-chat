@@ -5,8 +5,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 // import ReactMarkdown from "react-markdown";
 // import remarkGfm from "remark-gfm";
 import Markdown from "markdown-to-jsx";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+// import jsPDF from "jspdf";
+// import autoTable from "jspdf-autotable";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+
 
 type ChatMessage = {
   sender: "user" | "bot";
@@ -153,26 +156,26 @@ export function StandardUI({
       msg.timestamps?.sent || msg.timestamps?.received || "-"
     ]);
 
-    autoTable(doc, {
+
+
+    (doc as any).autoTable({
       startY: 30,
       head: [["#", "Sender", "Message", "Time"]],
-      body: tableBody,
+      body: chatHistory.map((msg, index) => [
+        index + 1,
+        msg.sender === "user" ? "User" : "Assistant",
+        msg.text || "",
+        msg.timestamps?.sent || msg.timestamps?.received || "-"
+      ]),
       styles: {
         fontSize: 10,
         cellPadding: 3,
         valign: "top",
       },
-      headStyles: {
-        fillColor: [37, 99, 235], // blue
-        textColor: 255,
-      },
-      columnStyles: {
-        0: { cellWidth: 10 },
-        1: { cellWidth: 25 },
-        2: { cellWidth: 100 },
-        3: { cellWidth: 30 },
-      },
     });
+
+    doc.save("chat-transcript.pdf");
+
 
     doc.save("chat-transcript.pdf");
   };
@@ -1805,7 +1808,7 @@ export function StandardUI({
                   //   📄 Download Chat PDF & End
                   // </button>
 
-                  // endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
+                  //  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
                 }}
                 onNegative={() => {
                   setShowQuickReview(false); // continue chat normally
