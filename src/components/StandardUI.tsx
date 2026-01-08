@@ -188,7 +188,7 @@ export function StandardUI({
     const radius = 8;
 
     // Optional colored background
-    doc.setFillColor(58,43,155); // purple
+    doc.setFillColor(58, 43, 155); // purple
     // doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
     doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
@@ -240,7 +240,23 @@ export function StandardUI({
 
 
 
-    const headingBottomY = 50;
+    const headingBottomY = 70;
+    // autoTable(doc, {
+    //   startY: headingBottomY,
+    //   head: [["#", "Sender", "Message", "Time"]],
+    //   body: chatHistory.map((msg, index) => [
+    //     index + 1,
+    //     msg.sender === "user" ? "User" : "Assistant",
+    //     msg.text || "",
+    //     msg.timestamps?.sent || msg.timestamps?.received || "-",
+    //   ]),
+    //   styles: {
+    //     fontSize: 10,
+    //     cellPadding: 3,
+    //     valign: "top",
+    //     font: "Inter",
+    //   },
+    // });
     autoTable(doc, {
       startY: headingBottomY,
       head: [["#", "Sender", "Message", "Time"]],
@@ -255,7 +271,11 @@ export function StandardUI({
         cellPadding: 3,
         valign: "top",
         font: "Inter",
+        overflow: "ellipsize", // optional, trims long text with "…"
       },
+      columnStyles: {
+        3: { cellWidth: 30 } // column 3 = "Time" → set fixed width
+      }
     });
 
     doc.save("chat-transcript.pdf");
