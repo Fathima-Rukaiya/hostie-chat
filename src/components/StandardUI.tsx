@@ -110,6 +110,7 @@ export function StandardUI({
 
   const [showQuickReview, setShowQuickReview] = useState(false);
   const [showQuickAssigneeReview, setShowQuickAssigneeReview] = useState(false);
+  const [showDownloadPDF, setShowDownloadPDF] = useState(false);
 
   const defaultSuggestions = suggestedQuestionList
 
@@ -272,7 +273,7 @@ export function StandardUI({
 
     setIsGuest(true);
     setShowQuickReview(false)
-
+    setShowDownloadPDF(false);
     let endStatement = endReason || "";
     if (endStatement)
       addBotMessage(endStatement);
@@ -1776,6 +1777,7 @@ export function StandardUI({
               <QuickReview
                 onPositive={async () => {
                   setShowQuickReview(false);
+                  setShowDownloadPDF(true);
 
                   // save positive review
                   await fetch(`${API_BASE_URL}/saveReview`, {
@@ -1790,20 +1792,20 @@ export function StandardUI({
                       review: "😊 Thank you, that helped",
                     }),
                   });
-                  <button
-                    onClick={() => {
-                      downloadChatPDF();
+                  // <button
+                  //   onClick={() => {
+                  //     downloadChatPDF();
 
-                      setTimeout(() => {
-                        endChatSessionByQuickReview("Thanks for chatting!! 😊");
-                      }, 500);
-                    }}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
-                  >
-                    📄 Download Chat PDF & End
-                  </button>
+                  //     setTimeout(() => {
+                  //       endChatSessionByQuickReview("Thanks for chatting!! 😊");
+                  //     }, 500);
+                  //   }}
+                  //   className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                  // >
+                  //   📄 Download Chat PDF & End
+                  // </button>
 
-                  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
+                  // endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
                 }}
                 onNegative={() => {
                   setShowQuickReview(false); // continue chat normally
@@ -1822,6 +1824,22 @@ export function StandardUI({
                 }}
               />
             )}
+            {showDownloadPDF && (
+              <div className="flex justify-end mt-3">
+                <button
+                  onClick={() => {
+                    downloadChatPDF();
+                    setTimeout(() => {
+                      endChatSessionByQuickReview("Thanks for chatting!! 😊");
+                    }, 500);
+                  }}
+                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                >
+                  📄 Download Chat PDF & End
+                </button>
+              </div>
+            )}
+
 
             {showSuggestedOnce &&
               suggestedQuestionList &&
