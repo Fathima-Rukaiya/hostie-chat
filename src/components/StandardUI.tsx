@@ -1172,7 +1172,7 @@ export function StandardUI({
           How was your experience?
         </p>
         {/* Emoji Buttons */}
-        <div className="flex flex-col gap-2 ">
+    
           {(Object.keys(emojiData) as ("positive" | "neutral" | "negative")[]).map((sentiment) => {
             const isHovered = hovered === sentiment;
 
@@ -1205,7 +1205,7 @@ export function StandardUI({
                 <span className="whitespace-nowrap font-medium">{emojiData[sentiment].text}</span>
               </button>
             );
-          })}</div>
+          })}
       </div>
     );
   };
