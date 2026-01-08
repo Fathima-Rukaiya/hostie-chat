@@ -228,7 +228,7 @@ export function StandardUI({
     // Optional underline for style
     doc.setDrawColor(180, 180, 180); // light gray
     doc.setLineWidth(0.5);
-    doc.line(20, 38, pageWidth - 20, 42);
+    doc.line(20, 42, pageWidth - 20, 42);
 
     // Printed date below heading
     doc.setFont("Inter", "normal");
@@ -240,7 +240,7 @@ export function StandardUI({
 
 
 
-    const headingBottomY = 54;
+    const headingBottomY = 50;
     autoTable(doc, {
       startY: headingBottomY,
       head: [["#", "Sender", "Message", "Time"]],
