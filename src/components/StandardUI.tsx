@@ -140,100 +140,101 @@ export function StandardUI({
   };
 
 
-const downloadChatPDF = async () => {
-  const { jsPDF } = await import("jspdf");
-  const autoTable = (await import("jspdf-autotable")).default;
+  const downloadChatPDF = async () => {
+    const { jsPDF } = await import("jspdf");
+    const autoTable = (await import("jspdf-autotable")).default;
 
-  const doc = new jsPDF();
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const now = new Date();
-  const printedDate = now.toLocaleDateString();
-  const printedTime = now.toLocaleTimeString();
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const now = new Date();
+    const printedDate = now.toLocaleDateString();
+    const printedTime = now.toLocaleTimeString();
 
 
-  // Header start
-doc.setFont("Inter", "bold");
-doc.setFontSize(24); // bigger and bolder
-doc.setTextColor(50, 50, 50); // dark gray for professionalism
+    // Header start
+    doc.setFont("Inter", "bold");
+    doc.setFontSize(24); // bigger and bolder
+    doc.setTextColor(50, 50, 50); // dark gray for professionalism
 
-// Gradient effect (optional, subtle)
-if (gradient) {
-  const grd = doc.context2d.createLinearGradient(0, 0, pageWidth, 0);
-  grd.addColorStop(0, gradient[0]);
-  grd.addColorStop(1, gradient[1]);
-  doc.setTextColor(0); // fallback for jsPDF (jsPDF doesn't directly support gradient text)
-  // for true gradient, would need svg or canvas workaround
-}
+    // Gradient effect (optional, subtle)
+    if (gradient) {
+      const grd = doc.context2d.createLinearGradient(0, 0, pageWidth, 0);
+      grd.addColorStop(0, gradient[0]);
+      grd.addColorStop(1, gradient[1]);
+      doc.setTextColor(0); // fallback for jsPDF (jsPDF doesn't directly support gradient text)
+      // for true gradient, would need svg or canvas workaround
+    }
 
-// Heading centered
-doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
+    // Heading centered
+    doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
 
-// Optional underline for style
-doc.setDrawColor(180, 180, 180); // light gray
-doc.setLineWidth(0.5);
-doc.line(20, 38, pageWidth - 20, 38);
+    // Optional underline for style
+    doc.setDrawColor(180, 180, 180); // light gray
+    doc.setLineWidth(0.5);
+    doc.line(20, 38, pageWidth - 20, 38);
 
-// Printed date below heading
-doc.setFont("Inter", "normal");
-doc.setFontSize(10);
-doc.setTextColor(120); // subtle gray
-doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 45, { align: "center" });
+    // Printed date below heading
+    doc.setFont("Inter", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(120); // subtle gray
+    doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 45, { align: "center" });
 
-// //header start
+    // //header start
 
-//   doc.setFontSize(16);
-//   doc.text("Chat Transcript", 14, 20);
-//    // Bot icon (circle placeholder)
-//   doc.setFillColor(gradient ?gradient[1] : "#b11e85ff"); // purple
-//   doc.circle(20, 20, 6, "F");
+    //   doc.setFontSize(16);
+    //   doc.text("Chat Transcript", 14, 20);
+    //    // Bot icon (circle placeholder)
+    //   doc.setFillColor(gradient ?gradient[1] : "#b11e85ff"); // purple
+    //   doc.circle(20, 20, 6, "F");
 
-//   // Bot initials
-//   doc.setTextColor(255, 255, 255);
-//   doc.setFontSize(10);
-//   doc.text(`${botIcon}`, 17.5, 23);
+    //   // Bot initials
+    //   doc.setTextColor(255, 255, 255);
+    //   doc.setFontSize(10);
+    //   doc.text(`${botIcon}`, 17.5, 23);
 
-//   // Bot name
-//   doc.setTextColor(30, 30, 30);
-//   doc.setFontSize(14);
-//   doc.text(`${botName}`, 30, 22);
+    //   // Bot name
+    //   doc.setTextColor(30, 30, 30);
+    //   doc.setFontSize(14);
+    //   doc.text(`${botName}`, 30, 22);
 
-//   // Title
-//   doc.setFontSize(18);
-//   //doc.setFont("helvetica", "bold");
-//     doc.setFont("Inter", "bold");
-//   doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
+    //   // Title
+    //   doc.setFontSize(18);
+    //   //doc.setFont("helvetica", "bold");
+    //     doc.setFont("Inter", "bold");
+    //   doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
 
-//   // Printed date
-//   doc.setFontSize(10);
-//   //doc.setFont("helvetica", "normal");
-//   doc.setFont("Inter", "normal");
-//   doc.setTextColor(100);
-//   doc.text(
-//     `Generated on ${printedDate} at ${printedTime}`,
-//     pageWidth / 2,
-//     42,
-//     { align: "center" }
-//   );
-//   /////header end
+    //   // Printed date
+    //   doc.setFontSize(10);
+    //   //doc.setFont("helvetica", "normal");
+    //   doc.setFont("Inter", "normal");
+    //   doc.setTextColor(100);
+    //   doc.text(
+    //     `Generated on ${printedDate} at ${printedTime}`,
+    //     pageWidth / 2,
+    //     42,
+    //     { align: "center" }
+    //   );
+    //   /////header end
+    const headingBottomY = 50;
+    autoTable(doc, {
+      startY: headingBottomY,
+      head: [["#", "Sender", "Message", "Time"]],
+      body: chatHistory.map((msg, index) => [
+        index + 1,
+        msg.sender === "user" ? "User" : "Assistant",
+        msg.text || "",
+        msg.timestamps?.sent || msg.timestamps?.received || "-",
+      ]),
+      styles: {
+        fontSize: 10,
+        cellPadding: 3,
+        valign: "top",
+        font: "Inter",
+      },
+    });
 
-  autoTable(doc, {
-    startY: 30,
-    head: [["#", "Sender", "Message", "Time"]],
-    body: chatHistory.map((msg, index) => [
-      index + 1,
-      msg.sender === "user" ? "User" : "Assistant",
-      msg.text || "",
-      msg.timestamps?.sent || msg.timestamps?.received || "-",
-    ]),
-    styles: {
-      fontSize: 10,
-      cellPadding: 3,
-      valign: "top",
-    },
-  });
-
-  doc.save("chat-transcript.pdf");
-};
+    doc.save("chat-transcript.pdf");
+  };
 
   const endChatSession = async (endReason?: string) => {
     clearTimeout(inactivityTimer.current);
@@ -1849,7 +1850,7 @@ doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 45, { a
                       review: "😊 Thank you, that helped",
                     }),
                   });
-               
+
 
                   //  endChatSessionByQuickReview("Thankyou for your review... Do you like to start a new chat?");
                 }}
