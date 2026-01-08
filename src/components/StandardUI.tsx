@@ -193,7 +193,7 @@ export function StandardUI({
     doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
     // Add the image
-    const size = 12;
+    const size = 8; //12
     // doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
     doc.addImage(
       imgData,
@@ -204,15 +204,26 @@ export function StandardUI({
       size
     );
     // Bot name
-    doc.setFont("Inter", "bold");
-    doc.setTextColor(30, 30, 30);
-    doc.setFontSize(18);
-   // doc.text(`${botNamex}`, 30, 27);
-   
-doc.text(botNamex, pageCenter, circleY + radius + 5, { align: "center" });
+    //     doc.setFont("Inter", "bold");
+    //     doc.setTextColor(30, 30, 30);
+    //     doc.setFontSize(14); 
+    // doc.text(botNamex, pageCenter, circleY + radius + 2, { align: "center" });
 
-    // Heading centered
-    doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
+    //     // Heading centered
+    //     doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
+
+    // Bot name smaller
+    doc.setFont("Inter", "bold");
+    doc.setFontSize(12); // smaller than before
+    doc.setTextColor(30, 30, 30);
+    doc.text(botNamex, pageCenter, circleY + radius + 2, { align: "center" });
+
+    // Main heading bigger
+    doc.setFont("Inter", "bold");
+    doc.setFontSize(26); // bigger
+    doc.setTextColor(50, 50, 50);
+    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 22, { align: "center" });
+
 
     // Optional underline for style
     doc.setDrawColor(180, 180, 180); // light gray
