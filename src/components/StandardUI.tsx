@@ -184,7 +184,7 @@ export function StandardUI({
 
     // --- 2️⃣ Draw bot icon with optional background ---
     const circleX = 20;
-    const circleY = 25;
+    const circleY = 12;
     const radius = 8;
 
     // Optional colored background
