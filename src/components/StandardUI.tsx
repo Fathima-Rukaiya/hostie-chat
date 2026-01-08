@@ -150,64 +150,66 @@ export function StandardUI({
     const printedDate = now.toLocaleDateString();
     const printedTime = now.toLocaleTimeString();
 
-function hexToRgb(hex: string) {
-  const cleanHex = hex.replace("#", "");
-  const bigint = parseInt(cleanHex, 16);
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
-  return [r, g, b];
-}
+    function hexToRgb(hex: string) {
+      const cleanHex = hex.replace("#", "");
+      const bigint = parseInt(cleanHex, 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return [r, g, b];
+    }
     // Header start
     doc.setFont("Inter", "bold");
     doc.setFontSize(24); // bigger and bolder
     doc.setTextColor(50, 50, 50); // dark gray for professionalism
 
-   const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
+    const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
     doc.circle(20, 25, 6, "F"); // y = 25
 
-// --- 1️⃣ Fetch bot icon as base64 ---
-  async function getImageBase64(url: string): Promise<string> {
-    const res = await fetch(url);
-    const blob = await res.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  }
+    // --- 1️⃣ Fetch bot icon as base64 ---
+    async function getImageBase64(url: string): Promise<string> {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+    const pageCenter = pageWidth / 2;
+    const botIconUrl = botIcon; // your URL
+    const botNamex = botName; // your bot name
+    const imgData = await getImageBase64(botIconUrl);
 
-   const botIconUrl =botIcon; // your URL
-  const botNamex = botName; // your bot name
-  const imgData = await getImageBase64(botIconUrl);
+    // --- 2️⃣ Draw bot icon with optional background ---
+    const circleX = 20;
+    const circleY = 25;
+    const radius = 8;
 
-  // --- 2️⃣ Draw bot icon with optional background ---
-  const circleX = 20;
-  const circleY = 25;
-  const radius = 8;
+    // Optional colored background
+    doc.setFillColor(177, 30, 133); // purple
+    // doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
+    doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
-  // Optional colored background
-  doc.setFillColor(177, 30, 133); // purple
-  doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
-
-  // Add the image
-  const size = 12;
-  doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
-
-  // --- 3️⃣ Draw bot name next to icon ---
-  // doc.setFont("Inter", "bold");
-  // doc.setFontSize(14);
-  // doc.setTextColor(30, 30, 30);
-  // doc.text(botNamex, circleX + radius + 5, circleY + 4); // slight vertical adjustment
-
-    ///////////////////////////////////////
-
+    // Add the image
+    const size = 12;
+    // doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
+    doc.addImage(
+      imgData,
+      "PNG",
+      pageCenter - size / 2,
+      circleY - size / 2,
+      size,
+      size
+    );
     // Bot name
-     doc.setFont("Inter", "bold");
+    doc.setFont("Inter", "bold");
     doc.setTextColor(30, 30, 30);
     doc.setFontSize(14);
-    doc.text(`${botNamex}`, 30, 27);
+   // doc.text(`${botNamex}`, 30, 27);
+   
+doc.text(botNamex, pageCenter, circleY + radius + 8, { align: "center" });
 
     // Heading centered
     doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
@@ -223,42 +225,10 @@ function hexToRgb(hex: string) {
     doc.setTextColor(120); // subtle gray
     doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 45, { align: "center" });
 
-    // //header start
 
-    //   doc.setFontSize(16);
-    //   doc.text("Chat Transcript", 14, 20);
-    //    // Bot icon (circle placeholder)
-    //   doc.setFillColor(gradient ?gradient[1] : "#b11e85ff"); // purple
-    //   doc.circle(20, 20, 6, "F");
 
-    //   // Bot initials
-    //   doc.setTextColor(255, 255, 255);
-    //   doc.setFontSize(10);
-    //   doc.text(`${botIcon}`, 17.5, 23);
 
-    //   // Bot name
-    //   doc.setTextColor(30, 30, 30);
-    //   doc.setFontSize(14);
-    //   doc.text(`${botName}`, 30, 22);
 
-    //   // Title
-    //   doc.setFontSize(18);
-    //   //doc.setFont("helvetica", "bold");
-    //     doc.setFont("Inter", "bold");
-    //   doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
-
-    //   // Printed date
-    //   doc.setFontSize(10);
-    //   //doc.setFont("helvetica", "normal");
-    //   doc.setFont("Inter", "normal");
-    //   doc.setTextColor(100);
-    //   doc.text(
-    //     `Generated on ${printedDate} at ${printedTime}`,
-    //     pageWidth / 2,
-    //     42,
-    //     { align: "center" }
-    //   );
-    //   /////header end
     const headingBottomY = 50;
     autoTable(doc, {
       startY: headingBottomY,
