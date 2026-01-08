@@ -33,5 +33,5 @@ export default defineConfig({
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
-  external: [], // ⚡ Make sure lucide-react, iconsax-react, and react are NOT external
+ external: ["fs"], // ⚡ Make sure lucide-react, iconsax-react, and react are NOT external
 });

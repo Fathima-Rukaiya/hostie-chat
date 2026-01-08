@@ -5,12 +5,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 // import ReactMarkdown from "react-markdown";
 // import remarkGfm from "remark-gfm";
 import Markdown from "markdown-to-jsx";
-// import jsPDF from "jspdf";
-// import autoTable from "jspdf-autotable";
 // import { jsPDF } from "jspdf";
-// import "jspdf-autotable";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+// import autoTable from "jspdf-autotable";
 
 
 type ChatMessage = {
@@ -143,7 +139,10 @@ export function StandardUI({
     }, 4 * 60 * 1000); // 4 minutes
   };
 
-const downloadChatPDF = () => {
+const downloadChatPDF = async () => {
+  const { jsPDF } = await import("jspdf");
+  const autoTable = (await import("jspdf-autotable")).default;
+
   const doc = new jsPDF();
 
   doc.setFontSize(16);
@@ -156,7 +155,7 @@ const downloadChatPDF = () => {
       index + 1,
       msg.sender === "user" ? "User" : "Assistant",
       msg.text || "",
-      msg.timestamps?.sent || msg.timestamps?.received || "-"
+      msg.timestamps?.sent || msg.timestamps?.received || "-",
     ]),
     styles: {
       fontSize: 10,
@@ -167,7 +166,6 @@ const downloadChatPDF = () => {
 
   doc.save("chat-transcript.pdf");
 };
-
 
 
   const endChatSession = async (endReason?: string) => {
