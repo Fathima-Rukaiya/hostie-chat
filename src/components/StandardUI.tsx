@@ -222,7 +222,7 @@ export function StandardUI({
     doc.setFont("Inter", "bold");
     doc.setFontSize(26); // bigger
     doc.setTextColor(50, 50, 50);
-    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 6, { align: "center" });
+    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 12, { align: "center" });
 
 
     // Optional underline for style
