@@ -214,15 +214,7 @@ function markdownToPlainText(md: string) {
       size,
       size
     );
-    // Bot name
-    //     doc.setFont("Inter", "bold");
-    //     doc.setTextColor(30, 30, 30);
-    //     doc.setFontSize(14); 
-    // doc.text(botNamex, pageCenter, circleY + radius + 2, { align: "center" });
-
-    //     // Heading centered
-    //     doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
-
+   
     // Bot name smaller
     doc.setFont("Inter", "bold");
     doc.setFontSize(12); // smaller than before
@@ -285,6 +277,42 @@ function markdownToPlainText(md: string) {
         3: { cellWidth: 30} // column 3 = "Time" → set fixed width
       }
     });
+
+    // --- 3️⃣ Add Powered by Hostie footer ---
+const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
+const footerText = "Powered by Hostie";
+
+// Gradient colors (same as your HTML gradient)
+const gradientColors = [
+  [124, 58, 237],   // #7c3aed
+  [236, 72, 153],   // #ec4899
+  [59, 130, 246],   // #3b82f6
+];
+
+// Draw gradient text manually
+const startX = pageCenter - (doc.getTextWidth(footerText) / 2);
+let charX = startX;
+for (let i = 0; i < footerText.length; i++) {
+  const char = footerText[i];
+
+  // Calculate gradient position (simple)
+  const colorIndex = Math.floor((i / footerText.length) * (gradientColors.length - 1));
+  const nextColorIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
+  const ratio = (i / footerText.length) * (gradientColors.length - 1) - colorIndex;
+
+  const r = Math.round(gradientColors[colorIndex][0] * (1 - ratio) + gradientColors[nextColorIndex][0] * ratio);
+  const g = Math.round(gradientColors[colorIndex][1] * (1 - ratio) + gradientColors[nextColorIndex][1] * ratio);
+  const b = Math.round(gradientColors[colorIndex][2] * (1 - ratio) + gradientColors[nextColorIndex][2] * ratio);
+
+  doc.setTextColor(r, g, b);
+  doc.setFont("Inter", "bold");
+  doc.setFontSize(10);
+  doc.text(char, charX, footerY);
+
+  charX += doc.getTextWidth(char); // move next character
+}
+
+
 
     doc.save("chat-transcript.pdf");
   };
