@@ -165,6 +165,18 @@ export function StandardUI({
 
     // const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
     // doc.circle(20, 25, 6, "F"); // y = 25
+function markdownToPlainText(md: string) {
+  // Simple way: remove markdown syntax and keep readable text
+  return md
+    .replace(/(\*\*|__)(.*?)\1/g, '$2') // bold
+    .replace(/(\*|_)(.*?)\1/g, '$2')   // italic
+    .replace(/!\[.*?\]\(.*?\)/g, '')   // images
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // links
+    .replace(/^\s*\d+\.\s+/gm, '')     // numbered list prefix
+    .replace(/^\s*[-*]\s+/gm, '')      // bullet list prefix
+    .replace(/\n+/g, ' ')              // convert newlines to space
+    .trim();
+}
 
     // --- 1️⃣ Fetch bot icon as base64 ---
     async function getImageBase64(url: string): Promise<string> {
@@ -177,6 +189,7 @@ export function StandardUI({
         reader.readAsDataURL(blob);
       });
     }
+
     const pageCenter = pageWidth / 2;
     const botIconUrl = botIcon; // your URL
     const botNamex = botName; // your bot name
@@ -259,7 +272,7 @@ export function StandardUI({
       body: chatHistory.map((msg, index) => [
         index + 1,
         msg.sender === "user" ? "User" : "Assistant",
-        msg.text || "",
+        markdownToPlainText(msg.text || ""), 
         msg.timestamps?.sent || msg.timestamps?.received || "-",
       ]),
       styles: {
