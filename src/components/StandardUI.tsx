@@ -144,133 +144,96 @@ const downloadChatPDF = async () => {
   const { jsPDF } = await import("jspdf");
   const autoTable = (await import("jspdf-autotable")).default;
 
-  const doc = new jsPDF("p", "mm", "a4");
-
+  const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const now = new Date();
   const printedDate = now.toLocaleDateString();
   const printedTime = now.toLocaleTimeString();
 
-  /* =========================
-     HEADER (BOT + TITLE)
-  ========================== */
 
-  // Bot icon (circle placeholder)
-  doc.setFillColor(124, 58, 237); // purple
-  doc.circle(20, 20, 6, "F");
+  // Header start
+doc.setFont("Inter", "bold");
+doc.setFontSize(24); // bigger and bolder
+doc.setTextColor(50, 50, 50); // dark gray for professionalism
 
-  // Bot initials
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(10);
-  doc.text("AI", 17.5, 23);
+// Gradient effect (optional, subtle)
+if (gradient) {
+  const grd = doc.context2d.createLinearGradient(0, 0, pageWidth, 0);
+  grd.addColorStop(0, gradient[0]);
+  grd.addColorStop(1, gradient[1]);
+  doc.setTextColor(0); // fallback for jsPDF (jsPDF doesn't directly support gradient text)
+  // for true gradient, would need svg or canvas workaround
+}
 
-  // Bot name
-  doc.setTextColor(30, 30, 30);
-  doc.setFontSize(14);
-  doc.text("Hostie Assistant", 30, 22);
+// Heading centered
+doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
 
-  // Title
-  doc.setFontSize(18);
-  doc.setFont("helvetica", "bold");
-  doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
+// Optional underline for style
+doc.setDrawColor(180, 180, 180); // light gray
+doc.setLineWidth(0.5);
+doc.line(20, 38, pageWidth - 20, 38);
 
-  // Printed date
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(100);
-  doc.text(
-    `Generated on ${printedDate} at ${printedTime}`,
-    pageWidth / 2,
-    42,
-    { align: "center" }
-  );
+// Printed date below heading
+doc.setFont("Inter", "normal");
+doc.setFontSize(10);
+doc.setTextColor(120); // subtle gray
+doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 45, { align: "center" });
 
-  /* =========================
-     TABLE
-  ========================== */
+// //header start
+
+//   doc.setFontSize(16);
+//   doc.text("Chat Transcript", 14, 20);
+//    // Bot icon (circle placeholder)
+//   doc.setFillColor(gradient ?gradient[1] : "#b11e85ff"); // purple
+//   doc.circle(20, 20, 6, "F");
+
+//   // Bot initials
+//   doc.setTextColor(255, 255, 255);
+//   doc.setFontSize(10);
+//   doc.text(`${botIcon}`, 17.5, 23);
+
+//   // Bot name
+//   doc.setTextColor(30, 30, 30);
+//   doc.setFontSize(14);
+//   doc.text(`${botName}`, 30, 22);
+
+//   // Title
+//   doc.setFontSize(18);
+//   //doc.setFont("helvetica", "bold");
+//     doc.setFont("Inter", "bold");
+//   doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
+
+//   // Printed date
+//   doc.setFontSize(10);
+//   //doc.setFont("helvetica", "normal");
+//   doc.setFont("Inter", "normal");
+//   doc.setTextColor(100);
+//   doc.text(
+//     `Generated on ${printedDate} at ${printedTime}`,
+//     pageWidth / 2,
+//     42,
+//     { align: "center" }
+//   );
+//   /////header end
 
   autoTable(doc, {
-    startY: 50,
-    head: [["#", "Sender", "Message", "Date", "Time"]],
-    body: chatHistory.map((msg, index) => {
-      const ts = msg.timestamps?.sent || msg.timestamps?.received;
-      const d = ts ? new Date(ts) : null;
-
-      return [
-        index + 1,
-        msg.sender === "user" ? "User" : "Assistant",
-        msg.text || "",
-        d ? d.toLocaleDateString() : "-",
-        d ? d.toLocaleTimeString() : "-",
-      ];
-    }),
-
+    startY: 30,
+    head: [["#", "Sender", "Message", "Time"]],
+    body: chatHistory.map((msg, index) => [
+      index + 1,
+      msg.sender === "user" ? "User" : "Assistant",
+      msg.text || "",
+      msg.timestamps?.sent || msg.timestamps?.received || "-",
+    ]),
     styles: {
       fontSize: 10,
-      cellPadding: 4,
+      cellPadding: 3,
       valign: "top",
-    },
-
-    headStyles: {
-      fillColor: [124, 58, 237],
-      textColor: 255,
-      fontStyle: "bold",
-    },
-
-   columnStyles: {
-  0: { cellWidth: 8 },    // #
-  1: { cellWidth: 22 },   // Sender
-  2: { cellWidth: 90 },   // Message
-  3: {
-    cellWidth: 25,
-    halign: "center",
-    overflow: "linebreak",
-  }, // Date
-  4: {
-    cellWidth: 25,
-    halign: "center",
-    overflow: "linebreak",
-  }, // Time
-},
-
-
-    alternateRowStyles: {
-      fillColor: [245, 245, 245],
     },
   });
 
-  /* =========================
-     FOOTER (POWERED BY)
-  ========================== */
-
-  const finalY = (doc as any).lastAutoTable.finalY + 15;
-
-  doc.setDrawColor(200);
-  doc.line(20, finalY, pageWidth - 20, finalY);
-
-  doc.setFontSize(10);
-  doc.setTextColor(120);
-  doc.text("Powered by", pageWidth / 2 - 12, finalY + 8);
-
-  // Gradient-style Hostie text (fake gradient using color shift)
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(124, 58, 237);
-  doc.text("Hostie", pageWidth / 2 + 8, finalY + 8);
-
-  // AI badge
-  doc.setFillColor(124, 58, 237);
-  doc.roundedRect(pageWidth / 2 + 23, finalY + 4, 10, 6, 1, 1, "F");
-  doc.setTextColor(255);
-  doc.setFontSize(8);
-  doc.text("AI", pageWidth / 2 + 25.5, finalY + 8);
-
-  /* =========================
-     SAVE
-  ========================== */
-
-  doc.save(`chat-transcript-${printedDate}.pdf`);
+  doc.save("chat-transcript.pdf");
 };
-
 
   const endChatSession = async (endReason?: string) => {
     clearTimeout(inactivityTimer.current);
