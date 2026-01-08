@@ -165,6 +165,21 @@ export function StandardUI({
       // for true gradient, would need svg or canvas workaround
     }
 
+    // Bot icon (circle placeholder)
+    doc.setFillColor(gradient ? gradient[1] : "#b11e85ff"); // purple
+    doc.circle(20, 25, 6, "F"); // y = 25
+
+    // Bot initials
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("Inter", "bold");
+    doc.setFontSize(10);
+    doc.text(`${botIcon}`, 17.5, 28);
+
+    // Bot name
+    doc.setTextColor(30, 30, 30);
+    doc.setFontSize(14);
+    doc.text(`${botName}`, 30, 27);
+
     // Heading centered
     doc.text("Chat Transcript", pageWidth / 2, 35, { align: "center" });
 
