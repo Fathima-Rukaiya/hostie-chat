@@ -193,7 +193,7 @@ export function StandardUI({
     doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
     // Add the image
-    const size = 8; //12
+    const size = 12; //12
     // doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
     doc.addImage(
       imgData,
@@ -216,31 +216,31 @@ export function StandardUI({
     doc.setFont("Inter", "bold");
     doc.setFontSize(12); // smaller than before
     doc.setTextColor(30, 30, 30);
-    doc.text(botNamex, pageCenter, circleY + radius + 3, { align: "center" });
+    doc.text(botNamex, pageCenter, circleY + radius + 4, { align: "center" });
 
     // Main heading bigger
     doc.setFont("Inter", "bold");
     doc.setFontSize(26); // bigger
     doc.setTextColor(50, 50, 50);
-    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 12, { align: "center" });
+    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 15, { align: "center" });
 
 
     // Optional underline for style
     doc.setDrawColor(180, 180, 180); // light gray
     doc.setLineWidth(0.5);
-    doc.line(20, 38, pageWidth - 20, 38);
+    doc.line(20, 38, pageWidth - 20, 42);
 
     // Printed date below heading
     doc.setFont("Inter", "normal");
     doc.setFontSize(10);
     doc.setTextColor(120); // subtle gray
-    doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 45, { align: "center" });
+    doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 48, { align: "center" });
 
 
 
 
 
-    const headingBottomY = 50;
+    const headingBottomY = 54;
     autoTable(doc, {
       startY: headingBottomY,
       head: [["#", "Sender", "Message", "Time"]],
