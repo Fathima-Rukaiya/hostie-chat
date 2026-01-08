@@ -150,23 +150,31 @@ export function StandardUI({
     const printedDate = now.toLocaleDateString();
     const printedTime = now.toLocaleTimeString();
 
-
+function hexToRgb(hex: string) {
+  const cleanHex = hex.replace("#", "");
+  const bigint = parseInt(cleanHex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return [r, g, b];
+}
     // Header start
     doc.setFont("Inter", "bold");
     doc.setFontSize(24); // bigger and bolder
     doc.setTextColor(50, 50, 50); // dark gray for professionalism
 
     // Gradient effect (optional, subtle)
-    if (gradient) {
-      const grd = doc.context2d.createLinearGradient(0, 0, pageWidth, 0);
-      grd.addColorStop(0, gradient[0]);
-      grd.addColorStop(1, gradient[1]);
-      doc.setTextColor(0); // fallback for jsPDF (jsPDF doesn't directly support gradient text)
-      // for true gradient, would need svg or canvas workaround
-    }
+    // if (gradient) {
+    //   const grd = doc.context2d.createLinearGradient(0, 0, pageWidth, 0);
+    //   grd.addColorStop(0, (gradient[0]));
+    //   grd.addColorStop(1, gradient[1]);
+    //   doc.setTextColor(0); // fallback for jsPDF (jsPDF doesn't directly support gradient text)
+    //   // for true gradient, would need svg or canvas workaround
+    // }
 
     // Bot icon (circle placeholder)
-    doc.setFillColor(gradient ? gradient[1] : "#b11e85ff"); // purple
+   // doc.setFillColor(gradient ? gradient[1] : "#b11e85ff"); // purple
+   const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
     doc.circle(20, 25, 6, "F"); // y = 25
 
     // Bot initials
@@ -174,6 +182,30 @@ export function StandardUI({
     doc.setFont("Inter", "bold");
     doc.setFontSize(10);
     doc.text(`${botIcon}`, 17.5, 28);
+
+
+    ///////////////////////////////////////
+
+    // Circle background for bot initials
+const circleX = 20;   // x-position
+const circleY = 25;   // y-position
+const radius = 8;     // radius of circle
+
+// Set fill color (background)
+doc.setFillColor(177, 30, 133); // RGB purple, or use your gradient color safely
+
+// Draw filled circle
+doc.circle(circleX, circleY, radius, "F"); // "F" = fill
+
+// Bot initials on top
+doc.setTextColor(255, 255, 255);   // white text
+doc.setFont("Inter", "bold");
+doc.setFontSize(10);
+
+// Center text in circle (y offset slightly to align visually)
+doc.text(botIcon || "B", circleX, circleY + 3, { align: "center" });
+
+    /////////////////////////////////////
 
     // Bot name
     doc.setTextColor(30, 30, 30);
