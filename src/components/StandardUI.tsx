@@ -350,8 +350,8 @@ export function StandardUI({
       }
     });
 
-const tableXStart = 7; // usually autoTable default margin left
-const tableXEnd = pageWidth - 7; // or calculate actual table width if smaller
+const tableXStart = 14; // usually autoTable default margin left
+const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
 
    // const tableEndY = (doc as any).lastAutoTable.finalY;
    // doc.setDrawColor(220);
