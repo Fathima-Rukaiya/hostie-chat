@@ -157,93 +157,94 @@ export function StandardUI({
 
     // const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
     // doc.circle(20, 25, 6, "F"); // y = 25
-function markdownToPlainText(md: string) {
-  return md
-    .replace(/!\[.*?\]\(.*?\)/g, '') // remove images
-    .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '$1 ($2)') // show links as text (URL in parentheses)
-    .replace(/(\*\*|__)(.*?)\1/g, '$2') // bold
-    .replace(/(\*|_)(.*?)\1/g, '$2')   // italic
-    .replace(/^\s*\d+\.\s+/gm, '• ')     // numbered list → bullets
-    .replace(/^\s*[-*]\s+/gm, '• ')      // bullet list
-    .trim();
-}
+    function markdownToPlainText(md: string) {
+      return md
+        .replace(/!\[.*?\]\(.*?\)/g, '') // remove images
+        .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '$1 ($2)') // show links as text (URL in parentheses)
+        .replace(/(\*\*|__)(.*?)\1/g, '$2') // bold
+        .replace(/(\*|_)(.*?)\1/g, '$2')   // italic
+        .replace(/^\s*\d+\.\s+/gm, '• ')     // numbered list → bullets
+        .replace(/^\s*[-*]\s+/gm, '• ')      // bullet list
+        .trim();
+    }
 
-function drawGradientText(
-  doc: any,
-  text: string,
-  x: number,
-  y: number,
-  fontSize = 10
-) {
-  const gradientColors = [
-    [124, 58, 237], // #7c3aed
-    [236, 72, 153], // #ec4899
-    [59, 130, 246], // #3b82f6
-  ];
+    function drawGradientText(
+      doc: any,
+      text: string,
+      x: number,
+      y: number,
+      fontSize = 10
+    ) {
+      const gradientColors = [
+        [124, 58, 237], // #7c3aed
+        [236, 72, 153], // #ec4899
+        [59, 130, 246], // #3b82f6
+      ];
 
-  doc.setFont("Inter", "bold");
-  doc.setFontSize(fontSize);
+      doc.setFont("Inter", "bold");
+      doc.setFontSize(fontSize);
 
-  let currentX = x;
+      let currentX = x;
 
-  for (let i = 0; i < text.length; i++) {
-    const ratio = i / Math.max(text.length - 1, 1);
-    const colorIndex = Math.floor(ratio * (gradientColors.length - 1));
-    const nextIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
-    const localRatio = ratio * (gradientColors.length - 1) - colorIndex;
+      for (let i = 0; i < text.length; i++) {
+        const ratio = i / Math.max(text.length - 1, 1);
+        const colorIndex = Math.floor(ratio * (gradientColors.length - 1));
+        const nextIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
+        const localRatio = ratio * (gradientColors.length - 1) - colorIndex;
 
-    const r = Math.round(
-      gradientColors[colorIndex][0] * (1 - localRatio) +
-      gradientColors[nextIndex][0] * localRatio
-    );
-    const g = Math.round(
-      gradientColors[colorIndex][1] * (1 - localRatio) +
-      gradientColors[nextIndex][1] * localRatio
-    );
-    const b = Math.round(
-      gradientColors[colorIndex][2] * (1 - localRatio) +
-      gradientColors[nextIndex][2] * localRatio
-    );
+        const r = Math.round(
+          gradientColors[colorIndex][0] * (1 - localRatio) +
+          gradientColors[nextIndex][0] * localRatio
+        );
+        const g = Math.round(
+          gradientColors[colorIndex][1] * (1 - localRatio) +
+          gradientColors[nextIndex][1] * localRatio
+        );
+        const b = Math.round(
+          gradientColors[colorIndex][2] * (1 - localRatio) +
+          gradientColors[nextIndex][2] * localRatio
+        );
 
-    doc.setTextColor(r, g, b);
-    doc.text(text[i], currentX, y);
-    currentX += doc.getTextWidth(text[i]);
-  }
-}
+        doc.setTextColor(r, g, b);
+        doc.text(text[i], currentX, y);
+        currentX += doc.getTextWidth(text[i]);
+      }
+    }
 
-function drawPoweredByHostie(doc: any, startY: number) {
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const y = startY + 10;
+    function drawPoweredByHostie(doc: any, startY: number) {
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const y = startY + 10;
 
-  const poweredBy = "Powered by";
-  const hostie = "Hostie";
-  const gap = 1;
+      const poweredBy = "Powered by";
+      const hostie = "Hostie";
+      const gap = 1;
 
-  doc.setFont("Inter", "normal");
-  doc.setFontSize(10);
+      doc.setFont("Inter", "bolditalic");
+      doc.setFontSize(12);
 
-  const poweredByWidth = doc.getTextWidth(poweredBy);
-  const hostieWidth = doc.getTextWidth(hostie);
-  const totalWidth = poweredByWidth + gap + hostieWidth;
+      const poweredByWidth = doc.getTextWidth(poweredBy);
+      const hostieWidth = doc.getTextWidth(hostie);
+      const totalWidth = poweredByWidth + gap + hostieWidth;
 
-  const startX = (pageWidth - totalWidth) / 2;
+      const startX = (pageWidth - totalWidth) / 2;
 
-  // Powered by (normal text)
-  doc.setTextColor(140, 140, 140);
-  doc.text(poweredBy, startX, y);
+      // Powered by (normal text)
+      doc.setTextColor(140, 140, 140);
+      doc.text(poweredBy, startX, y);
 
-  // Hostie (gradient text ONLY)
-  drawGradientText(
-    doc,
-    hostie,
-    startX + poweredByWidth + gap,
-    y,
-    10
-  );
-
-    doc.setTextColor(140, 140, 140);
-  doc.text("AI", startX + poweredByWidth + gap+11, y);
-}
+      // Hostie (gradient text ONLY)
+      drawGradientText(
+        doc,
+        hostie,
+        startX + poweredByWidth + gap,
+        y,
+        10
+      );
+      doc.setFont("Inter", "bolditalic");
+      doc.setTextColor(140, 140, 140);
+      doc.setFontSize(12);
+      doc.text("AI", startX + poweredByWidth + gap + 10, y);
+    }
 
 
 
@@ -285,7 +286,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
       size,
       size
     );
-   
+
     // Bot name smaller
     doc.setFont("Inter", "bold");
     doc.setFontSize(12); // smaller than before
@@ -333,7 +334,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
       body: chatHistory.map((msg, index) => [
         index + 1,
         msg.sender === "user" ? "User" : "Assistant",
-        markdownToPlainText(msg.text || ""), 
+        markdownToPlainText(msg.text || ""),
         msg.timestamps?.sent || msg.timestamps?.received || "-",
       ]),
       styles: {
@@ -345,52 +346,52 @@ function drawPoweredByHostie(doc: any, startY: number) {
       },
       columnStyles: {
         2: { cellWidth: 120, overflow: 'linebreak' },
-        3: { cellWidth: 30} // column 3 = "Time" → set fixed width
+        3: { cellWidth: 30 } // column 3 = "Time" → set fixed width
       }
     });
 
-    
-   const tableEndY = (doc as any).lastAutoTable.finalY;
-doc.setDrawColor(220);
-doc.line(14, tableEndY + 4, pageWidth - 10, tableEndY + 8);
 
-drawPoweredByHostie(doc, tableEndY);
+    const tableEndY = (doc as any).lastAutoTable.finalY;
+    doc.setDrawColor(220);
+    doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 8);
+
+    drawPoweredByHostie(doc, tableEndY);
 
 
     // --- 3️⃣ Add Powered by Hostie footer ---
-// const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
-// const footerText1 = "Powered by";
-// const footerText2 = "Hostie";
+    // const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
+    // const footerText1 = "Powered by";
+    // const footerText2 = "Hostie";
 
-// // Gradient colors (same as your HTML gradient)
-// const gradientColors = [
-//   [124, 58, 237],   // #7c3aed
-//   [236, 72, 153],   // #ec4899
-//   [59, 130, 246],   // #3b82f6
-// ];
+    // // Gradient colors (same as your HTML gradient)
+    // const gradientColors = [
+    //   [124, 58, 237],   // #7c3aed
+    //   [236, 72, 153],   // #ec4899
+    //   [59, 130, 246],   // #3b82f6
+    // ];
 
-// // Draw gradient text manually
-// const startX = pageCenter - (doc.getTextWidth(footerText2) / 2);
-// let charX = startX;
-// for (let i = 0; i < footerText2.length; i++) {
-//   const char = footerText2[i];
+    // // Draw gradient text manually
+    // const startX = pageCenter - (doc.getTextWidth(footerText2) / 2);
+    // let charX = startX;
+    // for (let i = 0; i < footerText2.length; i++) {
+    //   const char = footerText2[i];
 
-//   // Calculate gradient position (simple)
-//   const colorIndex = Math.floor((i / footerText2.length) * (gradientColors.length - 1));
-//   const nextColorIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
-//   const ratio = (i / footerText2.length) * (gradientColors.length - 1) - colorIndex;
+    //   // Calculate gradient position (simple)
+    //   const colorIndex = Math.floor((i / footerText2.length) * (gradientColors.length - 1));
+    //   const nextColorIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
+    //   const ratio = (i / footerText2.length) * (gradientColors.length - 1) - colorIndex;
 
-//   const r = Math.round(gradientColors[colorIndex][0] * (1 - ratio) + gradientColors[nextColorIndex][0] * ratio);
-//   const g = Math.round(gradientColors[colorIndex][1] * (1 - ratio) + gradientColors[nextColorIndex][1] * ratio);
-//   const b = Math.round(gradientColors[colorIndex][2] * (1 - ratio) + gradientColors[nextColorIndex][2] * ratio);
+    //   const r = Math.round(gradientColors[colorIndex][0] * (1 - ratio) + gradientColors[nextColorIndex][0] * ratio);
+    //   const g = Math.round(gradientColors[colorIndex][1] * (1 - ratio) + gradientColors[nextColorIndex][1] * ratio);
+    //   const b = Math.round(gradientColors[colorIndex][2] * (1 - ratio) + gradientColors[nextColorIndex][2] * ratio);
 
-//   doc.setTextColor(r, g, b);
-//   doc.setFont("Inter", "bold");
-//   doc.setFontSize(10);
-//   doc.text(char, charX, footerY);
+    //   doc.setTextColor(r, g, b);
+    //   doc.setFont("Inter", "bold");
+    //   doc.setFontSize(10);
+    //   doc.text(char, charX, footerY);
 
-//   charX += doc.getTextWidth(char); // move next character
-// }
+    //   charX += doc.getTextWidth(char); // move next character
+    // }
 
 
     doc.save("chat-transcript.pdf");
