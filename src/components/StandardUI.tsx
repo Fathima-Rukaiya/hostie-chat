@@ -219,7 +219,7 @@ export function StandardUI({
       const hostie = "Hostie";
       const gap = 1;
 
-      doc.setFont("Inter", "bold");
+      doc.setFont("Inter", "bolditalic");
       doc.setFontSize(12);
 
       const poweredByWidth = doc.getTextWidth(poweredBy);
