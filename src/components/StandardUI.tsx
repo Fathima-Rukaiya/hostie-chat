@@ -349,7 +349,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
     
    const tableEndY = (doc as any).lastAutoTable.finalY;
 doc.setDrawColor(220);
-doc.line(40, tableEndY + 4, pageWidth - 40, tableEndY + 4);
+doc.line(40, tableEndY + 4, pageWidth - 5, tableEndY + 4);
 
 drawPoweredByHostie(doc, tableEndY);
 
