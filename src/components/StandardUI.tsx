@@ -242,7 +242,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
   );
 
     doc.setTextColor(140, 140, 140);
-  doc.text("AI", startX + poweredByWidth + gap+9, y);
+  doc.text("AI", startX + poweredByWidth + gap+11, y);
 }
 
 
@@ -352,7 +352,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
     
    const tableEndY = (doc as any).lastAutoTable.finalY;
 doc.setDrawColor(220);
-doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 4);
+doc.line(14, tableEndY + 4, pageWidth - 10, tableEndY + 8);
 
 drawPoweredByHostie(doc, tableEndY);
 
