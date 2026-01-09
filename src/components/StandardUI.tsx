@@ -181,7 +181,7 @@ export function StandardUI({
         [59, 130, 246], // #3b82f6
       ];
 
-      doc.setFont("Inter", "bold");
+      doc.setFont("Inter", "bolditalic");
       doc.setFontSize(fontSize);
 
       let currentX = x;
@@ -217,9 +217,9 @@ export function StandardUI({
 
       const poweredBy = "Powered by";
       const hostie = "Hostie";
-      const gap = 1;
+      const gap = 3;
 
-      doc.setFont("Inter", "bolditalic");
+      doc.setFont("Inter", "bold");
       doc.setFontSize(12);
 
       const poweredByWidth = doc.getTextWidth(poweredBy);
