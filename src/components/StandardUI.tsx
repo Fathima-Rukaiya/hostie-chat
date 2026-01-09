@@ -168,49 +168,80 @@ function markdownToPlainText(md: string) {
     .trim();
 }
 
+function drawGradientText(
+  doc: any,
+  text: string,
+  x: number,
+  y: number,
+  fontSize = 10
+) {
+  const gradientColors = [
+    [124, 58, 237], // #7c3aed
+    [236, 72, 153], // #ec4899
+    [59, 130, 246], // #3b82f6
+  ];
+
+  doc.setFont("Inter", "bold");
+  doc.setFontSize(fontSize);
+
+  let currentX = x;
+
+  for (let i = 0; i < text.length; i++) {
+    const ratio = i / Math.max(text.length - 1, 1);
+    const colorIndex = Math.floor(ratio * (gradientColors.length - 1));
+    const nextIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
+    const localRatio = ratio * (gradientColors.length - 1) - colorIndex;
+
+    const r = Math.round(
+      gradientColors[colorIndex][0] * (1 - localRatio) +
+      gradientColors[nextIndex][0] * localRatio
+    );
+    const g = Math.round(
+      gradientColors[colorIndex][1] * (1 - localRatio) +
+      gradientColors[nextIndex][1] * localRatio
+    );
+    const b = Math.round(
+      gradientColors[colorIndex][2] * (1 - localRatio) +
+      gradientColors[nextIndex][2] * localRatio
+    );
+
+    doc.setTextColor(r, g, b);
+    doc.text(text[i], currentX, y);
+    currentX += doc.getTextWidth(text[i]);
+  }
+}
+
 function drawPoweredByHostie(doc: any, startY: number) {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const footerY = startY + 10;
+  const y = startY + 10;
 
+  const poweredBy = "Powered by";
+  const hostie = "Hostie";
+  const gap = 6;
+
+  doc.setFont("Inter", "normal");
   doc.setFontSize(10);
 
-  const poweredByText = "Powered by";
-  const hostieText = "Hostie";
-
-  doc.setFont("Inter", "normal");
-  const poweredByWidth = doc.getTextWidth(poweredByText);
-
-  doc.setFont("Inter", "bold");
-  const hostieWidth = doc.getTextWidth(hostieText);
-
-  const gap = 6;
+  const poweredByWidth = doc.getTextWidth(poweredBy);
+  const hostieWidth = doc.getTextWidth(hostie);
   const totalWidth = poweredByWidth + gap + hostieWidth;
+
   const startX = (pageWidth - totalWidth) / 2;
 
-  // "Powered by"
-  doc.setFont("Inter", "normal");
-  doc.setTextColor(120, 120, 120);
-  doc.text(poweredByText, startX, footerY);
+  // Powered by (normal text)
+  doc.setTextColor(140, 140, 140);
+  doc.text(poweredBy, startX, y);
 
-  // Background ONLY for Hostie
-  const hostieX = startX + poweredByWidth + gap;
-
-  doc.setFillColor(124, 58, 237); // purple
-  doc.roundedRect(
-    hostieX - 4,
-    footerY - 8,
-    hostieWidth + 8,
-    10,
-    3,
-    3,
-    "F"
+  // Hostie (gradient text ONLY)
+  drawGradientText(
+    doc,
+    hostie,
+    startX + poweredByWidth + gap,
+    y,
+    10
   );
-
-  // Hostie text
-  doc.setFont("Inter", "bold");
-  doc.setTextColor(255, 255, 255);
-  doc.text(hostieText, hostieX, footerY);
 }
+
 
 
     // --- 1️⃣ Fetch bot icon as base64 ---
