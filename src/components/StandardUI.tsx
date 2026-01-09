@@ -373,7 +373,7 @@ export function StandardUI({
     // remove session
     sessionStorage.removeItem("guestContactId");
     sessionStorage.removeItem("room");
-  setShowDownloadPDF(false);
+    setShowDownloadPDF(false);
     setShowEndPopup(false);
     setChatHistory([]);
     setGuestId("");
@@ -1081,7 +1081,8 @@ export function StandardUI({
     }
 
     setShowReviewPopup(false);
-    endChatSessionByQuickReview("Thanks for chatting!! 😊")
+    setShowDownloadPDF(true);
+   // endChatSessionByQuickReview("Thanks for chatting!! 😊")
   };
 
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
@@ -1973,36 +1974,37 @@ export function StandardUI({
                   setShowQuickAssigneeReview(false);
 
                   await saveQuickAssigneeReview(sentiment);
+                  setShowDownloadPDF(true);
 
-                  endChatSessionByQuickReview("Thanks for chatting! 😊");
+                  // endChatSessionByQuickReview("Thanks for chatting! 😊");
                 }}
               />
             )}
             {showDownloadPDF && (
               <>
-              <div className="flex justify-end mt-3">
-                <button
-                  onClick={() => {
-                    downloadChatPDF();
-                    setTimeout(() => {
-                      endChatSessionByQuickReview("Thanks for chatting!! 😊");
-                    }, 500);
-                  }}
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
-                >
-                  📄 Download Chat PDF
-                </button>
-              </div>
-                 <div className="flex justify-end mt-3">
-                <button
-                  onClick={() => {
-                   endChatSessionByQuickReview("Thank You... You can start your new chat!")
-                  }}
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
-                >
-                   💬 Start a new conversation 
-                </button>
-              </div></>
+                <div className="flex justify-end mt-3">
+                  <button
+                    onClick={() => {
+                      downloadChatPDF();
+                      setTimeout(() => {
+                        endChatSessionByQuickReview("Thanks for chatting!! 😊");
+                      }, 500);
+                    }}
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                  >
+                    📄 Download Chat PDF
+                  </button>
+                </div>
+                <div className="flex justify-end mt-3">
+                  <button
+                    onClick={() => {
+                      endChatSessionByQuickReview("Thank You... You can start your new chat!")
+                    }}
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                  >
+                    💬 Start a new conversation
+                  </button>
+                </div></>
             )}
 
 
@@ -2018,53 +2020,53 @@ export function StandardUI({
 
           <div ref={chatEndRef} />
 
-         
-{!showDownloadPDF && (
-          <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
 
-            <input
-              type="file" ref={fileInputRef} className="hidden"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  handleFileUpload(e.target.files[0]);
-                }
-              }}
-            />
-            {allowFileUpload && (
-              <button
-                onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder">
-                <Plus className="w-4 h-4" />
-              </button>
+          {!showDownloadPDF && (
+            <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
 
-            )}
-            <input
-              type="text"
-              value={message}
-              // onChange={(e) => setMessage(e.target.value)}
-              onChange={(e) => {
-                setMessage(e.target.value);
-                if (showQuickReview) {
-                  setShowQuickReview(false);
-                }
-                setLastActivity(Date.now());
-                resetInactivityTimer();
-              }}
-              onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-              placeholder="Ask your question"
-              className="flex-1 outline-none rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 btnBorder"
+              <input
+                type="file" ref={fileInputRef} className="hidden"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    handleFileUpload(e.target.files[0]);
+                  }
+                }}
+              />
+              {allowFileUpload && (
+                <button
+                  onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center h-9 w-9 rounded-full  text-zinc-500 dark:text-zinc-400 btnBorder">
+                  <Plus className="w-4 h-4" />
+                </button>
 
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = borderColor || "#e9e4e6"; // normal mode
-                if (document.body.classList.contains("dark")) {
-                  e.currentTarget.style.borderColor = darkBorderColor || "#50484c"; // dark mode
-                }
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = "";
-              }}
-            />
+              )}
+              <input
+                type="text"
+                value={message}
+                // onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  if (showQuickReview) {
+                    setShowQuickReview(false);
+                  }
+                  setLastActivity(Date.now());
+                  resetInactivityTimer();
+                }}
+                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                placeholder="Ask your question"
+                className="flex-1 outline-none rounded-full px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 btnBorder"
 
-            <style>{`
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = borderColor || "#e9e4e6"; // normal mode
+                  if (document.body.classList.contains("dark")) {
+                    e.currentTarget.style.borderColor = darkBorderColor || "#50484c"; // dark mode
+                  }
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = "";
+                }}
+              />
+
+              <style>{`
                 .send-button {
                 
                   display: flex;
@@ -2082,12 +2084,12 @@ export function StandardUI({
                   height: 16px;
                 }
               `}</style>
-            {/* #7e23a8ff */}
-            <button onClick={sendMessage} className="send-button hostie-background">
-              <SendHorizontal />
-            </button>
+              {/* #7e23a8ff */}
+              <button onClick={sendMessage} className="send-button hostie-background">
+                <SendHorizontal />
+              </button>
 
-          </div>)}
+            </div>)}
 
           <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
             {botName} may produce inaccurate information
