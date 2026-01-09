@@ -945,9 +945,9 @@ export function StandardUI({
           senderId,
         );
 
-        // setTimeout(() => {
-        //   setShowQuickReview(true);
-        // }, 3000);
+        setTimeout(() => {
+          setShowQuickReview(true);
+        }, 3000);
 
 
       } catch (err) {
