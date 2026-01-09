@@ -155,8 +155,6 @@ export function StandardUI({
     doc.setFontSize(24); // bigger and bolder
     doc.setTextColor(50, 50, 50); // dark gray for professionalism
 
-    // const fillColor = gradient ? hexToRgb(gradient[1]) : [177, 30, 133];
-    // doc.circle(20, 25, 6, "F"); // y = 25
     function markdownToPlainText(md: string) {
       return md
         .replace(/!\[.*?\]\(.*?\)/g, '') // remove images
@@ -246,8 +244,6 @@ export function StandardUI({
       doc.text("AI", startX + poweredByWidth + gap + 12, y);
     }
 
-
-
     // --- 1️⃣ Fetch bot icon as base64 ---
     async function getImageBase64(url: string): Promise<string> {
       const res = await fetch(url);
@@ -271,14 +267,11 @@ export function StandardUI({
     const radius = 8;
 
     // Optional colored background
-   // doc.setFillColor(58, 43, 155); // purple
-    // doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
-    doc.setFillColor(145,49,231);
+    doc.setFillColor(58, 43, 155); // purple
     doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
     // Add the image
     const size = 12; //12
-    // doc.addImage(imgData, "PNG", circleX - size / 2, circleY - size / 2, size, size);
     doc.addImage(
       imgData,
       "PNG",
@@ -313,22 +306,6 @@ export function StandardUI({
     doc.text(`Generated on ${printedDate} at ${printedTime}`, pageWidth / 2, 48, { align: "center" });
 
     const headingBottomY = 54;
-    // autoTable(doc, {
-    //   startY: headingBottomY,
-    //   head: [["#", "Sender", "Message", "Time"]],
-    //   body: chatHistory.map((msg, index) => [
-    //     index + 1,
-    //     msg.sender === "user" ? "User" : "Assistant",
-    //     msg.text || "",
-    //     msg.timestamps?.sent || msg.timestamps?.received || "-",
-    //   ]),
-    //   styles: {
-    //     fontSize: 10,
-    //     cellPadding: 3,
-    //     valign: "top",
-    //     font: "Inter",
-    //   },
-    // });
     autoTable(doc, {
       startY: headingBottomY,
       head: [["#", "Sender", "Message", "Time"]],
@@ -351,22 +328,17 @@ export function StandardUI({
       }
     });
 
-const tableXStart = 14; // usually autoTable default margin left
-const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
+    const tableXStart = 14; // usually autoTable default margin left
+    const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
 
-   // const tableEndY = (doc as any).lastAutoTable.finalY;
-   // doc.setDrawColor(220);
-    //doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 4);
     const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
-const lineY = tableEndY + 4; // some padding below table
+    const lineY = tableEndY + 4; // some padding below table
 
-doc.setDrawColor(200);   // light gray
-doc.setLineWidth(0.4);
-doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching table width
-
+    doc.setDrawColor(200);   // light gray
+    doc.setLineWidth(0.4);
+    doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching table width
 
     drawPoweredByHostie(doc, tableEndY);
-   
 
     doc.save("chat-transcript.pdf");
   };
@@ -2007,6 +1979,7 @@ doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching tabl
               />
             )}
             {showDownloadPDF && (
+              <>
               <div className="flex justify-end mt-3">
                 <button
                   onClick={() => {
@@ -2017,9 +1990,19 @@ doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching tabl
                   }}
                   className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
                 >
-                  📄 Download Chat PDF & End
+                  📄 Download Chat PDF
                 </button>
               </div>
+                 <div className="flex justify-end mt-3">
+                <button
+                  onClick={() => {
+                   endChatSessionByQuickReview("Thank You... You can start your new chat!")
+                  }}
+                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                >
+                   💬 Start a new conversation 
+                </button>
+              </div></>
             )}
 
 
