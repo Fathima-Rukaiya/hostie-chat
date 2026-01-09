@@ -217,7 +217,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
 
   const poweredBy = "Powered by";
   const hostie = "Hostie";
-  const gap = 6;
+  const gap = 3;
 
   doc.setFont("Inter", "normal");
   doc.setFontSize(10);
@@ -240,6 +240,9 @@ function drawPoweredByHostie(doc: any, startY: number) {
     y,
     10
   );
+
+    doc.setTextColor(140, 140, 140);
+  doc.text("AI", startX + poweredByWidth + gap+3, y);
 }
 
 
@@ -349,7 +352,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
     
    const tableEndY = (doc as any).lastAutoTable.finalY;
 doc.setDrawColor(220);
-doc.line(40, tableEndY + 4, pageWidth - 5, tableEndY + 4);
+doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 4);
 
 drawPoweredByHostie(doc, tableEndY);
 
