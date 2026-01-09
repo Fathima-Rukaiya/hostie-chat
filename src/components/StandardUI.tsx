@@ -945,9 +945,9 @@ export function StandardUI({
           senderId,
         );
 
-        setTimeout(() => {
-          setShowQuickReview(true);
-        }, 3000);
+        // setTimeout(() => {
+        //   setShowQuickReview(true);
+        // }, 3000);
 
 
       } catch (err) {
@@ -2013,7 +2013,7 @@ export function StandardUI({
                 <div className="flex justify-end mt-3">
                   <button
                     onClick={() => {
-                      endChatSessionByQuickReview("Thank You... You can start your new chat!")
+                      endChatSessionByQuickReview("You can start your new chat!")
                     }}
                     className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
                   >
