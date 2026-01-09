@@ -385,7 +385,7 @@ export function StandardUI({
     // reset AI pause state
     setAiPaused(false);
     sessionStorage.removeItem("aiPaused");
-
+ setShowSuggestedOnce(false);
 
     // create new room id
     const newRoom = crypto.randomUUID();
@@ -428,6 +428,7 @@ export function StandardUI({
     // reset AI pause state
     setAiPaused(false);
     sessionStorage.removeItem("aiPaused");
+     setShowSuggestedOnce(false);
 
 
     // create new room id
@@ -635,6 +636,7 @@ export function StandardUI({
           setAssignedAgent(null);
           setShowQuickReview(false);
           setShowQuickAssigneeReview(true);
+           setShowSuggestedOnce(false);
 
           // Auto-end after 30s if no action
           // setTimeout(() => {
@@ -1082,6 +1084,7 @@ export function StandardUI({
 
     setShowReviewPopup(false);
     setShowDownloadPDF(true);
+     setShowSuggestedOnce(false);
    // endChatSessionByQuickReview("Thanks for chatting!! 😊")
   };
 
@@ -1361,6 +1364,7 @@ export function StandardUI({
   }) => {
     if (!guestId) return null;
     setShowDownloadPDF(true);
+     setShowSuggestedOnce(false);
 
     const isDark = document
       .querySelector("#hostie-chat-root")
@@ -1945,6 +1949,7 @@ export function StandardUI({
                 onPositive={async () => {
                   setShowQuickReview(false);
                   setShowDownloadPDF(true);
+                   setShowSuggestedOnce(false);
 
                   // save positive review
                   await fetch(`${API_BASE_URL}/saveReview`, {
@@ -1976,6 +1981,7 @@ export function StandardUI({
 
                   await saveQuickAssigneeReview(sentiment);
                   setShowDownloadPDF(true);
+                   setShowSuggestedOnce(false);
 
                   // endChatSessionByQuickReview("Thanks for chatting! 😊");
                 }}
