@@ -150,14 +150,6 @@ export function StandardUI({
     const printedDate = now.toLocaleDateString();
     const printedTime = now.toLocaleTimeString();
 
-    function hexToRgb(hex: string) {
-      const cleanHex = hex.replace("#", "");
-      const bigint = parseInt(cleanHex, 16);
-      const r = (bigint >> 16) & 255;
-      const g = (bigint >> 8) & 255;
-      const b = bigint & 255;
-      return [r, g, b];
-    }
     // Header start
     doc.setFont("Inter", "bold");
     doc.setFontSize(24); // bigger and bolder
@@ -279,38 +271,83 @@ function markdownToPlainText(md: string) {
     });
 
     // --- 3️⃣ Add Powered by Hostie footer ---
-const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
-const footerText = "Powered by Hostie";
+// const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
+// const footerText1 = "Powered by";
+// const footerText2 = "Hostie";
 
-// Gradient colors (same as your HTML gradient)
-const gradientColors = [
-  [124, 58, 237],   // #7c3aed
-  [236, 72, 153],   // #ec4899
-  [59, 130, 246],   // #3b82f6
-];
+// // Gradient colors (same as your HTML gradient)
+// const gradientColors = [
+//   [124, 58, 237],   // #7c3aed
+//   [236, 72, 153],   // #ec4899
+//   [59, 130, 246],   // #3b82f6
+// ];
 
-// Draw gradient text manually
-const startX = pageCenter - (doc.getTextWidth(footerText) / 2);
-let charX = startX;
-for (let i = 0; i < footerText.length; i++) {
-  const char = footerText[i];
+// // Draw gradient text manually
+// const startX = pageCenter - (doc.getTextWidth(footerText2) / 2);
+// let charX = startX;
+// for (let i = 0; i < footerText2.length; i++) {
+//   const char = footerText2[i];
 
-  // Calculate gradient position (simple)
-  const colorIndex = Math.floor((i / footerText.length) * (gradientColors.length - 1));
-  const nextColorIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
-  const ratio = (i / footerText.length) * (gradientColors.length - 1) - colorIndex;
+//   // Calculate gradient position (simple)
+//   const colorIndex = Math.floor((i / footerText2.length) * (gradientColors.length - 1));
+//   const nextColorIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
+//   const ratio = (i / footerText2.length) * (gradientColors.length - 1) - colorIndex;
 
-  const r = Math.round(gradientColors[colorIndex][0] * (1 - ratio) + gradientColors[nextColorIndex][0] * ratio);
-  const g = Math.round(gradientColors[colorIndex][1] * (1 - ratio) + gradientColors[nextColorIndex][1] * ratio);
-  const b = Math.round(gradientColors[colorIndex][2] * (1 - ratio) + gradientColors[nextColorIndex][2] * ratio);
+//   const r = Math.round(gradientColors[colorIndex][0] * (1 - ratio) + gradientColors[nextColorIndex][0] * ratio);
+//   const g = Math.round(gradientColors[colorIndex][1] * (1 - ratio) + gradientColors[nextColorIndex][1] * ratio);
+//   const b = Math.round(gradientColors[colorIndex][2] * (1 - ratio) + gradientColors[nextColorIndex][2] * ratio);
 
-  doc.setTextColor(r, g, b);
-  doc.setFont("Inter", "bold");
-  doc.setFontSize(10);
-  doc.text(char, charX, footerY);
+//   doc.setTextColor(r, g, b);
+//   doc.setFont("Inter", "bold");
+//   doc.setFontSize(10);
+//   doc.text(char, charX, footerY);
 
-  charX += doc.getTextWidth(char); // move next character
-}
+//   charX += doc.getTextWidth(char); // move next character
+// }
+
+// --- 3️⃣ Add Powered by Hostie footer ---
+const footerY = doc.internal.pageSize.getHeight() - 20;
+
+const poweredByText = "Powered by";
+const hostieText = "Hostie";
+
+// Font settings
+doc.setFont("Inter", "normal");
+doc.setFontSize(10);
+
+// 1️⃣ Draw "Powered by" (normal text, no background)
+doc.setTextColor(120, 120, 120); // subtle gray
+
+const poweredByWidth = doc.getTextWidth(poweredByText);
+const hostieWidth = doc.getTextWidth(hostieText);
+
+// Total width to center both together
+const totalWidth = poweredByWidth + 6 + hostieWidth;
+let startX = pageCenter - totalWidth / 2;
+
+doc.text(poweredByText, startX, footerY);
+
+// 2️⃣ Draw background ONLY for "Hostie"
+const hostieX = startX + poweredByWidth + 6;
+const paddingX = 4;
+const paddingY = 3;
+
+// Background color for Hostie
+doc.setFillColor(124, 58, 237); // purple (change if needed)
+doc.roundedRect(
+  hostieX - paddingX,
+  footerY - 8,
+  hostieWidth + paddingX * 2,
+  10,
+  3,
+  3,
+  "F"
+);
+
+// 3️⃣ Draw "Hostie" text on top of background
+doc.setFont("Inter", "bold");
+doc.setTextColor(255, 255, 255); // white text
+doc.text(hostieText, hostieX, footerY);
 
 
 
