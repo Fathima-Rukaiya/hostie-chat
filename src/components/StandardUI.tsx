@@ -917,10 +917,8 @@ setShowQuickAssigneeReview(false);
 
       //addBotMessage(askMsg);
       await saveBotMessage(askMsg, senderId, apiKey,);
-
       await saveBotMessage(askMsg2, senderId, apiKey,);
-
-      return; // Don't save user message yet
+      return; 
     }
 
     // Guest just gave info → save contact & thank
@@ -943,14 +941,12 @@ setShowQuickAssigneeReview(false);
           //  await saveUserMessage(message, true);
           await saveUserMessageWithSender(messageText, true, savedGuest.id);
 
-
           const thankMsg = `Thanks ${savedGuest.name || savedGuest.email}! You can continue chatting now..!`;
           // addBotMessage(thankMsg);
           await saveBotMessage(thankMsg, savedGuest.id, apiKey);
           if (!showSuggestedOnce && defaultSuggestions?.length) {
             setSuggestedQuestions(defaultSuggestions);
             setShowSuggestedOnce(true);
-  
           }
 
         } catch (err) {
@@ -987,11 +983,9 @@ setShowQuickAssigneeReview(false);
       } catch (err) {
         console.error("AI call failed:", err);
         setChatHistory(prev => prev.filter(msg => !msg.isTyping));
-
       }
     } else {
       console.log("AI response paused due to live agent assignment.");
-
       const aiResp = await saveUserMessage(messageText, true);
     }
 
@@ -1177,67 +1171,6 @@ setShowQuickAssigneeReview(false);
     : "#3a3538";
 
 
-  //   const isDark = document
-  //     .querySelector("#hostie-chat-root")
-  //     ?.classList.contains("dark");
-
-  //   return (
-  //     <div className=" " >
-  //       {/* border rounded-lg border-t border-zinc-200 dark:border-neutral-700  */}
-  //       {/* <p className="text-center font-semibold text-sm font-medium text-black dark:text-white mt-1">You can ask me things like</p> */}
-
-  //       <div className="flex flex-col-reverse gap-2 mt-4 items-end">
-  //         <style>
-  //           {`
-  //          .hostie-suggest-question{
-  //    background: ${suggestQuestionsBg};
-  //     border-color: ${suggestQuestionsBorder || "#50484cff"};
-  //     color: #1F2937;
-
-  //   }
-  //      .dark .hostie-suggest-question{
-  //   color: #FFFFFF;
-  //    background: ${suggestQuestionsDark};
-  //     border-color: ${suggestQuestionsBorder || "#50484cff"};
-  //   /* opacity: 1;*/
-
-  // }
-  // .hover .hostie-suggest-question{
-  // }`}
-  //         </style>
-  //         {/* {questions.map((q, i) => (
-  //         <button
-
-  //           key={i}
-  //           className="px-3 py-1.5 rounded-full text-sm hostie-suggest-question"
-  //           onClick={() => onSelect(q)}
-  //         >
-  //           {q}
-  //         </button>
-  //       ))} */}
-  //       {/* px-3 py-1.5 rounded-full text-sm border transition-colors */}
-  //         {questions.map((q, i) => (
-  //           <button
-  //             key={i}
-  //             onClick={() => onSelect(q)}
-  //             className="p-2 rounded-3xl text-sm max-w-[80%] break-words"
-  //             style={{
-  //               backgroundColor: isDark
-  //                 ? suggestQuestionsDark
-  //                 : suggestQuestionsBg,
-  //               borderColor: suggestQuestionsBorder,
-  //               color: isDark ? "#ffffff" : "#1F2937",
-  //             }}
-  //           >
-  //             {q}
-  //           </button>
-  //         ))}
-
-  //       </div>
-  //     </div>
-
-  //   );
-  // };
   const SuggestedQuestions = ({
     questions,
     onSelect,
@@ -1301,6 +1234,11 @@ setShowQuickAssigneeReview(false);
           question,
           senderId,
         );
+        
+          setTimeout(() => {
+          setShowQuickReview(true);
+        }, 3000);
+
       } catch (err) {
         console.error("AI call failed:", err);
         setChatHistory(prev => prev.filter(msg => !msg.isTyping));
@@ -2039,7 +1977,7 @@ setShowQuickAssigneeReview(false);
                         endChatSessionByQuickReview("Thanks for chatting!! 😊");
                       }, 500);
                     }}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm w-64"
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm w-full"
                   >
                     📄 Download Chat PDF
                   </button>
@@ -2049,7 +1987,7 @@ setShowQuickAssigneeReview(false);
                     onClick={() => {
                       endChatSessionByQuickReview("You can start your new chat!")
                     }}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm w-64"
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm w-full"
                   >
                     💬 Start a new conversation
                   </button>
