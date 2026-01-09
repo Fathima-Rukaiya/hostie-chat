@@ -238,7 +238,7 @@ export function StandardUI({
         hostie,
         startX + poweredByWidth + gap,
         y,
-        10
+        12
       );
       doc.setFont("Inter", "bolditalic");
       doc.setTextColor(140, 140, 140);
@@ -353,7 +353,7 @@ export function StandardUI({
 
     const tableEndY = (doc as any).lastAutoTable.finalY;
     doc.setDrawColor(220);
-    doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 8);
+    doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 4);
 
     drawPoweredByHostie(doc, tableEndY);
 
