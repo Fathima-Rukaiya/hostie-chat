@@ -291,7 +291,7 @@ export function StandardUI({
     doc.setFont("Inter", "bold");
     doc.setFontSize(26); // bigger
     doc.setTextColor(50, 50, 50);
-    doc.text("Chat Transcript", pageWidth / 2, circleY + radius + 15, { align: "center" });
+    doc.text("Conversation Summary", pageWidth / 2, circleY + radius + 15, { align: "center" });
 
 
     // Optional underline for style
@@ -386,7 +386,9 @@ export function StandardUI({
     setAiPaused(false);
     sessionStorage.removeItem("aiPaused");
     setShowSuggestedOnce(false);
-
+setShowQuickAssigneeReview(false);
+setShowQuickReview(false)
+setShowDownloadPDF(false)
     // create new room id
     const newRoom = crypto.randomUUID();
     setRoomName(newRoom);
@@ -394,7 +396,7 @@ export function StandardUI({
     sessionStorage.setItem("room", newRoom);
 
     setIsGuest(true);
-    setShowQuickReview(false)
+    
 
     let endStatement = endReason || "Your previous chat has ended due to inactivity. How can I assist you now?";
     addBotMessage(endStatement);
@@ -429,8 +431,8 @@ export function StandardUI({
     setAiPaused(false);
     sessionStorage.removeItem("aiPaused");
     setShowSuggestedOnce(false);
-
-
+setShowQuickAssigneeReview(false);
+ setShowDownloadPDF(false);
     // create new room id
     const newRoom = crypto.randomUUID();
     setRoomName(newRoom);
@@ -439,7 +441,7 @@ export function StandardUI({
 
     setIsGuest(true);
     setShowQuickReview(false)
-    setShowDownloadPDF(false);
+   
     let endStatement = endReason || "";
     if (endStatement)
       addBotMessage(endStatement);
