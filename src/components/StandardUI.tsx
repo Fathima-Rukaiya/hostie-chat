@@ -217,7 +217,7 @@ export function StandardUI({
 
       const poweredBy = "Powered by";
       const hostie = "Hostie";
-      const gap = 3;
+      const gap = 2;
 
       doc.setFont("Inter", "bold");
       doc.setFontSize(12);
