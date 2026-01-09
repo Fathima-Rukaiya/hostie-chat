@@ -217,7 +217,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
 
   const poweredBy = "Powered by";
   const hostie = "Hostie";
-  const gap = 3;
+  const gap = 1;
 
   doc.setFont("Inter", "normal");
   doc.setFontSize(10);
@@ -242,7 +242,7 @@ function drawPoweredByHostie(doc: any, startY: number) {
   );
 
     doc.setTextColor(140, 140, 140);
-  doc.text("AI", startX + poweredByWidth + gap+3, y);
+  doc.text("AI", startX + poweredByWidth + gap+9, y);
 }
 
 
