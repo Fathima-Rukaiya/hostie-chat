@@ -301,9 +301,19 @@ export function StandardUI({
 
 
     // Optional underline for style
-    doc.setDrawColor(180, 180, 180); // light gray
-    doc.setLineWidth(0.5);
-    doc.line(20, 42, pageWidth - 20, 42);
+    // doc.setDrawColor(180, 180, 180); // light gray
+    // doc.setLineWidth(0.5);
+    // doc.line(20, 42, pageWidth - 20, 42);
+    const tableXStart = 14; // usually autoTable default margin left
+const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
+
+ 
+    const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
+const lineY = tableEndY + 4; // some padding below table
+
+doc.setDrawColor(200);   // light gray
+doc.setLineWidth(0.4);
+doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching table width
 
     // Printed date below heading
     doc.setFont("Inter", "normal");
@@ -350,14 +360,12 @@ export function StandardUI({
       }
     });
 
-const tableXStart = 14; // usually autoTable default margin left
-const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
+// const tableXStart = 14; // usually autoTable default margin left
+// const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
 
-   // const tableEndY = (doc as any).lastAutoTable.finalY;
-   // doc.setDrawColor(220);
-    //doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 4);
-    const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
-const lineY = tableEndY + 4; // some padding below table
+ 
+//     const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
+// const lineY = tableEndY + 4; // some padding below table
 
 doc.setDrawColor(200);   // light gray
 doc.setLineWidth(0.4);
@@ -365,45 +373,7 @@ doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching tabl
 
 
     drawPoweredByHostie(doc, tableEndY);
-
-
-    // --- 3️⃣ Add Powered by Hostie footer ---
-    // const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
-    // const footerText1 = "Powered by";
-    // const footerText2 = "Hostie";
-
-    // // Gradient colors (same as your HTML gradient)
-    // const gradientColors = [
-    //   [124, 58, 237],   // #7c3aed
-    //   [236, 72, 153],   // #ec4899
-    //   [59, 130, 246],   // #3b82f6
-    // ];
-
-    // // Draw gradient text manually
-    // const startX = pageCenter - (doc.getTextWidth(footerText2) / 2);
-    // let charX = startX;
-    // for (let i = 0; i < footerText2.length; i++) {
-    //   const char = footerText2[i];
-
-    //   // Calculate gradient position (simple)
-    //   const colorIndex = Math.floor((i / footerText2.length) * (gradientColors.length - 1));
-    //   const nextColorIndex = Math.min(colorIndex + 1, gradientColors.length - 1);
-    //   const ratio = (i / footerText2.length) * (gradientColors.length - 1) - colorIndex;
-
-    //   const r = Math.round(gradientColors[colorIndex][0] * (1 - ratio) + gradientColors[nextColorIndex][0] * ratio);
-    //   const g = Math.round(gradientColors[colorIndex][1] * (1 - ratio) + gradientColors[nextColorIndex][1] * ratio);
-    //   const b = Math.round(gradientColors[colorIndex][2] * (1 - ratio) + gradientColors[nextColorIndex][2] * ratio);
-
-    //   doc.setTextColor(r, g, b);
-    //   doc.setFont("Inter", "bold");
-    //   doc.setFontSize(10);
-    //   doc.text(char, charX, footerY);
-
-    //   charX += doc.getTextWidth(char); // move next character
-    // }
-
-
-    
+   
 
     doc.save("chat-transcript.pdf");
   };
