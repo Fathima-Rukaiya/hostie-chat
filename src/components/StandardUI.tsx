@@ -637,10 +637,10 @@ export function StandardUI({
           setShowQuickAssigneeReview(true);
 
           // Auto-end after 30s if no action
-          setTimeout(() => {
-            setShowQuickAssigneeReview(false);
-            endChatSessionByQuickReview("Thanks for chatting!! 😊");
-          }, 10 * 1000);
+          // setTimeout(() => {
+          //   setShowQuickAssigneeReview(false);
+          //   endChatSessionByQuickReview("Thanks for chatting!! 😊");
+          // }, 10 * 1000);
 
           return;
         }
@@ -1360,6 +1360,7 @@ export function StandardUI({
     onSelect: (sentiment: "positive" | "neutral" | "negative") => void;
   }) => {
     if (!guestId) return null;
+    setShowDownloadPDF(true);
 
     const isDark = document
       .querySelector("#hostie-chat-root")
