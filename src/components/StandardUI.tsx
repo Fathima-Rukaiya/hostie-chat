@@ -168,6 +168,51 @@ function markdownToPlainText(md: string) {
     .trim();
 }
 
+function drawPoweredByHostie(doc: any, startY: number) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const footerY = startY + 10;
+
+  doc.setFontSize(10);
+
+  const poweredByText = "Powered by";
+  const hostieText = "Hostie";
+
+  doc.setFont("Inter", "normal");
+  const poweredByWidth = doc.getTextWidth(poweredByText);
+
+  doc.setFont("Inter", "bold");
+  const hostieWidth = doc.getTextWidth(hostieText);
+
+  const gap = 6;
+  const totalWidth = poweredByWidth + gap + hostieWidth;
+  const startX = (pageWidth - totalWidth) / 2;
+
+  // "Powered by"
+  doc.setFont("Inter", "normal");
+  doc.setTextColor(120, 120, 120);
+  doc.text(poweredByText, startX, footerY);
+
+  // Background ONLY for Hostie
+  const hostieX = startX + poweredByWidth + gap;
+
+  doc.setFillColor(124, 58, 237); // purple
+  doc.roundedRect(
+    hostieX - 4,
+    footerY - 8,
+    hostieWidth + 8,
+    10,
+    3,
+    3,
+    "F"
+  );
+
+  // Hostie text
+  doc.setFont("Inter", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text(hostieText, hostieX, footerY);
+}
+
+
     // --- 1️⃣ Fetch bot icon as base64 ---
     async function getImageBase64(url: string): Promise<string> {
       const res = await fetch(url);
@@ -270,6 +315,14 @@ function markdownToPlainText(md: string) {
       }
     });
 
+    
+   const tableEndY = (doc as any).lastAutoTable.finalY;
+doc.setDrawColor(220);
+doc.line(40, tableEndY + 4, pageWidth - 40, tableEndY + 4);
+
+drawPoweredByHostie(doc, tableEndY);
+
+
     // --- 3️⃣ Add Powered by Hostie footer ---
 // const footerY = doc.internal.pageSize.getHeight() - 20; // 20px from bottom
 // const footerText1 = "Powered by";
@@ -304,51 +357,6 @@ function markdownToPlainText(md: string) {
 
 //   charX += doc.getTextWidth(char); // move next character
 // }
-
-// --- 3️⃣ Add Powered by Hostie footer ---
-const footerY = doc.internal.pageSize.getHeight() - 20;
-
-const poweredByText = "Powered by";
-const hostieText = "Hostie";
-
-// Font settings
-doc.setFont("Inter", "normal");
-doc.setFontSize(10);
-
-// 1️⃣ Draw "Powered by" (normal text, no background)
-doc.setTextColor(120, 120, 120); // subtle gray
-
-const poweredByWidth = doc.getTextWidth(poweredByText);
-const hostieWidth = doc.getTextWidth(hostieText);
-
-// Total width to center both together
-const totalWidth = poweredByWidth + 6 + hostieWidth;
-let startX = pageCenter - totalWidth / 2;
-
-doc.text(poweredByText, startX, footerY);
-
-// 2️⃣ Draw background ONLY for "Hostie"
-const hostieX = startX + poweredByWidth + 6;
-const paddingX = 4;
-const paddingY = 3;
-
-// Background color for Hostie
-doc.setFillColor(124, 58, 237); // purple (change if needed)
-doc.roundedRect(
-  hostieX - paddingX,
-  footerY - 8,
-  hostieWidth + paddingX * 2,
-  10,
-  3,
-  3,
-  "F"
-);
-
-// 3️⃣ Draw "Hostie" text on top of background
-doc.setFont("Inter", "bold");
-doc.setTextColor(255, 255, 255); // white text
-doc.text(hostieText, hostieX, footerY);
-
 
 
     doc.save("chat-transcript.pdf");
