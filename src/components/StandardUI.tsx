@@ -303,7 +303,7 @@ export function StandardUI({
     // Optional underline for style
     doc.setDrawColor(180, 180, 180); // light gray
     doc.setLineWidth(0.5);
-    doc.line(14, 42, 14, 42);
+    doc.line(16, 42, pageWidth - 16, 42);
 
     // Printed date below heading
     doc.setFont("Inter", "normal");
