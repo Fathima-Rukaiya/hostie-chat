@@ -271,8 +271,9 @@ export function StandardUI({
     const radius = 8;
 
     // Optional colored background
-    doc.setFillColor(58, 43, 155); // purple
+   // doc.setFillColor(58, 43, 155); // purple
     // doc.circle(circleX, circleY, radius, "F"); // filled circle behind icon
+    doc.setFillColor(145,49,231);
     doc.circle(pageCenter, circleY, radius, "F"); // centered circle
 
     // Add the image
