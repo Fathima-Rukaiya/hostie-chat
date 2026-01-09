@@ -350,8 +350,8 @@ export function StandardUI({
       }
     });
 
-const tableXStart = 10; // usually autoTable default margin left
-const tableXEnd = pageWidth - 10; // or calculate actual table width if smaller
+const tableXStart = 7; // usually autoTable default margin left
+const tableXEnd = pageWidth - 7; // or calculate actual table width if smaller
 
    // const tableEndY = (doc as any).lastAutoTable.finalY;
    // doc.setDrawColor(220);
@@ -403,18 +403,7 @@ doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching tabl
     // }
 
 
-    //const tableEndY = (doc as any).lastAutoTable.finalY;
-const padding = 5; // reduce line on both sides
-
-const tableXStartt = ((doc as any).lastAutoTable.settings.margin?.left ?? 10) + padding;
-const tableXEndt = tableXStartt + ((doc as any).lastAutoTable.table.width ?? (pageWidth - 20)) - padding * 2;
-
-const lineYt = tableEndY + 4; // distance below table
-
-doc.setDrawColor(200);   // light gray
-doc.setLineWidth(0.4);
-doc.line(tableXStartt, lineYt, tableXEndt, lineYt); // smaller line
-
+    
 
     doc.save("chat-transcript.pdf");
   };
