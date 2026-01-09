@@ -373,7 +373,7 @@ export function StandardUI({
     // remove session
     sessionStorage.removeItem("guestContactId");
     sessionStorage.removeItem("room");
-
+  setShowDownloadPDF(false);
     setShowEndPopup(false);
     setChatHistory([]);
     setGuestId("");
@@ -2018,7 +2018,8 @@ export function StandardUI({
 
           <div ref={chatEndRef} />
 
-          {/* Input */}
+         
+{!showDownloadPDF && (
           <div className="flex items-center border-t border-zinc-200 dark:border-neutral-700 p-3 gap-1" >
 
             <input
@@ -2086,7 +2087,7 @@ export function StandardUI({
               <SendHorizontal />
             </button>
 
-          </div>
+          </div>)}
 
           <div className="font-medium text-center border-b border-zinc-200 dark:border-neutral-700 pb-3 text-xs text-zinc-400 dark:text-zinc-400">
             {botName} may produce inaccurate information
