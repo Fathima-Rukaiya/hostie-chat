@@ -219,7 +219,7 @@ export function StandardUI({
       const hostie = "Hostie";
       const gap = 1;
 
-      doc.setFont("Inter", "bolditalic");
+      doc.setFont("Inter", "bold");
       doc.setFontSize(12);
 
       const poweredByWidth = doc.getTextWidth(poweredBy);
@@ -301,19 +301,9 @@ export function StandardUI({
 
 
     // Optional underline for style
-    // doc.setDrawColor(180, 180, 180); // light gray
-    // doc.setLineWidth(0.5);
-    // doc.line(20, 42, pageWidth - 20, 42);
-    const tableXStart = 14; // usually autoTable default margin left
-const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
-
- 
-    const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
-const lineY = tableEndY + 4; // some padding below table
-
-doc.setDrawColor(200);   // light gray
-doc.setLineWidth(0.4);
-doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching table width
+    doc.setDrawColor(180, 180, 180); // light gray
+    doc.setLineWidth(0.5);
+    doc.line(14, 42, 14, 42);
 
     // Printed date below heading
     doc.setFont("Inter", "normal");
@@ -360,12 +350,14 @@ doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching tabl
       }
     });
 
-// const tableXStart = 14; // usually autoTable default margin left
-// const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
+const tableXStart = 14; // usually autoTable default margin left
+const tableXEnd = pageWidth - 14; // or calculate actual table width if smaller
 
- 
-//     const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
-// const lineY = tableEndY + 4; // some padding below table
+   // const tableEndY = (doc as any).lastAutoTable.finalY;
+   // doc.setDrawColor(220);
+    //doc.line(10, tableEndY + 4, pageWidth - 10, tableEndY + 4);
+    const tableEndY = (doc as any).lastAutoTable.finalY; // bottom of table
+const lineY = tableEndY + 4; // some padding below table
 
 doc.setDrawColor(200);   // light gray
 doc.setLineWidth(0.4);
