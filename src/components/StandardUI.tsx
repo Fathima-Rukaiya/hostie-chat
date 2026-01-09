@@ -243,7 +243,7 @@ export function StandardUI({
       doc.setFont("Inter", "bolditalic");
       doc.setTextColor(140, 140, 140);
       doc.setFontSize(12);
-      doc.text("AI", startX + poweredByWidth + gap + 13, y);
+      doc.text("AI", startX + poweredByWidth + gap + 12, y);
     }
 
 
@@ -401,6 +401,19 @@ doc.line(tableXStart, lineY, tableXEnd, lineY); // horizontal line matching tabl
 
     //   charX += doc.getTextWidth(char); // move next character
     // }
+
+
+    //const tableEndY = (doc as any).lastAutoTable.finalY;
+const padding = 5; // reduce line on both sides
+
+const tableXStartt = ((doc as any).lastAutoTable.settings.margin?.left ?? 10) + padding;
+const tableXEndt = tableXStartt + ((doc as any).lastAutoTable.table.width ?? (pageWidth - 20)) - padding * 2;
+
+const lineYt = tableEndY + 4; // distance below table
+
+doc.setDrawColor(200);   // light gray
+doc.setLineWidth(0.4);
+doc.line(tableXStartt, lineYt, tableXEndt, lineYt); // smaller line
 
 
     doc.save("chat-transcript.pdf");
