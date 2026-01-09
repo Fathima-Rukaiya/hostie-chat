@@ -836,18 +836,49 @@ setShowQuickAssigneeReview(false);
     onPositive: () => void;
     onNegative: () => void;
   }) => {
+    const isDark = document
+      .querySelector("#hostie-chat-root")
+      ?.classList.contains("dark");
+
+      const baseBg = isDark ? suggestQuestionsDark : backgroundColor;
+    const hoverBg = darkenColor(baseBg, 12);
+
+      const baseStyle = {
+    backgroundColor: baseBg,
+    borderColor: suggestQuestionsBorder,
+    color: "#333",
+  };
+
+  const hoverStyle = {
+    backgroundColor: hoverBg,
+  };
+
     return (
       <div className="flex flex-col items-end gap-2 mt-3">
         <button
           onClick={onPositive}
-          className="p-2 rounded-3xl text-sm border max-w-[80%]"
+          className="p-2 rounded-3xl text-sm border transition-colors max-w-[80%]"
+          style={baseStyle}
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.backgroundColor = hoverBg)
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.backgroundColor = baseBg)
+        }
         >
           😊 Thank you, that helped
         </button>
 
         <button
           onClick={onNegative}
-          className="p-2 rounded-3xl text-sm border max-w-[80%]"
+          className="p-2 rounded-3xl text-sm border transition-colors max-w-[80%]"
+           style={baseStyle}
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.backgroundColor = hoverBg)
+        }
+        onMouseLeave={(e) =>
+          (e.currentTarget.style.backgroundColor = baseBg)
+        }
         >
           ❓No I have more question
         </button>
@@ -919,6 +950,7 @@ setShowQuickAssigneeReview(false);
           if (!showSuggestedOnce && defaultSuggestions?.length) {
             setSuggestedQuestions(defaultSuggestions);
             setShowSuggestedOnce(true);
+  
           }
 
         } catch (err) {
@@ -1547,7 +1579,7 @@ setShowQuickAssigneeReview(false);
               </button>
 
               <button
-                className="flex-1 bg-pink-600 text-white px-2 py-1 rounded-lg text-sm"
+                className="flex-1 bg-purple-600 text-white px-2 py-1 rounded-lg text-sm"
                 // onClick={handleReviewSubmit}
                 onClick={handleReviewSubmit}
               >
@@ -2007,7 +2039,7 @@ setShowQuickAssigneeReview(false);
                         endChatSessionByQuickReview("Thanks for chatting!! 😊");
                       }, 500);
                     }}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm w-64"
                   >
                     📄 Download Chat PDF
                   </button>
@@ -2017,7 +2049,7 @@ setShowQuickAssigneeReview(false);
                     onClick={() => {
                       endChatSessionByQuickReview("You can start your new chat!")
                     }}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm w-64"
                   >
                     💬 Start a new conversation
                   </button>
